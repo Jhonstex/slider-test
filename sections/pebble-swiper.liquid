@@ -4,7 +4,7 @@
 
 <section
   id="{{ slider_id }}"
-  class="pebble-swiper pebble-swiper--{{ section.settings.content_position }}"
+  class="pebble-swiper pebble-swiper--{{ section.settings.content_position }} pebble-swiper--mobile-{{ section.settings.mobile_content_position }}"
   data-pebble-swiper
   data-autoplay="{{ section.settings.autoplay }}"
   data-delay="{{ section.settings.autoplay_delay | times: 1000 }}"
@@ -98,7 +98,7 @@
 .pebble-swiper__container,
 .pebble-swiper .swiper-wrapper,
 .pebble-swiper .swiper-slide {
-  height: var(--pebble-height);
+  height: min(var(--pebble-height), 52.083vw);
 }
 
 .pebble-swiper__slide {
@@ -222,14 +222,15 @@
   display: inline-flex;
   align-items: center;
   gap: 0;
-  min-height: 50px;
+  min-width: 260px;
+  min-height: 60px;
   margin-top: 0;
-  padding: 1px 1px 1px 24px;
+  padding: 0 14px 0 34px;
   border-radius: 999px;
   background: #fff;
   color: #242424;
   font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 24px;
   text-decoration: none;
@@ -238,10 +239,10 @@
 
 .pebble-swiper__button span {
   display: grid;
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
-  margin-left: 1px;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
   border-radius: 50%;
   background: #242424;
   color: #fff;
@@ -317,12 +318,19 @@
     height: calc(100% - 64px);
     padding: 24px 16px;
   }
-  .pebble-swiper__content { width: 100%; text-align: center; }
-  .pebble-swiper__eyebrow,
-  .pebble-swiper__heading { margin-right: auto; margin-left: auto; }
+  .pebble-swiper__content { width: 100%; }
+  .pebble-swiper--mobile-left .pebble-swiper__content { text-align: left; }
+  .pebble-swiper--mobile-center .pebble-swiper__content { text-align: center; }
+  .pebble-swiper--mobile-right .pebble-swiper__content { text-align: right; }
+  .pebble-swiper--mobile-left .pebble-swiper__eyebrow,
+  .pebble-swiper--mobile-left .pebble-swiper__heading { margin-right: auto; margin-left: 0; }
+  .pebble-swiper--mobile-center .pebble-swiper__eyebrow,
+  .pebble-swiper--mobile-center .pebble-swiper__heading { margin-right: auto; margin-left: auto; }
+  .pebble-swiper--mobile-right .pebble-swiper__eyebrow,
+  .pebble-swiper--mobile-right .pebble-swiper__heading { margin-right: 0; margin-left: auto; }
   .pebble-swiper__heading { max-width: 210px; margin-bottom: 24px; font-size: 38px; }
   .pebble-swiper__body { font-size: 15px; }
-  .pebble-swiper__button { width: 100%; justify-content: flex-start; text-align: left; }
+  .pebble-swiper__button { width: 100%; min-width: 0; justify-content: flex-start; text-align: left; }
   .pebble-swiper__button span { margin-left: auto; }
   .pebble-swiper__controls { right: 16px; bottom: 40px; left: 16px; gap: 12px; }
   .pebble-swiper__counter { gap: 4px; font-size: 15px; }
@@ -400,10 +408,11 @@
   "tag": "section",
   "class": "section-pebble-swiper",
   "settings": [
-    { "type": "range", "id": "desktop_height", "label": "Desktop height", "min": 420, "max": 900, "step": 10, "unit": "px", "default": 680 },
-    { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 520, "max": 900, "step": 10, "unit": "px", "default": 680 },
+    { "type": "range", "id": "desktop_height", "label": "Desktop max height", "min": 620, "max": 1200, "step": 10, "unit": "px", "default": 1040 },
+    { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 520, "max": 900, "step": 10, "unit": "px", "default": 560 },
     { "type": "range", "id": "content_width", "label": "Content width", "min": 280, "max": 760, "step": 10, "unit": "px", "default": 520 },
     { "type": "select", "id": "content_position", "label": "Content position", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "select", "id": "mobile_content_position", "label": "Mobile content position", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "center" },
     { "type": "checkbox", "id": "autoplay", "label": "Enable autoplay", "default": true },
     { "type": "range", "id": "autoplay_delay", "label": "Autoplay delay", "min": 3, "max": 15, "step": 1, "unit": "s", "default": 6 },
     { "type": "range", "id": "transition_speed", "label": "Transition speed", "min": 300, "max": 1600, "step": 100, "unit": "ms", "default": 700 },

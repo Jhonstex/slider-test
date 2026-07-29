@@ -17,7 +17,7 @@
         "slide_3": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440", "alt_text": "Pebble Little campaign", "eyebrow": "New Campaign", "heading": "Softness", "heading_second_line": "in Comfort", "button_label": "Shop Collection" } }
       },
       "block_order": ["slide_1", "slide_2", "slide_3"],
-      "settings": { "desktop_height": 620, "mobile_height": 540, "content_width": 360, "content_position": "left", "autoplay": true, "autoplay_delay": 5, "transition_speed": 700, "show_navigation": true, "show_pagination": true, "overlay_color": "#000000", "overlay_opacity": 10 }
+      "settings": { "desktop_height": 1040, "mobile_height": 560, "content_width": 360, "content_position": "left", "mobile_content_position": "center", "autoplay": true, "autoplay_delay": 5, "transition_speed": 700, "show_navigation": true, "show_pagination": true, "overlay_color": "#000000", "overlay_opacity": 10 }
     }
   },
   "order": ["pebble_slider"]
