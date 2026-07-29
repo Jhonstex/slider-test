@@ -13,9 +13,16 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "menu": "",
+        "announcement_left": "KITO - Every day low price",
+        "announcement_center": "Free Delivery on orders over €120. Don't miss discount.",
+        "announcement_right": "ENG   |   USD"
+      }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
-
