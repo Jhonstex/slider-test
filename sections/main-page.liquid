@@ -1,0 +1,23 @@
+<section class="main-page" style="--main-page-width: {{ section.settings.content_width }}px; --main-page-padding-top: {{ section.settings.padding_top }}px; --main-page-padding-bottom: {{ section.settings.padding_bottom }}px; --main-page-background: {{ section.settings.background }};">
+  <div class="main-page__inner rte">
+    <h1>{{ page.title }}</h1>
+    {{ page.content }}
+  </div>
+</section>
+
+{% stylesheet %}
+.main-page { background: var(--main-page-background); padding: var(--main-page-padding-top) 24px var(--main-page-padding-bottom); }
+.main-page__inner { max-width: var(--main-page-width); margin: 0 auto; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Main page",
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 640, "max": 1200, "step": 20, "unit": "px", "default": 880 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ]
+}
+{% endschema %}
