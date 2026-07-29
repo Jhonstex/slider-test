@@ -1,14 +1,14 @@
-# kito-shopify-theme
-KITO Shopify theme recreated from Figma with responsive sections and configurable theme settings
+# slider-test
+Pebble-style Shopify theme with a configurable Swiper slideshow.
 
-## Automatic Shopify draft deployment
+## GitHub and Shopify connection
 
-The workflow in `.github/workflows/deploy-shopify-theme.yml` pushes the theme to the Shopify draft theme whenever `main` is updated, and can also be started manually from GitHub Actions.
+This public repository is connected to a Shopify draft theme through Shopify's native GitHub integration. The connected branch is `main`.
 
-Create a GitHub environment named `shopify-draft`, then add these environment secrets:
+- GitHub: https://github.com/Jhonstex/slider-test
 
-- `SHOPIFY_STORE`: `beae-anna.myshopify.com`
-- `SHOPIFY_THEME_ID`: `160807846101`
-- `SHOPIFY_CLI_THEME_TOKEN`: a Theme Access password with permission to update themes
+Push changes to `main` to let the connected Shopify theme sync from GitHub.
 
-The workflow uses `--nodelete`, so files that are not present locally are not removed from the draft theme. It ignores `TASK-LOG.md` and the workflow directory.
+## Pebble Swiper section
+
+`sections/pebble-swiper.liquid` includes three starter slides and supports adding, removing, and reordering blocks in Theme Editor. It also includes desktop/mobile images, autoplay and delay, fade transition, navigation, pagination, overlay, content position, responsive sizing, and placeholder media.
