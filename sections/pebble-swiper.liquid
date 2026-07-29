@@ -48,7 +48,7 @@
               {% if block.settings.heading != blank %}<h2 class="pebble-swiper__heading">{{ block.settings.heading }}{% if block.settings.heading_second_line != blank %}<br>{{ block.settings.heading_second_line }}{% endif %}</h2>{% endif %}
               {% if block.settings.body != blank %}<div class="pebble-swiper__body rte">{{ block.settings.body }}</div>{% endif %}
               {% if block.settings.button_label != blank %}
-                <a class="pebble-swiper__button" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label }}<span aria-hidden="true">{% render 'pebble-arrow' %}</span></a>
+                <a class="pebble-swiper__button" href="{{ block.settings.button_link | default: '#' }}"><span class="pebble-swiper__button-label">{{ block.settings.button_label }}</span><span class="pebble-swiper__button-icon" aria-hidden="true">{% render 'pebble-arrow' %}</span></a>
               {% endif %}
             </div>
           </div>
@@ -236,6 +236,7 @@
 }
 
 .pebble-swiper__button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0;
@@ -244,6 +245,7 @@
   margin-top: 0;
   padding: 0 14px 0 34px;
   border-radius: 999px;
+  overflow: hidden;
   background: #fff;
   color: #242424;
   font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
@@ -252,9 +254,34 @@
   line-height: 24px;
   text-decoration: none;
   text-transform: capitalize;
+  isolation: isolate;
 }
 
-.pebble-swiper__button span {
+.pebble-swiper__button::before {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  z-index: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #242424;
+  content: '';
+  transform: translateY(-50%);
+  transition: right .45s cubic-bezier(.2, .75, .2, 1), width .45s cubic-bezier(.2, .75, .2, 1), height .45s cubic-bezier(.2, .75, .2, 1);
+}
+
+.pebble-swiper__button-label,
+.pebble-swiper__button-icon {
+  position: relative;
+  z-index: 1;
+}
+
+.pebble-swiper__button-label {
+  transition: color .3s ease;
+}
+
+.pebble-swiper__button-icon {
   display: grid;
   flex: 0 0 36px;
   width: 36px;
@@ -267,7 +294,22 @@
 }
 
 .pebble-swiper__button svg { width: 16px; height: 16px; }
-.pebble-swiper__button:hover { transform: translateY(-2px); background: #f5f5f5; }
+
+@media (hover: hover) {
+  .pebble-swiper__button:hover::before {
+    right: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+  }
+  .pebble-swiper__button:hover .pebble-swiper__button-label { color: #fff; }
+}
+
+.pebble-swiper__button:focus-visible::before {
+  right: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+}
+.pebble-swiper__button:focus-visible .pebble-swiper__button-label { color: #fff; }
 
 .pebble-swiper__controls {
   position: absolute;
@@ -348,7 +390,7 @@
   .pebble-swiper__heading { max-width: 210px; margin-bottom: 24px; font-size: 38px; }
   .pebble-swiper__body { font-size: 15px; }
   .pebble-swiper__button { width: 100%; min-width: 0; justify-content: flex-start; text-align: left; }
-  .pebble-swiper__button span { margin-left: auto; }
+  .pebble-swiper__button-icon { margin-left: auto; }
   .pebble-swiper__controls { right: 16px; bottom: 40px; left: 16px; gap: 12px; }
   .pebble-swiper__counter { gap: 4px; font-size: 15px; }
   .pebble-swiper__progress { flex: 1 1 auto; width: auto; }
@@ -364,7 +406,9 @@
   .pebble-swiper__eyebrow,
   .pebble-swiper__heading,
   .pebble-swiper__body,
-  .pebble-swiper__button { transition: none; }
+  .pebble-swiper__button,
+  .pebble-swiper__button::before,
+  .pebble-swiper__button-label { transition: none; }
   .pebble-swiper__media { transform: none; }
 }
 {% endstylesheet %}
