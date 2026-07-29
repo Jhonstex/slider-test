@@ -72,10 +72,27 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
 {% stylesheet %}
+@font-face {
+  font-family: 'Pebble Bricolage Grotesque';
+  src: url('https://pebble-little.myshopify.com/cdn/fonts/bricolage_grotesque/bricolagegrotesque_n5.8c091e52a78b3e58ef96221ce55140a80a8253ff.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pebble Bricolage Grotesque';
+  src: url('https://pebble-little.myshopify.com/cdn/fonts/bricolage_grotesque/bricolagegrotesque_n7.de5675dd7a8e145fdc4cb2cfe67a16cb085528d0.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 .pebble-swiper {
   width: 100%;
   color: var(--pebble-text-color, #fff);
   background: #d7d7d7;
+  font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
 }
 
 .pebble-swiper__container,
@@ -128,7 +145,7 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--pebble-overlay), transparent 58%), var(--pebble-overlay);
+  background: var(--pebble-overlay);
   opacity: var(--pebble-overlay-opacity);
 }
 
@@ -139,7 +156,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: clamp(32px, 7vw, 112px);
+  padding: 40px clamp(32px, 4.167vw, 80px) 84px;
 }
 
 .pebble-swiper--left .pebble-swiper__content-wrap { justify-content: flex-start; }
@@ -176,20 +193,22 @@
 .pebble-swiper .swiper-slide-active .pebble-swiper__button { transition-delay: 360ms; }
 
 .pebble-swiper__eyebrow {
-  margin: 0 0 18px;
-  font-size: clamp(11px, 1vw, 15px);
+  margin: 0 0 16px;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: .08em;
+  line-height: 24px;
+  letter-spacing: normal;
   text-transform: uppercase;
 }
 
 .pebble-swiper__heading {
-  max-width: 520px;
-  margin: 0;
-  font-size: clamp(42px, 5.1vw, 82px);
+  max-width: 320px;
+  margin: 0 0 clamp(24px, calc(1.163vw + 15.08px), 32px);
+  font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
+  font-size: clamp(38px, calc(5.848vw - 6.85px), 68px);
   font-weight: 700;
-  line-height: .98;
-  letter-spacing: -.04em;
+  line-height: 1.2;
+  letter-spacing: normal;
 }
 
 .pebble-swiper__body {
@@ -202,22 +221,27 @@
 .pebble-swiper__button {
   display: inline-flex;
   align-items: center;
-  gap: 18px;
-  min-height: 52px;
-  margin-top: 34px;
-  padding: 8px 10px 8px 24px;
+  gap: 0;
+  min-height: 50px;
+  margin-top: 0;
+  padding: 1px 1px 1px 24px;
   border-radius: 999px;
   background: #fff;
   color: #242424;
-  font-size: 14px;
+  font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
+  font-size: 15px;
   font-weight: 700;
+  line-height: 24px;
   text-decoration: none;
+  text-transform: capitalize;
 }
 
 .pebble-swiper__button span {
   display: grid;
-  width: 36px;
-  height: 36px;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  margin-left: 1px;
   border-radius: 50%;
   background: #242424;
   color: #fff;
@@ -229,23 +253,23 @@
 
 .pebble-swiper__controls {
   position: absolute;
-  right: clamp(24px, 7vw, 112px);
-  bottom: clamp(24px, 6vw, 80px);
+  right: clamp(32px, 4.167vw, 80px);
+  bottom: 60px;
   z-index: 4;
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 12px;
   color: #fff;
 }
 
 .pebble-swiper__counter {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 4px;
   white-space: nowrap;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 .pebble-swiper__progress {
@@ -265,13 +289,13 @@
   will-change: transform;
 }
 
-.pebble-swiper__navigation { display: flex; align-items: center; gap: 24px; }
+.pebble-swiper__navigation { display: flex; align-items: center; gap: 8px; }
 .pebble-swiper .swiper-button-prev,
 .pebble-swiper .swiper-button-next {
   position: static;
   display: grid;
-  width: 20px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   margin: 0;
   padding: 0;
   border: 0;
@@ -282,22 +306,30 @@
 .pebble-swiper .swiper-button-prev::after,
 .pebble-swiper .swiper-button-next::after { display: none; }
 .pebble-swiper .swiper-button-prev svg,
-.pebble-swiper .swiper-button-next svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.pebble-swiper .swiper-button-next svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (max-width: 749px) {
   .pebble-swiper__container,
   .pebble-swiper .swiper-wrapper,
   .pebble-swiper .swiper-slide { height: var(--pebble-mobile-height); }
-  .pebble-swiper__content-wrap { align-items: flex-end; padding: 28px 22px 92px; }
-  .pebble-swiper__heading { font-size: clamp(38px, 12vw, 58px); }
+  .pebble-swiper__content-wrap {
+    align-items: flex-end;
+    height: calc(100% - 64px);
+    padding: 24px 16px;
+  }
+  .pebble-swiper__content { width: 100%; text-align: center; }
+  .pebble-swiper__eyebrow,
+  .pebble-swiper__heading { margin-right: auto; margin-left: auto; }
+  .pebble-swiper__heading { max-width: 210px; margin-bottom: 24px; font-size: 38px; }
   .pebble-swiper__body { font-size: 15px; }
-  .pebble-swiper__button { margin-top: 24px; }
-  .pebble-swiper__controls { right: 22px; bottom: 22px; gap: 14px; }
-  .pebble-swiper__counter { gap: 5px; font-size: 13px; }
-  .pebble-swiper__progress { width: clamp(72px, 24vw, 110px); }
-  .pebble-swiper__navigation { gap: 14px; }
+  .pebble-swiper__button { width: 100%; justify-content: flex-start; text-align: left; }
+  .pebble-swiper__button span { margin-left: auto; }
+  .pebble-swiper__controls { right: 16px; bottom: 40px; left: 16px; gap: 12px; }
+  .pebble-swiper__counter { gap: 4px; font-size: 15px; }
+  .pebble-swiper__progress { flex: 1 1 auto; width: auto; }
+  .pebble-swiper__navigation { gap: 8px; }
   .pebble-swiper .swiper-button-prev,
-  .pebble-swiper .swiper-button-next { width: 18px; }
+  .pebble-swiper .swiper-button-next { width: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

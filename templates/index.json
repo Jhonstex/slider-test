@@ -12,12 +12,12 @@
     "pebble_slider": {
       "type": "pebble-swiper",
       "blocks": {
-        "slide_1": { "type": "slide", "settings": { "eyebrow": "New campaign", "heading": "Softness in Comfort", "button_label": "Shop Collection" } },
-        "slide_2": { "type": "slide", "settings": { "eyebrow": "Everyday essentials", "heading": "Made for Slow Moments", "button_label": "Explore the edit" } },
-        "slide_3": { "type": "slide", "settings": { "eyebrow": "The new collection", "heading": "Objects with Feeling", "button_label": "Discover more" } }
+        "slide_1": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440", "alt_text": "Pebble Little campaign", "eyebrow": "New Campaign", "heading": "Softness in Comfort", "button_label": "Shop Collection" } },
+        "slide_2": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-2-v2.webp?v=1773908763&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-2-v2--mb.webp?v=1773979864&width=1440", "alt_text": "Pebble Little moments", "eyebrow": "Little Moments", "heading": "Wrapped in Warmth", "button_label": "Shop Collection" } },
+        "slide_3": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440", "alt_text": "Pebble Little campaign", "eyebrow": "New Campaign", "heading": "Softness in Comfort", "button_label": "Shop Collection" } }
       },
       "block_order": ["slide_1", "slide_2", "slide_3"],
-      "settings": { "desktop_height": 680, "mobile_height": 680, "content_width": 560, "content_position": "left", "autoplay": true, "autoplay_delay": 6, "transition_speed": 700, "show_navigation": true, "show_pagination": true, "overlay_color": "#000000", "overlay_opacity": 20 }
+      "settings": { "desktop_height": 620, "mobile_height": 540, "content_width": 320, "content_position": "left", "autoplay": true, "autoplay_delay": 5, "transition_speed": 700, "show_navigation": true, "show_pagination": true, "overlay_color": "#000000", "overlay_opacity": 10 }
     }
   },
   "order": ["pebble_slider"]
