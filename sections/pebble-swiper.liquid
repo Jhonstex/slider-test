@@ -209,6 +209,15 @@
 .pebble-swiper .swiper-slide-active .pebble-swiper__body { transition-delay: 280ms; }
 .pebble-swiper .swiper-slide-active .pebble-swiper__button { transition-delay: 360ms; }
 
+.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__eyebrow,
+.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__heading,
+.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__body,
+.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__button {
+  opacity: 1;
+  transform: translate3d(var(--pebble-content-shift, 0px), 0, 0);
+  transition: none;
+}
+
 .pebble-swiper__eyebrow {
   margin: 0 0 16px;
   font-size: 15px;
@@ -445,6 +454,7 @@
         var progress = Number.isFinite(slide.progress) ? slide.progress : 0;
         progress = Math.max(-1, Math.min(1, progress));
         slide.style.setProperty('--pebble-slide-shift', progress * distance + 'px');
+        slide.style.setProperty('--pebble-content-shift', progress * distance * 0.35 + 'px');
       });
     }
     function updateCounter(instance) {
