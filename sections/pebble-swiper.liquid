@@ -72,6 +72,13 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
 {% stylesheet %}
+.section-pebble-swiper {
+  width: 100vw;
+  max-width: none;
+  margin-inline: calc(50% - 50vw);
+  overflow: clip;
+}
+
 @font-face {
   font-family: 'Pebble Bricolage Grotesque';
   src: url('https://pebble-little.myshopify.com/cdn/fonts/bricolage_grotesque/bricolagegrotesque_n5.8c091e52a78b3e58ef96221ce55140a80a8253ff.woff2') format('woff2');
@@ -90,6 +97,7 @@
 
 .pebble-swiper {
   width: 100%;
+  max-width: none;
   color: var(--pebble-text-color, #fff);
   background: #d7d7d7;
   font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
@@ -98,6 +106,8 @@
 .pebble-swiper__container,
 .pebble-swiper .swiper-wrapper,
 .pebble-swiper .swiper-slide {
+  width: 100%;
+  max-width: none;
   height: min(var(--pebble-height), 52.083vw);
 }
 
