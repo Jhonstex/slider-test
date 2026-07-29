@@ -45,7 +45,7 @@
           <div class="pebble-swiper__content-wrap">
             <div class="pebble-swiper__content" style="--pebble-text-color: {{ block.settings.text_color }};">
               {% if block.settings.eyebrow != blank %}<p class="pebble-swiper__eyebrow">{{ block.settings.eyebrow }}</p>{% endif %}
-              {% if block.settings.heading != blank %}<h2 class="pebble-swiper__heading">{{ block.settings.heading }}</h2>{% endif %}
+              {% if block.settings.heading != blank %}<h2 class="pebble-swiper__heading">{{ block.settings.heading }}{% if block.settings.heading_second_line != blank %}<br>{{ block.settings.heading_second_line }}{% endif %}</h2>{% endif %}
               {% if block.settings.body != blank %}<div class="pebble-swiper__body rte">{{ block.settings.body }}</div>{% endif %}
               {% if block.settings.button_label != blank %}
                 <a class="pebble-swiper__button" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label }}<span aria-hidden="true">{% render 'pebble-arrow' %}</span></a>
@@ -425,7 +425,8 @@
         { "type": "url", "id": "slide_link", "label": "Slide link" },
         { "type": "checkbox", "id": "open_new_tab", "label": "Open slide link in new tab", "default": false },
         { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New campaign" },
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Softness in Comfort" },
+        { "type": "text", "id": "heading", "label": "Heading line 1", "default": "Softness" },
+        { "type": "text", "id": "heading_second_line", "label": "Heading line 2", "default": "in Comfort" },
         { "type": "richtext", "id": "body", "label": "Body" },
         { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Collection" },
         { "type": "url", "id": "button_link", "label": "Button link" },
