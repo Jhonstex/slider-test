@@ -1,0 +1,22 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "contact": { "type": "contact", "settings": {} },
+        "quick_links": { "type": "links", "settings": {} },
+        "information": { "type": "information", "settings": {} },
+        "social": { "type": "social", "settings": {} }
+      },
+      "block_order": ["contact", "quick_links", "information", "social"],
+      "settings": {}
+    }
+  },
+  "order": ["footer"]
+}
+

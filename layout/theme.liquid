@@ -1,0 +1,45 @@
+Exit code: 0
+Wall time: 0.4 seconds
+Output:
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {% if settings.favicon != blank %}<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">{% endif %}
+    <title>{{ page_title }}{% if current_tags %} – {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} – Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
+    {{ content_for_header }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <style>
+      :root {
+        --kito-bg: {{ settings.default_color_scheme.settings.background | default: settings.color_background }};
+        --kito-surface: {{ settings.color_surface }};
+        --kito-text: {{ settings.default_color_scheme.settings.text | default: settings.color_text }};
+        --kito-muted: {{ settings.color_muted }};
+        --kito-accent: {{ settings.default_color_scheme.settings.button | default: settings.color_accent }};
+        --kito-accent-contrast: {{ settings.default_color_scheme.settings.button_label | default: settings.color_accent_contrast }};
+        --kito-border: {{ settings.color_border }};
+        --kito-max-width: {{ settings.content_width }}px;
+        --kito-radius: {{ settings.card_radius }}px;
+        --kito-section-space: {{ settings.section_spacing }}px;
+        --kito-page-padding: {{ settings.page_padding | default: 24 }}px;
+        --kito-base-font-size: {{ settings.base_font_size | default: 16 }}px;
+        --kito-heading-weight: {{ settings.heading_weight | default: 700 }};
+        --kito-button-height: {{ settings.button_height | default: 44 }}px;
+        --kito-button-radius: {{ settings.button_radius | default: 999 }}px;
+        --kito-button-bg: {{ settings.button_background | default: settings.color_accent }};
+        --kito-button-label: {{ settings.button_label_color | default: settings.color_accent_contrast }};
+        {% if settings.font_body != blank %}--kito-body-font: {{ settings.font_body.family | escape }}, system-ui, sans-serif;{% endif %}
+        {% if settings.font_heading != blank %}--kito-heading-font: {{ settings.font_heading.family | escape }}, Georgia, serif;{% endif %}
+      }
+    </style>
+  </head>
+  <body class="template-{{ template.name }} theme-style-{{ settings.theme_style_preset | default: settings.theme_style }} button-style-{{ settings.button_style }}{% unless settings.enable_animations %} animations-disabled{% endunless %}">
+    <a class="skip-link" href="#MainContent">{{ 'general.skip_to_content' | t }}</a>
+    {% sections 'header-group' %}
+    <main id="MainContent">{{ content_for_layout }}</main>
+    {% sections 'footer-group' %}
+  </body>
+</html>
+

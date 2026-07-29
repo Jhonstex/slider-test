@@ -1,0 +1,62 @@
+Exit code: 0
+Wall time: 0.4 seconds
+Output:
+<header class="site-header" data-section-id="{{ section.id }}">
+  <div class="site-header__announcement" aria-label="Announcement">
+    <span>{{ section.settings.announcement_left }}</span>
+    <span>{{ section.settings.announcement_center }}</span>
+    <span>{{ section.settings.announcement_right }}</span>
+  </div>
+  <div class="site-header__inner page-width">
+    <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 260 | image_tag: class: 'site-header__logo', alt: shop.name }}
+      {% else %}
+        <span>{{ settings.logo_text | escape }}</span>
+      {% endif %}
+    </a>
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      {% else %}
+        {% for block in section.blocks %}
+          <a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {% endfor %}
+      {% endif %}
+    </nav>
+    <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="MobileMenu">{{ 'header.open_menu' | t }}</button>
+  </div>
+  <div id="MobileMenu" class="mobile-menu page-width" hidden>
+    {% if section.settings.menu != blank %}
+      {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+    {% else %}
+      {% for block in section.blocks %}<a href="{{ block.settings.url }}">{{ block.settings.label }}</a>{% endfor %}
+    {% endif %}
+  </div>
+</header>
+{% javascript %}
+  const toggle = document.querySelector('.site-header__toggle');
+  const menu = document.querySelector('.mobile-menu');
+  if (toggle && menu) toggle.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); menu.hidden = open; });
+{% endjavascript %}
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu" },
+    { "type": "text", "id": "announcement_left", "label": "Announcement left", "default": "KITO - Every day low price" },
+    { "type": "text", "id": "announcement_center", "label": "Announcement center", "default": "Free Delivery on orders over €120. Don't miss discount." },
+    { "type": "text", "id": "announcement_right", "label": "Announcement right", "default": "ENG   |   USD" }
+  ],
+  "blocks": [
+    { "type": "link", "name": "Navigation link", "settings": [
+      { "type": "text", "id": "label", "label": "Label", "default": "About" },
+      { "type": "url", "id": "url", "label": "Link" }
+    ] }
+  ],
+  "presets": [{ "name": "Header" }]
+}
+{% endschema %}
+

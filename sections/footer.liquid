@@ -1,0 +1,68 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+<footer class="site-footer section-spacing section-spacing--compact">
+  <div class="page-width site-footer__top">
+    <a class="site-footer__brand" href="{{ routes.root_url }}">{{ settings.logo_text | escape }}</a>
+    <p class="site-footer__newsletter-copy">{{ section.settings.newsletter_text }}</p>
+    {% form 'customer', class: 'site-footer__form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label class="visually-hidden" for="FooterEmail-{{ section.id }}">{{ 'footer.newsletter_label' | t }}</label>
+      <input id="FooterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ section.settings.email_placeholder }}" autocorrect="off" autocapitalize="off" autocomplete="email" required>
+      <button class="button" type="submit">{{ section.settings.button_label }}</button>
+    {% endform %}
+  </div>
+  <div class="site-footer__rule site-footer__rule--top"></div>
+  <div class="page-width site-footer__columns">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'contact' %}
+          <div class="site-footer__column" {{ block.shopify_attributes }}><h3>{{ block.settings.heading }}</h3><div class="site-footer__contact"><p><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="9" r="2.3" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>{{ block.settings.address | newline_to_br }}</span></p><p><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a></p><p><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.7 3.8 9.2 3l2 4.4-1.7 1.7a14.8 14.8 0 0 0 5.4 5.4l1.7-1.7 4.4 2-.8 2.5a2.4 2.4 0 0 1-2.5 1.6A15.6 15.6 0 0 1 5.1 6.3a2.4 2.4 0 0 1 1.6-2.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><a href="tel:{{ block.settings.phone | remove: ' ' }}">{{ block.settings.phone }}</a></p></div></div>
+        {% when 'links', 'information' %}
+          <div class="site-footer__column" {{ block.shopify_attributes }}><h3>{{ block.settings.heading }}</h3><ul>{% if block.settings.menu != blank %}{% for link in block.settings.menu.links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}{% else %}{% assign fallback_links = block.settings.fallback_links | split: '|' %}{% for item in fallback_links %}<li><a href="#">{{ item }}</a></li>{% endfor %}{% endif %}</ul></div>
+        {% when 'social' %}
+          <div class="site-footer__column" {{ block.shopify_attributes }}><h3>{{ block.settings.heading }}</h3><ul class="site-footer__socials"><li><a href="{{ block.settings.facebook_url | default: '#' }}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z" fill="currentColor"/></svg><span>{{ block.settings.facebook_label }}</span></a></li><li><a href="{{ block.settings.twitter_url | default: '#' }}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.7 7.1v.5c0 5.1-3.9 10.9-11 10.9-2.2 0-4.2-.6-5.9-1.7h.9c1.8 0 3.4-.6 4.7-1.6a3.9 3.9 0 0 1-3.6-2.7c.6.1 1.2.1 1.8-.1a3.9 3.9 0 0 1-3.1-3.8v-.1c.5.3 1.1.5 1.8.5A3.9 3.9 0 0 1 4 3.8a11 11 0 0 0 8 4.1 3.9 3.9 0 0 1 6.6-3.6 7.7 7.7 0 0 0 2.5-1 3.9 3.9 0 0 1-1.7 2.1 7.8 7.8 0 0 0 2.3-.6 8.3 8.3 0 0 1-2 2.3Z" fill="currentColor"/></svg><span>{{ block.settings.twitter_label }}</span></a></li><li><a href="{{ block.settings.instagram_url | default: '#' }}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg><span>{{ block.settings.instagram_label }}</span></a></li><li><a href="{{ block.settings.youtube_url | default: '#' }}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 8.2a2.8 2.8 0 0 0-2-2C17.2 5.7 12 5.7 12 5.7s-5.2 0-7 .5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2.5 12 29 29 0 0 0 3 15.8a2.8 2.8 0 0 0 2 2c1.8.5 7 .5 7 .5s5.2 0 7-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-3.8 29 29 0 0 0-.5-3.8ZM10 15.2V8.8l5.5 3.2-5.5 3.2Z" fill="currentColor"/></svg><span>{{ block.settings.youtube_label }}</span></a></li></ul></div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+  <div class="site-footer__rule site-footer__rule--bottom"></div>
+  <div class="page-width site-footer__bottom"><span>{{ section.settings.copyright }}</span></div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "newsletter_text", "label": "Newsletter text", "default": "Join our list and get 20% off your first purchase!" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "button_label", "label": "Subscribe button", "default": "Subscribe" },
+    { "type": "text", "id": "copyright", "label": "Copyright", "default": "Beae'stemplate © 2022. All Rights Reserved." }
+  ],
+  "blocks": [
+    { "type": "contact", "name": "Contact info", "limit": 1, "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Contact Info" },
+      { "type": "textarea", "id": "address", "label": "Address", "default": "560 King St W, Kingston,\nON K7L 4V7, Canada" },
+      { "type": "text", "id": "email", "label": "Email", "default": "contactinfo@gmail.com" },
+      { "type": "text", "id": "phone", "label": "Phone", "default": "+1 212 736 3100" }
+    ] },
+    { "type": "links", "name": "Link column", "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Quick Links" },
+      { "type": "link_list", "id": "menu", "label": "Menu" },
+      { "type": "text", "id": "fallback_links", "label": "Fallback links", "default": "My account|Cart|Wishlist|Product Compare" }
+    ] },
+    { "type": "information", "name": "Information column", "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Information" },
+      { "type": "link_list", "id": "menu", "label": "Menu" },
+      { "type": "text", "id": "fallback_links", "label": "Fallback links", "default": "Privacy policy|Refund policy|Shipping & Return|Term & conditions" }
+    ] },
+    { "type": "social", "name": "Social links", "limit": 1, "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Follow Us" },
+      { "type": "text", "id": "facebook_label", "label": "Facebook label", "default": "Facebook" }, { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
+      { "type": "text", "id": "twitter_label", "label": "Twitter label", "default": "Twitter" }, { "type": "url", "id": "twitter_url", "label": "Twitter URL" },
+      { "type": "text", "id": "instagram_label", "label": "Instagram label", "default": "Instagram" }, { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+      { "type": "text", "id": "youtube_label", "label": "YouTube label", "default": "Youtube" }, { "type": "url", "id": "youtube_url", "label": "YouTube URL" }
+    ] }
+  ],
+  "presets": [{ "name": "Footer", "blocks": [{ "type": "contact" }, { "type": "links" }, { "type": "links" }, { "type": "social" }] }]
+}
+{% endschema %}
+

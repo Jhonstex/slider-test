@@ -1,0 +1,40 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+<section class="story section-spacing" style="--story-columns: {{ section.settings.columns }};">
+  <div class="page-width">
+    <div class="section-heading reveal"><h2>{{ section.settings.heading }}</h2><p>{{ section.settings.intro }}</p></div>
+    <div class="story__grid">
+      {% for block in section.blocks %}
+        <article class="story-card reveal" style="--story-bg: {{ block.settings.background }};" {{ block.shopify_attributes }}>
+          <div class="story-card__media">
+            {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | escape }}{% else %}<div class="media-placeholder">Add image</div>{% endif %}
+          </div>
+          <div class="story-card__content"><h3>{{ block.settings.heading }}</h3><div class="rte">{{ block.settings.text }}</div>{% if block.settings.button_label != blank %}<a class="button button--small" href="{{ block.settings.button_link | default: routes.root_url }}">{{ block.settings.button_label }}</a>{% endif %}</div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Story cards",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What We Are Proud Of." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "A little joy can make a big difference." },
+    { "type": "select", "id": "columns", "label": "Columns", "options": [{ "value": "3", "label": "Three" }, { "value": "2", "label": "Two" }], "default": "3" }
+  ],
+  "blocks": [
+    { "type": "story", "name": "Story card", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Small things, big smiles." },
+      { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Made for gifting, keeping, and celebrating the little moments.</p>" },
+      { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore" },
+      { "type": "url", "id": "button_link", "label": "Button link" },
+      { "type": "color", "id": "background", "label": "Background", "default": "#f4eafa" }
+    ] }
+  ],
+  "presets": [{ "name": "Story cards", "blocks": [{ "type": "story" }, { "type": "story" }, { "type": "story" }] }]
+}
+{% endschema %}
+

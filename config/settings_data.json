@@ -1,0 +1,57 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+{
+  "current": {
+    "logo_text": "KITO",
+    "color_background": "#ffffff",
+    "color_surface": "#fff5f8",
+    "color_text": "#171717",
+    "color_muted": "#777777",
+    "color_accent": "#e94f8d",
+    "color_accent_contrast": "#ffffff",
+    "color_border": "#ece8ea",
+    "content_width": 1410,
+    "section_spacing": 72,
+    "card_radius": 12,
+    "button_style": "pill",
+    "enable_animations": true,
+    "default_color_scheme": "scheme_1",
+    "color_schemes": {
+      "scheme_1": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "text": "#171717",
+          "button": "#e94f8d",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#171717",
+          "shadow": "#171717"
+        }
+      },
+      "scheme_2": {
+        "settings": {
+          "background": "#fff5f8",
+          "background_gradient": "",
+          "text": "#171717",
+          "button": "#e94f8d",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#171717",
+          "shadow": "#171717"
+        }
+      },
+      "scheme_3": {
+        "settings": {
+          "background": "#171717",
+          "background_gradient": "",
+          "text": "#ffffff",
+          "button": "#ffffff",
+          "button_label": "#171717",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#000000"
+        }
+      }
+    }
+  }
+}
+

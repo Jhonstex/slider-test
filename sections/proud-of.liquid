@@ -1,0 +1,41 @@
+Exit code: 0
+Wall time: 0.4 seconds
+Output:
+<section class="proud-of section-spacing" style="--proud-bg: {{ section.settings.background }}; --proud-card-bg: {{ section.settings.card_background }}; --proud-card-radius: {{ section.settings.card_radius }}px; --proud-gap: {{ section.settings.card_gap }}px;">
+  <div class="page-width">
+    <div class="proud-of__heading {% if section.settings.heading_alignment == 'center' %}proud-of__heading--center{% endif %} reveal">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="proud-of__grid">
+      {% for block in section.blocks %}
+        <article class="proud-of__card reveal" {{ block.shopify_attributes }}>
+          <p class="proud-of__value">{{ block.settings.value }}</p>
+          <h3>{{ block.settings.heading }}</h3>
+          <div class="proud-of__description rte">{{ block.settings.description }}</div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Proud of",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What We Are Proud Of." },
+    { "type": "select", "id": "heading_alignment", "label": "Heading alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }], "default": "center" },
+    { "type": "color", "id": "background", "label": "Section background", "default": "#ffffff" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "range", "id": "card_radius", "label": "Card radius", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "card_gap", "label": "Card gap", "min": 8, "max": 36, "step": 2, "unit": "px", "default": 18 }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Stat card", "settings": [
+      { "type": "text", "id": "value", "label": "Value", "default": "20+" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Total top services" },
+      { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" }
+    ] }
+  ],
+  "presets": [{ "name": "Proud of", "blocks": [{ "type": "stat" }, { "type": "stat" }, { "type": "stat" }, { "type": "stat" }] }]
+}
+{% endschema %}
+

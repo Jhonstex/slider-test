@@ -1,0 +1,21 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "header": {
+    "open_menu": "Open menu"
+  },
+  "footer": {
+    "newsletter_label": "Email address",
+    "newsletter_submit": "Subscribe",
+    "social_links": "Social links"
+  }
+}
+

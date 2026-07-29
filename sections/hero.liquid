@@ -1,0 +1,107 @@
+Exit code: 0
+Wall time: 0.4 seconds
+Output:
+<section class="hero" data-hero-section style="--hero-bg: {{ section.settings.background }}; --hero-width: {{ section.settings.hero_width }}px; --hero-height: {{ section.settings.desktop_height }}px;">
+  <div class="hero__grid hero__grid--{{ section.settings.image_position }}">
+    {% for block in section.blocks %}
+      {% if block.type == 'image' %}{% render 'hero-media', block: block %}{% endif %}
+    {% endfor %}
+    {% for block in section.blocks %}
+      {% if block.type == 'content' %}{% render 'hero-content', block: block %}{% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-hero-video]').forEach(function (media) {
+    var video = media.querySelector('video');
+    var frame = media.querySelector('[data-hero-frame]');
+    var button = media.querySelector('[data-hero-play]');
+    if ((!video && !frame) || !button || button.dataset.ready === 'true') return;
+    button.dataset.ready = 'true';
+    button.addEventListener('click', function () {
+      if (frame) {
+        var isPlaying = media.classList.contains('is-playing');
+        frame.src = frame.dataset.baseSrc + (isPlaying ? '&autoplay=0' : '&autoplay=1');
+        media.classList.toggle('is-playing', !isPlaying);
+        button.setAttribute('aria-label', isPlaying ? button.dataset.playLabel : button.dataset.pauseLabel);
+        return;
+      }
+      if (video.paused) {
+        video.play();
+        media.classList.add('is-playing');
+        button.setAttribute('aria-label', button.dataset.pauseLabel);
+      } else {
+        video.pause();
+        media.classList.remove('is-playing');
+        button.setAttribute('aria-label', button.dataset.playLabel);
+      }
+    });
+    if (video) {
+      video.addEventListener('ended', function () {
+        media.classList.remove('is-playing');
+        button.setAttribute('aria-label', button.dataset.playLabel);
+      });
+    }
+  });
+</script>
+
+<script>
+  (function () {
+    function updateHeroMode(hero) {
+      var isNarrow = hero.getBoundingClientRect().width <= 820;
+      hero.classList.toggle('hero--narrow', isNarrow);
+      hero.classList.toggle('hero--wide', !isNarrow);
+    }
+
+    document.querySelectorAll('[data-hero-section]').forEach(function (hero) {
+      updateHeroMode(hero);
+      if (window.ResizeObserver) {
+        new ResizeObserver(function () { updateHeroMode(hero); }).observe(hero);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#eaf8fb" },
+    { "type": "select", "id": "image_position", "label": "Image position", "options": [{ "value": "right", "label": "Right" }, { "value": "left", "label": "Left" }], "default": "right" },
+    { "type": "range", "id": "hero_width", "label": "Desktop content width", "min": 800, "max": 1440, "step": 10, "unit": "px", "default": 1050 },
+    { "type": "range", "id": "desktop_height", "label": "Desktop hero height", "min": 352, "max": 640, "step": 8, "unit": "px", "default": 448 }
+  ],
+  "blocks": [
+    { "type": "content", "name": "Content", "limit": 1, "settings": [
+      { "type": "text", "id": "eyebrow_desktop", "label": "Desktop eyebrow", "default": "About us" },
+      { "type": "text", "id": "eyebrow_mobile", "label": "Mobile eyebrow", "default": "Special price" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Brightening Moments, One Little Joy at a Time." },
+      { "type": "richtext", "id": "body", "label": "Body", "default": "<p>We create thoughtful pieces that make everyday moments feel a little more special.</p>" },
+      { "type": "text", "id": "button_label", "label": "Button label", "default": "Learn more" },
+      { "type": "url", "id": "button_link", "label": "Button link" }
+    ] },
+    { "type": "image", "name": "Media", "limit": 1, "settings": [
+      { "type": "select", "id": "media_source", "label": "Media source", "options": [{ "value": "image", "label": "Image" }, { "value": "shopify_video", "label": "Shopify video" }, { "value": "youtube", "label": "YouTube video" }], "default": "image" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "video", "id": "video", "label": "Shopify video" },
+      { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
+      { "type": "text", "id": "youtube_title", "label": "YouTube title", "default": "Hero video" },
+      { "type": "image_picker", "id": "video_cover", "label": "Video cover image" },
+      { "type": "url", "id": "video_cover_url", "label": "Video cover URL" },
+      { "type": "text", "id": "alt", "label": "Alt text", "default": "KITO collection" },
+      { "type": "select", "id": "fit", "label": "Media fit", "options": [{ "value": "cover", "label": "Cover" }, { "value": "contain", "label": "Contain" }], "default": "cover" },
+      { "type": "checkbox", "id": "show_play_button", "label": "Show play button", "default": true },
+      { "type": "select", "id": "play_button_style", "label": "Play button style", "options": [{ "value": "circle", "label": "Circle" }, { "value": "square", "label": "Square" }, { "value": "minimal", "label": "Minimal" }], "default": "circle" },
+      { "type": "select", "id": "play_button_position", "label": "Play button position", "options": [{ "value": "center", "label": "Center" }, { "value": "bottom-left", "label": "Bottom left" }, { "value": "bottom-right", "label": "Bottom right" }], "default": "center" },
+      { "type": "color", "id": "play_button_color", "label": "Play button color", "default": "#e96a91" },
+      { "type": "color", "id": "play_button_icon_color", "label": "Play icon color", "default": "#ffffff" },
+      { "type": "range", "id": "play_button_size", "label": "Play button size", "min": 40, "max": 100, "step": 4, "unit": "px", "default": 64 },
+      { "type": "text", "id": "play_button_label", "label": "Play button label", "default": "Play video" },
+      { "type": "text", "id": "pause_button_label", "label": "Pause button label", "default": "Pause video" }
+    ] }
+  ],
+  "presets": [{ "name": "Hero", "blocks": [{ "type": "content" }, { "type": "image" }] }]
+}
+{% endschema %}
+

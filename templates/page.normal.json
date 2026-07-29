@@ -1,0 +1,87 @@
+{
+  "sections": {
+    "page_header": {
+      "type": "page-header",
+      "settings": {
+        "background": "#ffffff",
+        "header_width": 1410,
+        "page_title": "",
+        "show_breadcrumb": true,
+        "home_label": "Home",
+        "current_label": ""
+      }
+    },
+    "main_page": {
+      "type": "main-page",
+      "settings": {
+        "background": "#ffffff",
+        "content_width": 880,
+        "padding_top": 48,
+        "padding_bottom": 80
+      }
+    },
+    "movinglife_slider": {
+      "type": "movinglife-slider",
+      "blocks": {
+        "movinglife_slide_1": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://movinglife.co.il/cdn/shop/files/MainBanner_IL_Desktop_fd8ab13a-a9fd-41b3-aec2-d30eb08aa492_2000x.jpg?v=1776599291",
+            "mobile_image_url": "https://movinglife.co.il/cdn/shop/files/MainBanner_IL_Mobile_7aa00b51-f551-4e34-a990-4c32baa43364.jpg?v=1776599291",
+            "alt": "MovingLife first slider banner"
+          }
+        },
+        "movinglife_slide_2": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://movinglife.co.il/cdn/shop/files/Desktop_1600x600_v2_1_2000x.jpg?v=1757594341",
+            "mobile_image_url": "https://movinglife.co.il/cdn/shop/files/Mobile_375x695_1.jpg?v=1757594378",
+            "alt": "MovingLife second slider banner"
+          }
+        },
+        "movinglife_slide_3": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://movinglife.co.il/cdn/shop/files/3_afab83f6-37c5-46e6-a1b4-4d32ab944c8b_2000x.jpg?v=1678002348",
+            "mobile_image_url": "https://movinglife.co.il/cdn/shop/files/Mobile_6cf6e218-bee7-4f2d-bc93-6e3e66672a9e.jpg?v=1681889785",
+            "alt": "MovingLife third slider banner"
+          }
+        },
+        "movinglife_slide_4": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://movinglife.co.il/cdn/shop/files/MainBanner_IL_Desktop_2000x.jpg?v=1766387011",
+            "mobile_image_url": "https://movinglife.co.il/cdn/shop/files/MainBanner_IL_Mobile.jpg?v=1766387028",
+            "alt": "MovingLife fourth slider banner"
+          }
+        },
+        "movinglife_slide_5": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://movinglife.co.il/cdn/shop/files/b0df3cde57b9b0e5521029dfd6a8a5d8_2000x.jpg?v=1679490310",
+            "mobile_image_url": "https://movinglife.co.il/cdn/shop/files/Mobile-_-_-_-_-Recovered.jpg?v=1681889841",
+            "alt": "MovingLife fifth slider banner"
+          }
+        }
+      },
+      "block_order": ["movinglife_slide_1", "movinglife_slide_2", "movinglife_slide_3", "movinglife_slide_4", "movinglife_slide_5"],
+      "settings": {
+        "full_width": false,
+        "max_width": 1400,
+        "desktop_height": 600,
+        "mobile_height": 700,
+        "background": "#ffffff",
+        "border_radius": 0,
+        "animation": "fade",
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "transition_speed": 700,
+        "pause_on_hover": true,
+        "enable_swipe": true,
+        "show_arrows": true,
+        "show_dots": true
+      }
+    }
+  },
+  "order": ["page_header", "movinglife_slider", "main_page"]
+}

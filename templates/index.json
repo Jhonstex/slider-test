@@ -1,0 +1,74 @@
+Exit code: 0
+Wall time: 0.4 seconds
+Output:
+{
+  "sections": {
+    "pebble_slider": {
+      "type": "pebble-swiper",
+      "blocks": {
+        "slide_1": { "type": "slide", "settings": { "eyebrow": "New campaign", "heading": "Softness in Comfort", "button_label": "Shop Collection" } },
+        "slide_2": { "type": "slide", "settings": { "eyebrow": "Everyday essentials", "heading": "Made for Slow Moments", "button_label": "Explore the edit" } },
+        "slide_3": { "type": "slide", "settings": { "eyebrow": "The new collection", "heading": "Objects with Feeling", "button_label": "Discover more" } }
+      },
+      "block_order": ["slide_1", "slide_2", "slide_3"],
+      "settings": { "desktop_height": 680, "mobile_height": 680, "content_width": 560, "content_position": "left", "autoplay": true, "autoplay_delay": 6, "transition_speed": 700, "show_navigation": true, "show_pagination": true, "overlay_color": "#000000", "overlay_opacity": 20 }
+    },
+    "page_header": {
+      "type": "page-header",
+      "settings": { "background": "#ffffff", "header_width": 1410, "page_title": "About Us", "show_breadcrumb": true, "home_label": "Home", "current_label": "About Us" }
+    },
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "hero_content": { "type": "content", "settings": { "eyebrow_desktop": "About us", "eyebrow_mobile": "Special price", "heading": "Bring Exciting Moments Of Fun While Playing & Learning For Children.", "body": "", "button_label": "Contact us" } },
+        "hero_image": { "type": "image", "settings": { "media_source": "youtube", "youtube_url": "https://www.youtube.com/watch?v=OHAjc-ayhus", "youtube_title": "KITO hero video", "video_cover_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/hero-cover.jpg?v=1784590576", "show_play_button": true, "play_button_style": "circle", "play_button_position": "center", "play_button_color": "#e96a91", "play_button_icon_color": "#ffffff", "play_button_size": 64 } }
+      },
+      "block_order": ["hero_content", "hero_image"],
+      "settings": { "background": "#e5f8fd", "image_position": "right", "hero_width": 1410, "desktop_height": 600 }
+    },
+    "proud": {
+      "type": "proud-of",
+      "blocks": {
+        "stat_1": { "type": "stat", "settings": { "value": "20+", "heading": "Total top services", "description": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } },
+        "stat_2": { "type": "stat", "settings": { "value": "15+", "heading": "Countries", "description": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } },
+        "stat_3": { "type": "stat", "settings": { "value": "98%", "heading": "Positive Feedback", "description": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } },
+        "stat_4": { "type": "stat", "settings": { "value": "2,558", "heading": "Usual users", "description": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3", "stat_4"],
+      "settings": { "heading": "What We Are Proud Of.", "heading_alignment": "center" }
+    },
+    "about": {
+      "type": "about",
+      "blocks": {
+        "about_image_1": { "type": "image", "settings": { "image_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/about-left.jpg?v=1784590585", "alt": "KITO about left image" } },
+        "about_image_2": { "type": "image", "settings": { "image_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/about-center.jpg?v=1784590599", "alt": "KITO about center image" } },
+        "about_content": { "type": "content", "settings": { "heading": "Big Love For Our Lovely Kids.", "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Ut enim ad minim veniam, quis nostrud exercitation.</p>", "button_label": "Contact us", "background": "#fdf4f7" } }
+      },
+      "block_order": ["about_image_1", "about_image_2", "about_content"],
+      "settings": { "background": "#ffffff" }
+    },
+    "features": {
+      "type": "feature-bar",
+      "blocks": {
+        "feature_1": { "type": "feature", "settings": { "icon": "truck", "heading": "Free Shipping", "text": "Free shipping orders from $150" } },
+        "feature_2": { "type": "feature", "settings": { "icon": "gift", "heading": "Gift/Discount Codes", "text": "Many discount codes every day" } },
+        "feature_3": { "type": "feature", "settings": { "icon": "refresh", "heading": "Money Return", "text": "Return it within 30 days" } }
+      },
+      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "settings": { "background": "#ffffff" }
+    },
+    "team": {
+      "type": "team",
+      "blocks": {
+        "member_1": { "type": "member", "settings": { "image_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/team-01.jpg?v=1784590611", "name": "Name 01", "role": "CEO & Founder", "bio": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } },
+        "member_2": { "type": "member", "settings": { "image_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/team-02.jpg?v=1784590627", "name": "Name 02", "role": "Personnel", "bio": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } },
+        "member_3": { "type": "member", "settings": { "image_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/team-03.jpg?v=1784590641", "name": "Name 03", "role": "Personnel", "bio": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } },
+        "member_4": { "type": "member", "settings": { "image_url": "https://cdn.shopify.com/s/files/1/0748/6704/8661/files/team-04.jpg?v=1784590651", "name": "Name 04", "role": "Personnel", "bio": "<p>Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit.</p>" } }
+      },
+      "block_order": ["member_1", "member_2", "member_3", "member_4"],
+      "settings": { "heading": "Our Team", "intro": "The people behind the little joys." }
+    }
+  },
+  "order": ["pebble_slider", "page_header", "hero", "proud", "about", "team", "features"]
+}
+

@@ -1,0 +1,11 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+<div class="hero__content reveal" {{ block.shopify_attributes }}>
+  {% if block.settings.eyebrow_desktop != blank %}<p class="eyebrow eyebrow--desktop">{{ block.settings.eyebrow_desktop }}</p>{% endif %}
+  {% if block.settings.eyebrow_mobile != blank %}<p class="eyebrow eyebrow--mobile">{{ block.settings.eyebrow_mobile }}</p>{% endif %}
+  <h2>{{ block.settings.heading }}</h2>
+  <div class="rte">{{ block.settings.body }}</div>
+  {% if block.settings.button_label != blank %}<a class="button" href="{{ block.settings.button_link | default: routes.root_url }}">{{ block.settings.button_label }}</a>{% endif %}
+</div>
+

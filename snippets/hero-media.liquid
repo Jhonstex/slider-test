@@ -1,0 +1,44 @@
+Exit code: 0
+Wall time: 0.4 seconds
+Output:
+<div class="hero__media hero__media--{{ block.settings.fit }} reveal" {{ block.shopify_attributes }}>
+  {% assign has_youtube = false %}
+  {% if block.settings.media_source == 'youtube' and block.settings.youtube_url != blank %}
+    {% assign has_youtube = true %}
+  {% endif %}
+  {% assign has_shopify_video = false %}
+  {% if block.settings.media_source == 'shopify_video' and block.settings.video != blank %}
+    {% assign has_shopify_video = true %}
+  {% endif %}
+  {% if has_youtube or has_shopify_video %}
+    <div class="hero__video-wrap" data-hero-video>
+      {% if has_youtube %}
+        {% assign youtube_id = block.settings.youtube_url | split: 'v=' | last | split: '&' | first %}
+        {% if block.settings.youtube_url contains 'youtu.be/' %}
+          {% assign youtube_id = block.settings.youtube_url | split: 'youtu.be/' | last | split: '?' | first %}
+        {% endif %}
+        <iframe class="hero__youtube-video" data-hero-frame data-base-src="https://www.youtube.com/embed/{{ youtube_id }}?rel=0&amp;modestbranding=1&amp;playsinline=1" src="https://www.youtube.com/embed/{{ youtube_id }}?rel=0&amp;modestbranding=1&amp;playsinline=1" title="{{ block.settings.youtube_title | escape }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      {% else %}
+        {{ block.settings.video | video_tag: class: 'hero__video', controls: false, autoplay: false, loop: false, muted: false, playsinline: true }}
+      {% endif %}
+      {% if block.settings.video_cover != blank %}
+        <div class="hero__video-cover">
+          {{ block.settings.video_cover | image_url: width: 1600 | image_tag: loading: 'eager', alt: block.settings.alt | escape }}
+        </div>
+      {% elsif block.settings.video_cover_url != blank %}
+        <div class="hero__video-cover"><img src="{{ block.settings.video_cover_url | escape }}" width="1600" height="1000" loading="eager" alt="{{ block.settings.alt | escape }}"></div>
+      {% endif %}
+      {% if block.settings.show_play_button %}
+        <button class="hero__play-button hero__play-button--{{ block.settings.play_button_style }} hero__play-button--{{ block.settings.play_button_position }}" type="button" data-hero-play data-play-label="{{ block.settings.play_button_label | escape }}" data-pause-label="{{ block.settings.pause_button_label | escape }}" aria-label="{{ block.settings.play_button_label | escape }}" style="--hero-play-bg: {{ block.settings.play_button_color }}; --hero-play-icon: {{ block.settings.play_button_icon_color }}; --hero-play-size: {{ block.settings.play_button_size }}px;">
+          <span class="hero__play-icon hero__play-icon--play" aria-hidden="true">▶</span>
+          <span class="hero__play-icon hero__play-icon--pause" aria-hidden="true">Ⅱ</span>
+        </button>
+      {% endif %}
+    </div>
+  {% elsif block.settings.image != blank %}
+    {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: block.settings.alt | escape }}
+  {% else %}
+    <div class="media-placeholder media-placeholder--hero">Add a hero image or video</div>
+  {% endif %}
+</div>
+

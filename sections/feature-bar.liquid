@@ -1,0 +1,32 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
+<section class="feature-bar feature-bar--{{ section.settings.layout }} section-spacing section-spacing--compact" style="--feature-bg: {{ section.settings.background }};">
+  <div class="page-width feature-bar__grid">
+    {% for block in section.blocks %}
+      <article class="feature" {{ block.shopify_attributes }}>
+        <span class="feature__icon" aria-hidden="true">{% if block.settings.icon_image != blank %}{{ block.settings.icon_image | image_url: width: 80 | image_tag: alt: '' }}{% else %}{% case block.settings.icon %}{% when 'truck' %}<svg class="feature__icon-svg" viewBox="0 0 24 24" focusable="false"><path d="M3 5.5h11v10H3zM14 9h3.4l3.1 3.4v3.1H14zM6.5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm11 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" fill="currentColor"/><path d="M14 12.5h6.2M5 16.2h1.5m9.5 0h1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>{% when 'gift' %}<svg class="feature__icon-svg" viewBox="0 0 24 24" focusable="false"><path d="M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7c-2.7 0-5.2-.8-5.2-2.5C6.8 3.3 8.1 3 9 3c1.6 0 3 1.7 3 4Zm0 0c2.7 0 5.2-.8 5.2-2.5C17.2 3.3 15.9 3 15 3c-1.6 0-3 1.7-3 4Z" fill="currentColor"/></svg>{% when 'refresh' %}<svg class="feature__icon-svg" viewBox="0 0 24 24" focusable="false"><path d="M19.5 8.5A7.5 7.5 0 0 0 6.2 6.8L4 9m0 0V5m0 4h4M4.5 15.5A7.5 7.5 0 0 0 17.8 17.2L20 15m0 0v4m0-4h-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}<svg class="feature__icon-svg" viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>{% endcase %}{% endif %}</span>
+        <div><h3>{{ block.settings.heading }}</h3><p>{{ block.settings.text }}</p></div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Feature bar",
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [{ "value": "row", "label": "Row" }, { "value": "stack", "label": "Stack" }], "default": "row" }
+  ],
+  "blocks": [
+    { "type": "feature", "name": "Feature", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "truck", "label": "Shipping" }, { "value": "gift", "label": "Gift" }, { "value": "refresh", "label": "Return" }, { "value": "dot", "label": "Dot" }], "default": "truck" },
+      { "type": "image_picker", "id": "icon_image", "label": "Custom icon" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Free Shipping" },
+      { "type": "text", "id": "text", "label": "Text", "default": "Free shipping orders from $150" }
+    ] }
+  ],
+  "presets": [{ "name": "Feature bar", "blocks": [{ "type": "feature" }, { "type": "feature" }, { "type": "feature" }] }]
+}
+{% endschema %}
+
