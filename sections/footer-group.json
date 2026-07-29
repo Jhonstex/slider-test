@@ -14,15 +14,62 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "contact": { "type": "contact", "settings": {} },
-        "quick_links": { "type": "links", "settings": {} },
-        "information": { "type": "information", "settings": {} },
-        "social": { "type": "social", "settings": {} }
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "heading": "Contact Info",
+            "address": "560 King St W, Kingston,\nON K7L 4V7, Canada",
+            "email": "contactinfo@gmail.com",
+            "phone": "+1 212 736 3100"
+          }
+        },
+        "quick_links": {
+          "type": "links",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "",
+            "fallback_links": "My account|Cart|Wishlist|Product Compare"
+          }
+        },
+        "information": {
+          "type": "information",
+          "settings": {
+            "heading": "Information",
+            "menu": "",
+            "fallback_links": "Privacy policy|Refund policy|Shipping & Return|Term & conditions"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "Follow Us",
+            "facebook_label": "Facebook",
+            "facebook_url": "",
+            "twitter_label": "Twitter",
+            "twitter_url": "",
+            "instagram_label": "Instagram",
+            "instagram_url": "",
+            "youtube_label": "Youtube",
+            "youtube_url": ""
+          }
+        }
       },
-      "block_order": ["contact", "quick_links", "information", "social"],
-      "settings": {}
+      "block_order": [
+        "contact",
+        "quick_links",
+        "information",
+        "social"
+      ],
+      "disabled": true,
+      "settings": {
+        "newsletter_text": "Join our list and get 20% off your first purchase!",
+        "email_placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "copyright": "Beae'stemplate © 2022. All Rights Reserved."
+      }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
-
