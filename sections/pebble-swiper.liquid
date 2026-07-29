@@ -118,8 +118,13 @@
 
 .pebble-swiper__media {
   position: absolute;
-  inset: 0;
+  inset: 0 -5%;
+  transform: translate3d(var(--pebble-slide-shift, 0px), 0, 0);
+  transition: transform var(--pebble-motion-speed) cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
 }
+
+.pebble-swiper.is-dragging .pebble-swiper__media { transition: none; }
 
 .pebble-swiper__media-link {
   position: relative;
@@ -341,12 +346,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pebble-swiper__media,
   .pebble-swiper__image,
   .pebble-swiper__placeholder,
   .pebble-swiper__eyebrow,
   .pebble-swiper__heading,
   .pebble-swiper__body,
   .pebble-swiper__button { transition: none; }
+  .pebble-swiper__media { transform: none; }
 }
 {% endstylesheet %}
 
@@ -362,6 +369,10 @@
       speed: Number(root.dataset.speed) || 700,
       effect: 'fade',
       fadeEffect: { crossFade: true },
+      simulateTouch: true,
+      followFinger: true,
+      grabCursor: true,
+      watchSlidesProgress: true,
       watchOverflow: true,
       a11y: { enabled: true },
       keyboard: { enabled: true }
@@ -372,6 +383,14 @@
     var current = root.querySelector('[data-pebble-current]');
     var total = root.querySelector('[data-pebble-total]');
     var progressBar = root.querySelector('[data-pebble-progress]');
+    function updateDirectionalMotion(instance) {
+      var distance = Math.min(root.clientWidth * 0.04, 72);
+      instance.slides.forEach(function (slide) {
+        var progress = Number.isFinite(slide.progress) ? slide.progress : 0;
+        progress = Math.max(-1, Math.min(1, progress));
+        slide.style.setProperty('--pebble-slide-shift', progress * distance + 'px');
+      });
+    }
     function updateCounter(instance) {
       var value = String(instance.realIndex + 1);
       if (current) current.textContent = value;
@@ -381,10 +400,28 @@
       updateCounter(slider);
       if (progressBar) progressBar.style.transform = 'scaleX(0)';
     });
+    slider.on('setTranslate', function () {
+      updateDirectionalMotion(slider);
+    });
+    slider.on('touchStart', function () {
+      root.classList.add('is-dragging');
+    });
+    slider.on('touchEnd', function () {
+      root.classList.remove('is-dragging');
+      updateDirectionalMotion(slider);
+    });
+    slider.on('transitionEnd', function () {
+      root.classList.remove('is-dragging');
+      updateDirectionalMotion(slider);
+    });
+    slider.on('resize', function () {
+      updateDirectionalMotion(slider);
+    });
     slider.on('autoplayTimeLeft', function (_instance, _timeLeft, progress) {
       if (progressBar) progressBar.style.transform = 'scaleX(' + (1 - progress) + ')';
     });
     if (!autoplay && progressBar) progressBar.style.transform = 'scaleX(1)';
+    updateDirectionalMotion(slider);
     updateCounter(slider);
   }
   function boot() {
