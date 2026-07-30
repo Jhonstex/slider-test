@@ -1,6 +1,14 @@
 {%- assign slider_id = 'pebble-swiper-' | append: section.id -%}
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+{%- assign pebble_font = section.settings.font_family -%}
+{%- assign pebble_font_bold = pebble_font | font_modify: 'weight', '700' -%}
+
+{% style %}
+  {{ pebble_font | font_face: font_display: 'swap' }}
+  {{ pebble_font_bold | font_face: font_display: 'swap' }}
+  #{{ slider_id }} {
+    --pebble-font-family: {{ pebble_font.family }}, {{ pebble_font.fallback_families }};
+  }
+{% endstyle %}
 
 <section
   id="{{ slider_id }}"
@@ -12,27 +20,27 @@
   data-navigation="{{ section.settings.show_navigation }}"
   data-pagination="{{ section.settings.show_pagination }}"
   data-total="{{ section.blocks.size }}"
-  style="--pebble-height: {{ section.settings.desktop_height }}px; --pebble-mobile-height: {{ section.settings.mobile_height }}px; --pebble-overlay: {{ section.settings.overlay_color }}; --pebble-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --pebble-content-width: {{ section.settings.content_width }}px; --pebble-motion-speed: {{ section.settings.transition_speed }}ms;"
+  style="--pebble-height: {{ section.settings.desktop_height }}px; --pebble-mobile-height: {{ section.settings.mobile_height }}px; --pebble-overlay: {{ section.settings.overlay_color }}; --pebble-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --pebble-content-width: {{ section.settings.content_width }}px; --pebble-slide-speed: {{ section.settings.transition_speed }}ms;"
 >
   <div class="swiper pebble-swiper__container">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
         {%- assign desktop_image = block.settings.desktop_image -%}
         {%- assign mobile_image = block.settings.mobile_image | default: desktop_image -%}
-        <article class="swiper-slide pebble-swiper__slide" {{ block.shopify_attributes }}>
+        <article class="swiper-slide pebble-swiper__slide{% if forloop.first %} is-active{% endif %}" aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}" {{ block.shopify_attributes }}>
           <div class="pebble-swiper__media">
             {% if block.settings.slide_link != blank %}<a class="pebble-swiper__media-link" href="{{ block.settings.slide_link }}"{% if block.settings.open_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>{% endif %}
               {% if desktop_image != blank or block.settings.desktop_image_url != blank %}
                 <picture>
                   {% if mobile_image != blank %}
-                    <source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 1600 }}">
+                    <source media="(max-width: 767px)" srcset="{{ mobile_image | image_url: width: 1600 }}">
                   {% elsif block.settings.mobile_image_url != blank %}
-                    <source media="(max-width: 749px)" srcset="{{ block.settings.mobile_image_url | escape }}">
+                    <source media="(max-width: 767px)" srcset="{{ block.settings.mobile_image_url | escape }}">
                   {% endif %}
                   {% if desktop_image != blank %}
-                    {{ desktop_image | image_url: width: 2800 | image_tag: class: 'pebble-swiper__image', loading: 'lazy', alt: block.settings.alt_text }}
+                    {{ desktop_image | image_url: width: 3840 | image_tag: class: 'pebble-swiper__image', loading: 'lazy', sizes: '100vw', alt: block.settings.alt_text }}
                   {% else %}
-                    <img class="pebble-swiper__image" src="{{ block.settings.desktop_image_url | escape }}" alt="{{ block.settings.alt_text | escape }}" loading="lazy" width="2800" height="1200">
+                    <img class="pebble-swiper__image" src="{{ block.settings.desktop_image_url | escape }}" alt="{{ block.settings.alt_text | escape }}" loading="lazy" width="6000" height="3125" sizes="100vw">
                   {% endif %}
                 </picture>
               {% else %}
@@ -48,7 +56,13 @@
               {% if block.settings.heading != blank %}<h2 class="pebble-swiper__heading">{{ block.settings.heading }}{% if block.settings.heading_second_line != blank %}<br>{{ block.settings.heading_second_line }}{% endif %}</h2>{% endif %}
               {% if block.settings.body != blank %}<div class="pebble-swiper__body rte">{{ block.settings.body }}</div>{% endif %}
               {% if block.settings.button_label != blank %}
-                <a class="pebble-swiper__button" href="{{ block.settings.button_link | default: '#' }}"><span class="pebble-swiper__button-label">{{ block.settings.button_label }}</span><span class="pebble-swiper__button-icon" aria-hidden="true">{% render 'pebble-arrow' %}</span></a>
+                <a class="pebble-swiper__button" href="{{ block.settings.button_link | default: '#' }}">
+                  <span class="pebble-swiper__button-label">{{ block.settings.button_label }}</span>
+                  <span class="pebble-swiper__button-reveal" aria-hidden="true">
+                    <span class="pebble-swiper__button-reveal-label">{{ block.settings.button_label }}</span>
+                    <span class="pebble-swiper__button-icon">{% render 'pebble-arrow' %}</span>
+                  </span>
+                </a>
               {% endif %}
             </div>
           </div>
@@ -69,8 +83,6 @@
   </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
-
 {% stylesheet %}
 .section-pebble-swiper {
   width: 100vw;
@@ -79,41 +91,50 @@
   overflow: clip;
 }
 
-@font-face {
-  font-family: 'Pebble Bricolage Grotesque';
-  src: url('https://pebble-little.myshopify.com/cdn/fonts/bricolage_grotesque/bricolagegrotesque_n5.8c091e52a78b3e58ef96221ce55140a80a8253ff.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pebble Bricolage Grotesque';
-  src: url('https://pebble-little.myshopify.com/cdn/fonts/bricolage_grotesque/bricolagegrotesque_n7.de5675dd7a8e145fdc4cb2cfe67a16cb085528d0.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-}
-
 .pebble-swiper {
+  --pebble-page-padding: 16px;
+  --pebble-content-top-offset: 110px;
   width: 100%;
   max-width: none;
   color: var(--pebble-text-color, #fff);
   background: #d7d7d7;
-  font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
+  font-family: var(--pebble-font-family, Arial, sans-serif);
 }
 
 .pebble-swiper__container,
-.pebble-swiper .swiper-wrapper,
-.pebble-swiper .swiper-slide {
+.pebble-swiper .swiper-wrapper {
   width: 100%;
   max-width: none;
-  height: min(var(--pebble-height), 52.083vw);
+  height: min(var(--pebble-height), 52.083333vw, 100dvh);
+}
+
+.pebble-swiper__container {
+  position: relative;
+  overflow: hidden;
+}
+
+.pebble-swiper .swiper-wrapper {
+  position: relative;
 }
 
 .pebble-swiper__slide {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--pebble-slide-speed) linear, visibility 0s linear var(--pebble-slide-speed);
+}
+
+.pebble-swiper__slide.is-active {
+  z-index: 1;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity var(--pebble-slide-speed) linear;
 }
 
 .pebble-swiper__media,
@@ -128,15 +149,10 @@
 
 .pebble-swiper__media {
   position: absolute;
-  inset: 0 -5%;
-  width: 110%;
+  inset: 0;
+  width: 100%;
   max-width: none;
-  transform: translate3d(var(--pebble-slide-shift, 0px), 0, 0);
-  transition: transform var(--pebble-motion-speed) cubic-bezier(.22, 1, .36, 1);
-  will-change: transform;
 }
-
-.pebble-swiper.is-dragging .pebble-swiper__media { transition: none; }
 
 .pebble-swiper__media-link {
   position: relative;
@@ -146,12 +162,13 @@
 .pebble-swiper__image,
 .pebble-swiper__placeholder {
   object-fit: cover;
-  transform: scale(1.035);
-  transition: transform 1.1s cubic-bezier(.22, 1, .36, 1), opacity .35s ease-in-out;
+  transform: scale(1.15);
+  transition: transform 1.3s cubic-bezier(.16, 1, .3, 1), opacity .35s ease-in-out;
+  will-change: transform;
 }
 
-.pebble-swiper .swiper-slide-active .pebble-swiper__image,
-.pebble-swiper .swiper-slide-active .pebble-swiper__placeholder { transform: scale(1); }
+.pebble-swiper .is-active .pebble-swiper__image,
+.pebble-swiper .is-active .pebble-swiper__placeholder { transform: scale(1); }
 
 .pebble-swiper__placeholder {
   background: #cfcfcf;
@@ -172,8 +189,9 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100%;
-  padding: 24px clamp(32px, 4.167vw, 80px) 0;
+  height: calc(100% - 84px - var(--pebble-content-top-offset));
+  margin-top: var(--pebble-content-top-offset);
+  padding: 40px var(--pebble-page-padding);
 }
 
 .pebble-swiper--left .pebble-swiper__content-wrap { justify-content: flex-start; }
@@ -181,7 +199,8 @@
 .pebble-swiper--right .pebble-swiper__content-wrap { justify-content: flex-end; }
 
 .pebble-swiper__content {
-  width: min(100%, var(--pebble-content-width));
+  width: fit-content;
+  max-width: min(100%, var(--pebble-content-width));
   color: var(--pebble-text-color, #fff);
 }
 
@@ -190,33 +209,24 @@
 .pebble-swiper__body,
 .pebble-swiper__button {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(25px);
   transition-property: opacity, transform;
-  transition-duration: var(--pebble-motion-speed), var(--pebble-motion-speed);
-  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+  transition-duration: 1.5s, 1.5s;
+  transition-timing-function: cubic-bezier(.16, 1, .3, 1);
 }
 
-.pebble-swiper .swiper-slide-active .pebble-swiper__eyebrow,
-.pebble-swiper .swiper-slide-active .pebble-swiper__heading,
-.pebble-swiper .swiper-slide-active .pebble-swiper__body,
-.pebble-swiper .swiper-slide-active .pebble-swiper__button {
+.pebble-swiper .is-active .pebble-swiper__eyebrow,
+.pebble-swiper .is-active .pebble-swiper__heading,
+.pebble-swiper .is-active .pebble-swiper__body,
+.pebble-swiper .is-active .pebble-swiper__button {
   opacity: 1;
   transform: translateY(0);
 }
 
-.pebble-swiper .swiper-slide-active .pebble-swiper__eyebrow { transition-delay: 120ms; }
-.pebble-swiper .swiper-slide-active .pebble-swiper__heading { transition-delay: 200ms; }
-.pebble-swiper .swiper-slide-active .pebble-swiper__body { transition-delay: 280ms; }
-.pebble-swiper .swiper-slide-active .pebble-swiper__button { transition-delay: 360ms; }
-
-.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__eyebrow,
-.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__heading,
-.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__body,
-.pebble-swiper.is-dragging .swiper-slide .pebble-swiper__button {
-  opacity: 1;
-  transform: translate3d(var(--pebble-content-shift, 0px), 0, 0);
-  transition: none;
-}
+.pebble-swiper .is-active .pebble-swiper__eyebrow { transition-delay: 50ms; }
+.pebble-swiper .is-active .pebble-swiper__heading { transition-delay: 150ms; }
+.pebble-swiper .is-active .pebble-swiper__body { transition-delay: 250ms; }
+.pebble-swiper .is-active .pebble-swiper__button { transition-delay: 250ms; }
 
 .pebble-swiper__eyebrow {
   margin: 0 0 16px;
@@ -230,7 +240,7 @@
 .pebble-swiper__heading {
   max-width: 360px;
   margin: 0 0 clamp(24px, calc(1.163vw + 15.08px), 32px);
-  font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
+  font-family: var(--pebble-font-family, Arial, sans-serif);
   font-size: clamp(38px, calc(5.848vw - 6.85px), 68px);
   font-weight: 700;
   line-height: 1.2;
@@ -248,81 +258,90 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0;
-  min-width: 260px;
-  min-height: 60px;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  width: auto;
   margin-top: 0;
-  padding: 0 14px 0 34px;
-  border-radius: 999px;
+  padding: 10px 48px 10px 24px;
+  border: 1px solid transparent;
+  border-radius: 60px;
   overflow: hidden;
   background: #fff;
-  color: #242424;
-  font-family: 'Pebble Bricolage Grotesque', Arial, sans-serif;
-  font-size: 18px;
+  color: #000;
+  font-family: var(--pebble-font-family, Arial, sans-serif);
+  font-size: 15px;
   font-weight: 700;
   line-height: 24px;
+  white-space: nowrap;
   text-decoration: none;
   text-transform: capitalize;
   isolation: isolate;
 }
 
-.pebble-swiper__button::before {
-  position: absolute;
-  top: 50%;
-  right: 14px;
-  z-index: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  background: #242424;
-  content: '';
-  transform: translateY(-50%);
-  transition: right .45s cubic-bezier(.2, .75, .2, 1), width .45s cubic-bezier(.2, .75, .2, 1), height .45s cubic-bezier(.2, .75, .2, 1);
-}
-
 .pebble-swiper__button-label,
-.pebble-swiper__button-icon {
-  position: relative;
-  z-index: 1;
+.pebble-swiper__button-reveal-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.pebble-swiper__button-label {
-  transition: color .3s ease;
-}
-
-.pebble-swiper__button-icon {
-  display: grid;
-  flex: 0 0 36px;
-  width: 36px;
-  height: 36px;
-  margin-left: auto;
-  border-radius: 50%;
-  background: #242424;
+.pebble-swiper__button-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 0 10px 0 24px;
+  overflow: hidden;
+  background: #000;
   color: #fff;
-  place-items: center;
+  clip-path: circle(15px at calc(100% - 25px) 50%);
+  transition: clip-path .6s cubic-bezier(.4, 0, .2, 1);
 }
 
-.pebble-swiper__button svg { width: 16px; height: 16px; }
+.pebble-swiper__button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  overflow: hidden;
+  transition: transform .35s ease-in-out;
+}
 
-@media (hover: hover) {
-  .pebble-swiper__button:hover::before {
-    right: 1px;
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
+.pebble-swiper__button svg { width: 12px; height: 12px; }
+
+@keyframes pebble-button-arrow {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  50.001% { transform: translateX(-20px); }
+  100% { transform: translateX(0); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pebble-swiper__button:hover .pebble-swiper__button-reveal {
+    clip-path: circle(150% at calc(100% - 25px) 50%);
   }
-  .pebble-swiper__button:hover .pebble-swiper__button-label { color: #fff; }
+  .pebble-swiper__button:hover .pebble-swiper__button-icon svg {
+    animation: pebble-button-arrow 1s infinite;
+  }
 }
 
-.pebble-swiper__button:focus-visible::before {
-  right: 1px;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
+.pebble-swiper__button:focus-visible .pebble-swiper__button-reveal {
+  clip-path: circle(150% at calc(100% - 25px) 50%);
 }
-.pebble-swiper__button:focus-visible .pebble-swiper__button-label { color: #fff; }
 
 .pebble-swiper__controls {
   position: absolute;
-  right: clamp(32px, 4.167vw, 80px);
+  right: var(--pebble-page-padding);
   bottom: 60px;
   z-index: 4;
   display: flex;
@@ -346,7 +365,7 @@
   width: clamp(100px, 10vw, 140px);
   height: 2px;
   overflow: hidden;
-  background: rgb(255 255 255 / 20%);
+  background: rgb(255 255 255 / 10%);
 }
 
 .pebble-swiper__progress span {
@@ -375,15 +394,23 @@
 .pebble-swiper .swiper-button-prev::after,
 .pebble-swiper .swiper-button-next::after { display: none; }
 .pebble-swiper .swiper-button-prev svg,
-.pebble-swiper .swiper-button-next svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.pebble-swiper .swiper-button-next svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-@media (max-width: 749px) {
+@media (min-width: 1200px) {
+  .pebble-swiper { --pebble-page-padding: 50px; }
+}
+
+@media (min-width: 1536px) {
+  .pebble-swiper { --pebble-page-padding: max(135px, calc(50vw - 7.5px - 720px)); }
+}
+
+@media (max-width: 767px) {
+  .pebble-swiper { --pebble-content-top-offset: 90px; }
   .pebble-swiper__container,
-  .pebble-swiper .swiper-wrapper,
-  .pebble-swiper .swiper-slide { height: var(--pebble-mobile-height); }
+  .pebble-swiper .swiper-wrapper { height: min(var(--pebble-mobile-height), 154.666667vw, 100dvh); }
   .pebble-swiper__content-wrap {
     align-items: flex-end;
-    height: calc(100% - 64px);
+    height: calc(100% - 84px - var(--pebble-content-top-offset));
     padding: 24px 16px;
   }
   .pebble-swiper__content { width: 100%; }
@@ -398,9 +425,8 @@
   .pebble-swiper--mobile-right .pebble-swiper__heading { margin-right: 0; margin-left: auto; }
   .pebble-swiper__heading { max-width: 210px; margin-bottom: 24px; font-size: 38px; }
   .pebble-swiper__body { font-size: 15px; }
-  .pebble-swiper__button { width: 100%; min-width: 0; justify-content: flex-start; text-align: left; }
-  .pebble-swiper__button-icon { margin-left: auto; }
-  .pebble-swiper__controls { right: 16px; bottom: 40px; left: 16px; gap: 12px; }
+  .pebble-swiper__button { width: 100%; justify-content: space-between; text-align: left; }
+  .pebble-swiper__controls { right: 16px; bottom: 24px; left: 16px; gap: 12px; }
   .pebble-swiper__counter { gap: 4px; font-size: 15px; }
   .pebble-swiper__progress { flex: 1 1 auto; width: auto; }
   .pebble-swiper__navigation { gap: 8px; }
@@ -416,85 +442,101 @@
   .pebble-swiper__heading,
   .pebble-swiper__body,
   .pebble-swiper__button,
-  .pebble-swiper__button::before,
-  .pebble-swiper__button-label { transition: none; }
-  .pebble-swiper__media { transform: none; }
+  .pebble-swiper__button-reveal { transition: none; }
+  .pebble-swiper__image,
+  .pebble-swiper__placeholder { transform: none; }
 }
 {% endstylesheet %}
 
 {% javascript %}
 (function () {
   function initPebbleSlider(root) {
-    if (root.dataset.pebbleReady === 'true' || typeof Swiper === 'undefined') return;
+    if (root.dataset.pebbleReady === 'true') return;
     root.dataset.pebbleReady = 'true';
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.pebble-swiper__slide'));
+    if (!slides.length) return;
     var autoplay = root.dataset.autoplay === 'true';
-    var options = {
-      slidesPerView: 1,
-      loop: root.querySelectorAll('.swiper-slide').length > 1,
-      speed: Number(root.dataset.speed) || 700,
-      effect: 'fade',
-      fadeEffect: { crossFade: true },
-      simulateTouch: true,
-      followFinger: true,
-      grabCursor: true,
-      watchSlidesProgress: true,
-      watchOverflow: true,
-      a11y: { enabled: true },
-      keyboard: { enabled: true }
-    };
-    if (autoplay) options.autoplay = { delay: Number(root.dataset.delay) || 6000, disableOnInteraction: false, pauseOnMouseEnter: true };
-    if (root.dataset.navigation === 'true') options.navigation = { nextEl: root.querySelector('.swiper-button-next'), prevEl: root.querySelector('.swiper-button-prev') };
-    var slider = new Swiper(root.querySelector('.swiper'), options);
+    var delay = Number(root.dataset.delay) || 5000;
+    var activeIndex = Math.max(0, slides.findIndex(function (slide) { return slide.classList.contains('is-active'); }));
     var current = root.querySelector('[data-pebble-current]');
     var total = root.querySelector('[data-pebble-total]');
     var progressBar = root.querySelector('[data-pebble-progress]');
-    function updateDirectionalMotion(instance) {
-      var distance = Math.min(root.clientWidth * 0.04, 72);
-      instance.slides.forEach(function (slide) {
-        var progress = Number.isFinite(slide.progress) ? slide.progress : 0;
-        progress = Math.max(-1, Math.min(1, progress));
-        slide.style.setProperty('--pebble-slide-shift', progress * distance + 'px');
-        slide.style.setProperty('--pebble-content-shift', progress * distance * 0.35 + 'px');
+    var previousButton = root.querySelector('.swiper-button-prev');
+    var nextButton = root.querySelector('.swiper-button-next');
+    var progressAnimationFrame = null;
+    var autoplayTimer = null;
+    var resizeTimer = null;
+    var pointerStartX = 0;
+    var pointerStartY = 0;
+    function animateProgress() {
+      if (!progressBar || !autoplay) return;
+      if (progressAnimationFrame !== null) window.cancelAnimationFrame(progressAnimationFrame);
+      progressBar.style.transition = 'none';
+      progressBar.style.transform = 'translate3d(0, 0, 0) scaleX(0)';
+      progressAnimationFrame = window.requestAnimationFrame(function () {
+        progressAnimationFrame = window.requestAnimationFrame(function () {
+          progressAnimationFrame = null;
+          progressBar.style.transition = 'transform ' + delay + 'ms linear';
+          progressBar.style.transform = 'translate3d(0, 0, 0) scaleX(1)';
+        });
       });
     }
-    function updateCounter(instance) {
-      var value = String(instance.realIndex + 1);
-      if (current) current.textContent = value;
-      if (total) total.textContent = String(root.dataset.total || instance.slides.length);
+    function updateCounter() {
+      if (current) current.textContent = String(activeIndex + 1);
+      if (total) total.textContent = String(slides.length);
     }
-    slider.on('slideChange', function () {
-      updateCounter(slider);
-      if (progressBar) progressBar.style.transform = 'scaleX(0)';
+    function scheduleAutoplay() {
+      if (autoplayTimer !== null) window.clearTimeout(autoplayTimer);
+      if (!autoplay || slides.length < 2) return;
+      autoplayTimer = window.setTimeout(function () {
+        showSlide(activeIndex + 1, false);
+      }, delay);
+    }
+    function showSlide(index, stopAutoplay) {
+      if (slides.length < 2) return;
+      var nextIndex = (index + slides.length) % slides.length;
+      if (nextIndex === activeIndex) return;
+      slides[activeIndex].classList.remove('is-active');
+      slides[activeIndex].setAttribute('aria-hidden', 'true');
+      activeIndex = nextIndex;
+      slides[activeIndex].classList.add('is-active');
+      slides[activeIndex].setAttribute('aria-hidden', 'false');
+      updateCounter();
+      animateProgress();
+      if (stopAutoplay) {
+        autoplay = false;
+        if (autoplayTimer !== null) window.clearTimeout(autoplayTimer);
+      } else {
+        scheduleAutoplay();
+      }
+    }
+    if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, true); });
+    if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, true); });
+    root.addEventListener('pointerdown', function (event) {
+      if (event.target.closest('a, button')) return;
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
     });
-    slider.on('setTranslate', function () {
-      updateDirectionalMotion(slider);
+    root.addEventListener('pointerup', function (event) {
+      if (event.target.closest('a, button')) return;
+      var distanceX = event.clientX - pointerStartX;
+      var distanceY = event.clientY - pointerStartY;
+      if (Math.abs(distanceX) < 40 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
+      showSlide(activeIndex + (distanceX < 0 ? 1 : -1), true);
     });
-    slider.on('touchStart', function () {
-      root.classList.add('is-dragging');
+    window.addEventListener('resize', function () {
+      if (resizeTimer !== null) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(animateProgress, 150);
     });
-    slider.on('touchEnd', function () {
-      root.classList.remove('is-dragging');
-      updateDirectionalMotion(slider);
+    document.addEventListener('shopify:block:select', function (event) {
+      var index = slides.indexOf(event.target);
+      if (index >= 0) showSlide(index, true);
     });
-    slider.on('transitionEnd', function () {
-      root.classList.remove('is-dragging');
-      updateDirectionalMotion(slider);
-    });
-    slider.on('resize', function () {
-      updateDirectionalMotion(slider);
-    });
-    slider.on('autoplayTimeLeft', function (_instance, _timeLeft, progress) {
-      if (progressBar) progressBar.style.transform = 'scaleX(' + (1 - progress) + ')';
-    });
-    if (!autoplay && progressBar) progressBar.style.transform = 'scaleX(1)';
-    updateDirectionalMotion(slider);
-    updateCounter(slider);
+    if (autoplay) animateProgress(); else if (progressBar) progressBar.style.transform = 'scaleX(1)';
+    updateCounter();
+    scheduleAutoplay();
   }
   function boot() {
-    if (typeof Swiper === 'undefined') {
-      window.setTimeout(boot, 80);
-      return;
-    }
     document.querySelectorAll('[data-pebble-swiper]').forEach(initPebbleSlider);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
@@ -513,12 +555,13 @@
   "settings": [
     { "type": "range", "id": "desktop_height", "label": "Desktop max height", "min": 620, "max": 1200, "step": 10, "unit": "px", "default": 1040 },
     { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 520, "max": 900, "step": 10, "unit": "px", "default": 560 },
+    { "type": "font_picker", "id": "font_family", "label": "Typography", "default": "bricolage_grotesque_n5" },
     { "type": "range", "id": "content_width", "label": "Content width", "min": 280, "max": 760, "step": 10, "unit": "px", "default": 520 },
     { "type": "select", "id": "content_position", "label": "Content position", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
     { "type": "select", "id": "mobile_content_position", "label": "Mobile content position", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "center" },
     { "type": "checkbox", "id": "autoplay", "label": "Enable autoplay", "default": true },
-    { "type": "range", "id": "autoplay_delay", "label": "Autoplay delay", "min": 3, "max": 15, "step": 1, "unit": "s", "default": 6 },
-    { "type": "range", "id": "transition_speed", "label": "Transition speed", "min": 300, "max": 1600, "step": 100, "unit": "ms", "default": 700 },
+    { "type": "range", "id": "autoplay_delay", "label": "Autoplay delay", "min": 3, "max": 15, "step": 1, "unit": "s", "default": 5 },
+    { "type": "range", "id": "transition_speed", "label": "Transition speed", "min": 300, "max": 1600, "step": 100, "unit": "ms", "default": 300 },
     { "type": "checkbox", "id": "show_navigation", "label": "Show navigation arrows", "default": true },
     { "type": "checkbox", "id": "show_pagination", "label": "Show pagination", "default": true },
     { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#000000" },
