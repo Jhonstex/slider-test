@@ -111,6 +111,13 @@
 .pebble-swiper__container {
   position: relative;
   overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.pebble-swiper.is-dragging .pebble-swiper__container {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .pebble-swiper .swiper-wrapper {
@@ -127,6 +134,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--pebble-slide-speed) linear, visibility 0s linear var(--pebble-slide-speed);
+  will-change: opacity;
 }
 
 .pebble-swiper__slide.is-active {
@@ -135,6 +143,17 @@
   opacity: 1;
   pointer-events: auto;
   transition: opacity var(--pebble-slide-speed) linear;
+}
+
+.pebble-swiper__slide.is-drag-target {
+  z-index: 2;
+  visibility: visible;
+  pointer-events: none;
+  transition: opacity var(--pebble-slide-speed) linear;
+}
+
+.pebble-swiper.is-dragging .pebble-swiper__slide {
+  transition: none;
 }
 
 .pebble-swiper__media,
@@ -221,6 +240,15 @@
 .pebble-swiper .is-active .pebble-swiper__button {
   opacity: 1;
   transform: translateY(0);
+}
+
+.pebble-swiper .is-drag-target .pebble-swiper__eyebrow,
+.pebble-swiper .is-drag-target .pebble-swiper__heading,
+.pebble-swiper .is-drag-target .pebble-swiper__body,
+.pebble-swiper .is-drag-target .pebble-swiper__button {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
 }
 
 .pebble-swiper .is-active .pebble-swiper__eyebrow { transition-delay: 50ms; }
@@ -457,6 +485,7 @@
     if (!slides.length) return;
     var autoplay = root.dataset.autoplay === 'true';
     var delay = Number(root.dataset.delay) || 5000;
+    var speed = Number(root.dataset.speed) || 300;
     var activeIndex = Math.max(0, slides.findIndex(function (slide) { return slide.classList.contains('is-active'); }));
     var current = root.querySelector('[data-pebble-current]');
     var total = root.querySelector('[data-pebble-total]');
@@ -466,8 +495,15 @@
     var progressAnimationFrame = null;
     var autoplayTimer = null;
     var resizeTimer = null;
+    var dragResetTimer = null;
+    var dragPointerId = null;
+    var dragTargetIndex = -1;
+    var dragProgress = 0;
+    var dragStartedAt = 0;
     var pointerStartX = 0;
     var pointerStartY = 0;
+    var pointerLastX = 0;
+    var pointerLastY = 0;
     function animateProgress() {
       if (!progressBar || !autoplay) return;
       if (progressAnimationFrame !== null) window.cancelAnimationFrame(progressAnimationFrame);
@@ -492,10 +528,108 @@
         showSlide(activeIndex + 1, false);
       }, delay);
     }
+    function stopAutoplay() {
+      autoplay = false;
+      if (autoplayTimer !== null) {
+        window.clearTimeout(autoplayTimer);
+        autoplayTimer = null;
+      }
+      if (progressAnimationFrame !== null) {
+        window.cancelAnimationFrame(progressAnimationFrame);
+        progressAnimationFrame = null;
+      }
+      if (progressBar) {
+        var progressTransform = window.getComputedStyle(progressBar).transform;
+        progressBar.style.transition = 'none';
+        progressBar.style.transform = progressTransform;
+      }
+    }
+    function clearDragReset() {
+      if (dragResetTimer !== null) {
+        window.clearTimeout(dragResetTimer);
+        dragResetTimer = null;
+      }
+    }
+    function clearDragStyles() {
+      slides.forEach(function (slide) {
+        slide.classList.remove('is-drag-target');
+        slide.style.removeProperty('opacity');
+      });
+      root.classList.remove('is-dragging');
+    }
+    function setDragTarget(direction) {
+      var nextTargetIndex = (activeIndex + direction + slides.length) % slides.length;
+      if (nextTargetIndex === dragTargetIndex) return;
+      if (dragTargetIndex >= 0) {
+        slides[dragTargetIndex].classList.remove('is-drag-target');
+        slides[dragTargetIndex].style.removeProperty('opacity');
+      }
+      dragTargetIndex = nextTargetIndex;
+      slides[dragTargetIndex].classList.add('is-drag-target');
+      slides[dragTargetIndex].style.opacity = '0';
+    }
+    function renderDrag(distanceX) {
+      var sliderWidth = root.getBoundingClientRect().width || 1;
+      var direction = distanceX < 0 ? 1 : -1;
+      setDragTarget(direction);
+      dragProgress = Math.min(Math.abs(distanceX) / sliderWidth, 1);
+      slides[activeIndex].style.opacity = String(1 - dragProgress);
+      slides[dragTargetIndex].style.opacity = String(dragProgress);
+    }
+    function settleDrag(advance) {
+      var previousIndex = activeIndex;
+      var targetIndex = dragTargetIndex;
+      root.classList.remove('is-dragging');
+      clearDragReset();
+      if (advance && targetIndex >= 0) {
+        slides[previousIndex].classList.remove('is-active');
+        slides[previousIndex].setAttribute('aria-hidden', 'true');
+        activeIndex = targetIndex;
+        slides[activeIndex].classList.add('is-active');
+        slides[activeIndex].classList.remove('is-drag-target');
+        slides[activeIndex].setAttribute('aria-hidden', 'false');
+        window.requestAnimationFrame(function () {
+          slides[previousIndex].style.opacity = '0';
+          slides[activeIndex].style.opacity = '1';
+        });
+        updateCounter();
+      } else if (targetIndex >= 0) {
+        window.requestAnimationFrame(function () {
+          slides[activeIndex].style.opacity = '1';
+          slides[targetIndex].style.opacity = '0';
+        });
+      }
+      dragResetTimer = window.setTimeout(function () {
+        clearDragStyles();
+        dragResetTimer = null;
+      }, speed + 50);
+    }
+    function resetPointerState() {
+      dragPointerId = null;
+      dragTargetIndex = -1;
+      dragProgress = 0;
+      dragStartedAt = 0;
+    }
+    function finishDrag(event, cancelled) {
+      if (dragPointerId === null || event.pointerId !== dragPointerId) return;
+      pointerLastX = event.clientX;
+      pointerLastY = event.clientY;
+      var distanceX = pointerLastX - pointerStartX;
+      var distanceY = pointerLastY - pointerStartY;
+      var elapsed = window.performance.now() - dragStartedAt;
+      var horizontalDrag = dragTargetIndex >= 0 && Math.abs(distanceX) > Math.abs(distanceY);
+      var advance = !cancelled && horizontalDrag && (dragProgress >= 0.5 || (elapsed <= 300 && Math.abs(distanceX) >= 40));
+      if (dragTargetIndex >= 0) settleDrag(advance);
+      if (root.hasPointerCapture && root.hasPointerCapture(dragPointerId)) root.releasePointerCapture(dragPointerId);
+      resetPointerState();
+    }
     function showSlide(index, stopAutoplay) {
       if (slides.length < 2) return;
       var nextIndex = (index + slides.length) % slides.length;
       if (nextIndex === activeIndex) return;
+      clearDragReset();
+      clearDragStyles();
+      if (stopAutoplay) stopAutoplay();
       slides[activeIndex].classList.remove('is-active');
       slides[activeIndex].setAttribute('aria-hidden', 'true');
       activeIndex = nextIndex;
@@ -503,27 +637,40 @@
       slides[activeIndex].setAttribute('aria-hidden', 'false');
       updateCounter();
       animateProgress();
-      if (stopAutoplay) {
-        autoplay = false;
-        if (autoplayTimer !== null) window.clearTimeout(autoplayTimer);
-      } else {
-        scheduleAutoplay();
-      }
+      if (!stopAutoplay) scheduleAutoplay();
     }
     if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, true); });
     if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, true); });
     root.addEventListener('pointerdown', function (event) {
       if (event.target.closest('a, button')) return;
+      if (slides.length < 2 || event.button !== 0) return;
+      clearDragReset();
+      clearDragStyles();
+      stopAutoplay();
+      dragPointerId = event.pointerId;
+      dragStartedAt = window.performance.now();
       pointerStartX = event.clientX;
       pointerStartY = event.clientY;
+      pointerLastX = event.clientX;
+      pointerLastY = event.clientY;
+      if (root.setPointerCapture) root.setPointerCapture(event.pointerId);
     });
-    root.addEventListener('pointerup', function (event) {
-      if (event.target.closest('a, button')) return;
+    root.addEventListener('pointermove', function (event) {
+      if (dragPointerId === null || event.pointerId !== dragPointerId) return;
+      pointerLastX = event.clientX;
+      pointerLastY = event.clientY;
       var distanceX = event.clientX - pointerStartX;
       var distanceY = event.clientY - pointerStartY;
-      if (Math.abs(distanceX) < 40 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
-      showSlide(activeIndex + (distanceX < 0 ? 1 : -1), true);
+      if (dragTargetIndex < 0) {
+        if (Math.abs(distanceX) < 5 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
+        root.classList.add('is-dragging');
+      }
+      if (Math.abs(distanceX) <= Math.abs(distanceY)) return;
+      if (event.cancelable) event.preventDefault();
+      renderDrag(distanceX);
     });
+    root.addEventListener('pointerup', function (event) { finishDrag(event, false); });
+    root.addEventListener('pointercancel', function (event) { finishDrag(event, true); });
     window.addEventListener('resize', function () {
       if (resizeTimer !== null) window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(animateProgress, 150);
