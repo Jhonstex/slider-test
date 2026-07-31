@@ -127,29 +127,26 @@
 .pebble-swiper__slide {
   position: absolute;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  visibility: hidden;
+  visibility: visible;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--pebble-slide-speed) linear, visibility 0s linear var(--pebble-slide-speed);
+  transition: opacity var(--pebble-slide-speed) linear;
   will-change: opacity;
 }
 
 .pebble-swiper__slide.is-active {
   z-index: 1;
-  visibility: visible;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity var(--pebble-slide-speed) linear;
 }
 
 .pebble-swiper__slide.is-drag-target {
   z-index: 2;
-  visibility: visible;
   pointer-events: none;
-  transition: opacity var(--pebble-slide-speed) linear;
 }
 
 .pebble-swiper.is-dragging .pebble-swiper__slide {
@@ -528,8 +525,7 @@
         showSlide(activeIndex + 1, false);
       }, delay);
     }
-    function stopAutoplay() {
-      autoplay = false;
+    function pauseAutoplay() {
       if (autoplayTimer !== null) {
         window.clearTimeout(autoplayTimer);
         autoplayTimer = null;
@@ -544,6 +540,15 @@
         progressBar.style.transform = progressTransform;
       }
     }
+    function stopAutoplay() {
+      pauseAutoplay();
+      autoplay = false;
+    }
+    function restartAutoplay() {
+      if (!autoplay || slides.length < 2) return;
+      animateProgress();
+      scheduleAutoplay();
+    }
     function clearDragReset() {
       if (dragResetTimer !== null) {
         window.clearTimeout(dragResetTimer);
@@ -557,8 +562,11 @@
       });
       root.classList.remove('is-dragging');
     }
+    function normalizeIndex(index) {
+      return (index % slides.length + slides.length) % slides.length;
+    }
     function setDragTarget(direction) {
-      var nextTargetIndex = (activeIndex + direction + slides.length) % slides.length;
+      var nextTargetIndex = normalizeIndex(activeIndex + direction);
       if (nextTargetIndex === dragTargetIndex) return;
       if (dragTargetIndex >= 0) {
         slides[dragTargetIndex].classList.remove('is-drag-target');
@@ -622,10 +630,11 @@
       if (dragTargetIndex >= 0) settleDrag(advance);
       if (root.hasPointerCapture && root.hasPointerCapture(dragPointerId)) root.releasePointerCapture(dragPointerId);
       resetPointerState();
+      restartAutoplay();
     }
     function showSlide(index, stopAutoplay) {
       if (slides.length < 2) return;
-      var nextIndex = (index + slides.length) % slides.length;
+      var nextIndex = normalizeIndex(index);
       if (nextIndex === activeIndex) return;
       clearDragReset();
       clearDragStyles();
@@ -646,7 +655,7 @@
       if (slides.length < 2 || event.button !== 0) return;
       clearDragReset();
       clearDragStyles();
-      stopAutoplay();
+      pauseAutoplay();
       dragPointerId = event.pointerId;
       dragStartedAt = window.performance.now();
       pointerStartX = event.clientX;
