@@ -12,13 +12,81 @@
     "pebble_slider": {
       "type": "pebble-swiper",
       "blocks": {
-        "slide_1": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440", "alt_text": "Pebble Little campaign", "eyebrow": "New Campaign", "heading": "Softness", "heading_second_line": "in Comfort", "button_label": "Shop Collection" } },
-        "slide_2": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-2-v2.webp?v=1773908763&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-2-v2--mb.webp?v=1773979864&width=1440", "alt_text": "Pebble Little moments", "eyebrow": "Little Moments", "heading": "Wrapped", "heading_second_line": "in Warmth", "button_label": "Shop Collection" } },
-        "slide_3": { "type": "slide", "settings": { "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840", "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440", "alt_text": "Pebble Little campaign", "eyebrow": "New Campaign", "heading": "Softness", "heading_second_line": "in Comfort", "button_label": "Shop Collection" } }
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840",
+            "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440",
+            "alt_text": "Pebble Little campaign",
+            "slide_link": "",
+            "open_new_tab": false,
+            "eyebrow": "New Campaign",
+            "heading": "Softness",
+            "heading_second_line": "in Comfort",
+            "body": "",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-2-v2.webp?v=1773908763&width=3840",
+            "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-2-v2--mb.webp?v=1773979864&width=1440",
+            "alt_text": "Pebble Little moments",
+            "slide_link": "",
+            "open_new_tab": false,
+            "eyebrow": "Little Moments",
+            "heading": "Wrapped",
+            "heading_second_line": "in Warmth",
+            "body": "",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "desktop_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2.webp?v=1773908714&width=3840",
+            "mobile_image_url": "https://pebble-little.myshopify.com/cdn/shop/files/slide-1-v2--mb.webp?v=1773914127&width=1440",
+            "alt_text": "Pebble Little campaign",
+            "slide_link": "",
+            "open_new_tab": false,
+            "eyebrow": "New Campaign",
+            "heading": "tee",
+            "heading_second_line": "tttttt",
+            "body": "",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "text_color": "#ffffff"
+          }
+        }
       },
-      "block_order": ["slide_1", "slide_2", "slide_3"],
-      "settings": { "desktop_height": 1040, "mobile_height": 560, "content_width": 360, "content_position": "left", "mobile_content_position": "center", "autoplay": true, "autoplay_delay": 5, "transition_speed": 300, "show_navigation": true, "show_pagination": true, "overlay_color": "#000000", "overlay_opacity": 10 }
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "desktop_height": 1040,
+        "mobile_height": 560,
+        "font_family": "bricolage_grotesque_n5",
+        "content_width": 360,
+        "content_position": "left",
+        "mobile_content_position": "center",
+        "autoplay": true,
+        "autoplay_delay": 5,
+        "transition_speed": 300,
+        "show_navigation": true,
+        "show_pagination": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 10
+      }
     }
   },
-  "order": ["pebble_slider"]
+  "order": [
+    "pebble_slider"
+  ]
 }
