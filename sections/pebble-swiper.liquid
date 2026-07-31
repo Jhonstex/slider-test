@@ -168,6 +168,9 @@
   inset: 0;
   width: 100%;
   max-width: none;
+  opacity: 1;
+  transition: opacity var(--pebble-slide-speed) linear;
+  will-change: opacity;
 }
 
 .pebble-swiper__media-link {
@@ -208,6 +211,14 @@
   height: calc(100% - 84px - var(--pebble-content-top-offset));
   margin-top: var(--pebble-content-top-offset);
   padding: 40px var(--pebble-page-padding);
+  opacity: 1;
+  transition: opacity var(--pebble-slide-speed) linear;
+  will-change: opacity;
+}
+
+.pebble-swiper.is-dragging .pebble-swiper__media,
+.pebble-swiper.is-dragging .pebble-swiper__content-wrap {
+  transition: none;
 }
 
 .pebble-swiper--left .pebble-swiper__content-wrap { justify-content: flex-start; }
@@ -555,10 +566,28 @@
         dragResetTimer = null;
       }
     }
+    function getDragLayers(slide) {
+      return [
+        slide.querySelector('.pebble-swiper__media'),
+        slide.querySelector('.pebble-swiper__content-wrap')
+      ];
+    }
+    function setDragOpacity(slide, opacity) {
+      slide.style.opacity = '1';
+      getDragLayers(slide).forEach(function (layer) {
+        if (layer) layer.style.opacity = String(opacity);
+      });
+    }
+    function clearDragOpacity(slide) {
+      slide.style.removeProperty('opacity');
+      getDragLayers(slide).forEach(function (layer) {
+        if (layer) layer.style.removeProperty('opacity');
+      });
+    }
     function clearDragStyles() {
       slides.forEach(function (slide) {
         slide.classList.remove('is-drag-target');
-        slide.style.removeProperty('opacity');
+        clearDragOpacity(slide);
       });
       root.classList.remove('is-dragging');
     }
@@ -570,19 +599,19 @@
       if (nextTargetIndex === dragTargetIndex) return;
       if (dragTargetIndex >= 0) {
         slides[dragTargetIndex].classList.remove('is-drag-target');
-        slides[dragTargetIndex].style.removeProperty('opacity');
+        clearDragOpacity(slides[dragTargetIndex]);
       }
       dragTargetIndex = nextTargetIndex;
       slides[dragTargetIndex].classList.add('is-drag-target');
-      slides[dragTargetIndex].style.opacity = '0';
+      setDragOpacity(slides[dragTargetIndex], 0);
     }
     function renderDrag(distanceX) {
       var sliderWidth = root.getBoundingClientRect().width || 1;
       var direction = distanceX < 0 ? 1 : -1;
       setDragTarget(direction);
       dragProgress = Math.min(Math.abs(distanceX) / sliderWidth, 1);
-      slides[activeIndex].style.opacity = String(1 - dragProgress);
-      slides[dragTargetIndex].style.opacity = String(dragProgress);
+      setDragOpacity(slides[activeIndex], 1 - dragProgress);
+      setDragOpacity(slides[dragTargetIndex], dragProgress);
     }
     function settleDrag(advance) {
       var previousIndex = activeIndex;
@@ -597,14 +626,14 @@
         slides[activeIndex].classList.remove('is-drag-target');
         slides[activeIndex].setAttribute('aria-hidden', 'false');
         window.requestAnimationFrame(function () {
-          slides[previousIndex].style.opacity = '0';
-          slides[activeIndex].style.opacity = '1';
+          setDragOpacity(slides[previousIndex], 0);
+          setDragOpacity(slides[activeIndex], 1);
         });
         updateCounter();
       } else if (targetIndex >= 0) {
         window.requestAnimationFrame(function () {
-          slides[activeIndex].style.opacity = '1';
-          slides[targetIndex].style.opacity = '0';
+          setDragOpacity(slides[activeIndex], 1);
+          setDragOpacity(slides[targetIndex], 0);
         });
       }
       dragResetTimer = window.setTimeout(function () {
