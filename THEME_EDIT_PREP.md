@@ -250,3 +250,12 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Nút disabled giữ opacity `0.5` và con trỏ `not-allowed`, không khóa hover bằng `pointer-events` để giống demo.
 - Bổ sung trạng thái tương đương cho bàn phím bằng `:focus-visible` và tắt transition khi người dùng bật `prefers-reduced-motion`.
 - Backup trước cập nhật: `backup/pre-category-button-hover-20260802`, trỏ tới commit `ced6af5`.
+
+## 14. Sửa carousel Categories full-bleed (2026-08-02)
+
+- Đối chiếu ảnh người dùng gửi và đo trực tiếp demo ở viewport `1904px`.
+- Page-width của carousel là `1440px`, bắt đầu tại khoảng `x = 224px`, nhưng viewport dùng `overflow: visible`.
+- Sau một lần Next, track dịch `-290px`; card đầu đi tới khoảng `x = -65px` và chỉ bị cắt tại mép màn hình, không bị cắt tại padding page-width.
+- Đổi viewport desktop/tablet sang `overflow: visible`; section ngoài vẫn `overflow: hidden` để clipping đúng tại mép màn hình.
+- Mobile tiếp tục dùng vùng cuộn ngang riêng và ẩn overflow dọc để giữ swipe tự nhiên.
+- Backup trước cập nhật: `backup/pre-category-full-bleed-20260802`, trỏ tới commit `6ac8cf2`.
