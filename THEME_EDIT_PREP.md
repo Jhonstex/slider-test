@@ -231,3 +231,13 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - `templates/index.json`
 - `locales/en.default.json`
 - `THEME_EDIT_PREP.md`
+
+## 12. Sửa hiệu ứng section 2 phủ lên slider khi cuộn (2026-08-02)
+
+- Kiểm tra lại trực tiếp storefront Pebble theo từng mốc scroll trên desktop và mobile.
+- Xác định demo dùng `position: sticky` cho toàn bộ slideshow, không chỉ dùng margin âm giữa hai section.
+- Desktop giữ slider tại `top: 0`; mobile giữ tại `top: 60px` để nằm ngay dưới mobile header.
+- Slideshow nằm ở lớp `z-index: -1` trong stacking context của `#MainContent`; `Pebble categories` tiếp tục cuộn ở lớp phía trên và phủ dần lên ảnh/text slider.
+- Giữ nguyên overlap ban đầu: `34px` desktop và `18px` mobile.
+- Không thay đổi autoplay, drag cross-fade, pagination hoặc nội dung ba slide.
+- Backup trước cập nhật: `backup/pre-sticky-overlap-20260802`, trỏ tới commit `9ce8be0`.

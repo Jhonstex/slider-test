@@ -85,9 +85,18 @@
 
 {% stylesheet %}
 .section-pebble-swiper {
+  position: sticky;
+  top: 0;
+  z-index: -1;
   width: 100vw;
   max-width: none;
   margin-inline: calc(50% - 50vw);
+  overflow: clip;
+}
+
+body.template-index #MainContent {
+  position: relative;
+  z-index: 1;
   overflow: clip;
 }
 
@@ -441,6 +450,7 @@
 }
 
 @media (max-width: 767px) {
+  .section-pebble-swiper { top: 60px; }
   .pebble-swiper { --pebble-content-top-offset: 90px; }
   .pebble-swiper__container,
   .pebble-swiper .swiper-wrapper { height: min(var(--pebble-mobile-height), 154.666667vw, 100dvh); }
