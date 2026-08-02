@@ -241,3 +241,12 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Giữ nguyên overlap ban đầu: `34px` desktop và `18px` mobile.
 - Không thay đổi autoplay, drag cross-fade, pagination hoặc nội dung ba slide.
 - Backup trước cập nhật: `backup/pre-sticky-overlap-20260802`, trỏ tới commit `9ce8be0`.
+
+## 13. Đồng bộ hover hai nút carousel Categories (2026-08-02)
+
+- Kiểm tra DOM, computed style và stylesheet công khai của hai nút Previous/Next trên demo Pebble.
+- Nút có kích thước `44px`, bo tròn hoàn toàn, icon `16px` và viền đen opacity `20%`.
+- Hover dùng lớp `::before` màu đen mở rộng từ trái sang phải trong `300ms`; mũi tên chuyển sang trắng và viền chuyển thành đen.
+- Nút disabled giữ opacity `0.5` và con trỏ `not-allowed`, không khóa hover bằng `pointer-events` để giống demo.
+- Bổ sung trạng thái tương đương cho bàn phím bằng `:focus-visible` và tắt transition khi người dùng bật `prefers-reduced-motion`.
+- Backup trước cập nhật: `backup/pre-category-button-hover-20260802`, trỏ tới commit `ced6af5`.

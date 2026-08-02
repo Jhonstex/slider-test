@@ -46,8 +46,8 @@
         </div>
         <div class="pebble-categories__controls" data-category-controls>
           <div class="pebble-categories__progress" aria-hidden="true"><span data-category-progress></span></div>
-          <button type="button" data-category-prev aria-label="{{ 'general.previous' | t }}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 16.25 6.25 10l6.25-6.25"/></svg></button>
-          <button type="button" data-category-next aria-label="{{ 'general.next' | t }}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 3.75 6.25 6.25-6.25 6.25"/></svg></button>
+          <button type="button" data-category-prev aria-label="{{ 'general.previous' | t }}"><span class="pebble-categories__control-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 16.25 6.25 10l6.25-6.25"/></svg></span></button>
+          <button type="button" data-category-next aria-label="{{ 'general.next' | t }}"><span class="pebble-categories__control-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 3.75 6.25 6.25-6.25 6.25"/></svg></span></button>
         </div>
       </div>
     {% endfor %}
@@ -76,10 +76,17 @@
 .pebble-category-card__title { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0 0; font-family: inherit; font-size: 16px; font-weight: 700; line-height: 26px; }
 .pebble-category-card__title sup { position: static; color: #555; font-size: 15px; font-weight: 500; line-height: 20px; }
 .pebble-categories__controls { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-height: 76px; }
-.pebble-categories__controls button { display: grid; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid #1a1a1a; border-radius: 50%; background: transparent; color: #0a0a0a; cursor: pointer; transition: opacity .2s ease, background .2s ease, color .2s ease; }
-.pebble-categories__controls button:hover { background: #0a0a0a; color: #fff; }
-.pebble-categories__controls button:disabled { opacity: .5; pointer-events: none; }
-.pebble-categories__controls svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pebble-categories__controls button { position: relative; z-index: 0; isolation: isolate; display: grid; width: 44px; height: 44px; padding: 0; overflow: hidden; place-items: center; border: 1px solid rgb(0 0 0 / 20%); border-radius: 50%; background: transparent; color: #000; cursor: pointer; transition: background-color .35s, color .35s, border-color .35s, opacity .35s, transform .35s; }
+.pebble-categories__controls button::before { position: absolute; z-index: -1; top: -1px; bottom: -1px; left: -1px; width: 0; border-radius: 50%; background: #000; content: ''; transition: width .3s; }
+.pebble-categories__controls button:disabled { opacity: .5; cursor: not-allowed; }
+.pebble-categories__control-icon { display: flex; width: 16px; height: 16px; align-items: center; justify-content: center; overflow: hidden; }
+.pebble-categories__controls svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) and (pointer: fine) {
+  .pebble-categories__controls button:hover { border-color: #000; color: #fff; }
+  .pebble-categories__controls button:hover::before { width: calc(100% + 2px); }
+}
+.pebble-categories__controls button:focus-visible { border-color: #000; color: #fff; outline: 2px solid #000; outline-offset: 2px; }
+.pebble-categories__controls button:focus-visible::before { width: calc(100% + 2px); }
 .pebble-categories__progress { position: relative; width: 140px; height: 2px; margin-right: 8px; overflow: hidden; background: #e5e5e5; }
 .pebble-categories__progress span { position: absolute; inset: 0; background: #111; transform: scaleX(.5); transform-origin: left; transition: transform .65s cubic-bezier(.16,1,.3,1); }
 [data-pebble-reveal] { opacity: 0; transform: translateY(25px); transition: opacity 1.5s cubic-bezier(.16,1,.3,1), transform 1.5s cubic-bezier(.16,1,.3,1); }
@@ -106,7 +113,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pebble-categories__panel, .pebble-categories__track, [data-pebble-reveal], .pebble-category-card__image { transition: none !important; }
+  .pebble-categories__panel, .pebble-categories__track, .pebble-categories__controls button, .pebble-categories__controls button::before, [data-pebble-reveal], .pebble-category-card__image { transition: none !important; }
 }
 {% endstylesheet %}
 
