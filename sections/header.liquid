@@ -1,59 +1,213 @@
-<header class="site-header" data-section-id="{{ section.id }}">
-  <div class="site-header__announcement" aria-label="Announcement">
-    <span>{{ section.settings.announcement_left }}</span>
-    <span>{{ section.settings.announcement_center }}</span>
-    <span>{{ section.settings.announcement_right }}</span>
+{%- assign header_id = 'pebble-header-' | append: section.id -%}
+{%- assign header_font = section.settings.font_family -%}
+{%- assign header_font_bold = header_font | font_modify: 'weight', '700' -%}
+
+{% style %}
+  {{ header_font | font_face: font_display: 'swap' }}
+  {{ header_font_bold | font_face: font_display: 'swap' }}
+  #{{ header_id }} { --pebble-header-font: {{ header_font.family }}, {{ header_font.fallback_families }}; }
+{% endstyle %}
+
+<div id="{{ header_id }}" class="pebble-header-shell" data-pebble-header>
+  <header class="pebble-header" aria-label="{{ 'header.primary_navigation' | t }}">
+    <div class="pebble-header__surface">
+      <div class="pebble-header__mobile-left">
+        <button class="pebble-header__icon-button" type="button" data-pebble-menu-open aria-controls="PebbleMenu-{{ section.id }}" aria-expanded="false" aria-label="{{ 'header.open_menu' | t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+
+      <nav class="pebble-header__nav" aria-label="{{ 'header.primary_navigation' | t }}">
+        {% if section.settings.menu != blank %}
+          {% for link in section.settings.menu.links %}
+            <details class="pebble-header__nav-item{% if link.links == blank %} pebble-header__nav-item--plain{% endif %}">
+              <summary>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.5 4.5 3.5 3 3.5-3"/></svg>
+              </summary>
+              {% if link.links != blank %}
+                <div class="pebble-header__dropdown">
+                  {% for child_link in link.links %}<a href="{{ child_link.url }}">{{ child_link.title }}</a>{% endfor %}
+                </div>
+              {% endif %}
+            </details>
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}
+            <details class="pebble-header__nav-item pebble-header__nav-item--plain" {{ block.shopify_attributes }}>
+              <summary>
+                <a href="{{ block.settings.url | default: routes.all_products_collection_url }}">{{ block.settings.label }}</a>
+                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.5 4.5 3.5 3 3.5-3"/></svg>
+              </summary>
+            </details>
+          {% endfor %}
+        {% endif %}
+      </nav>
+
+      <a class="pebble-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 650 | image_tag: class: 'pebble-header__logo pebble-header__logo--desktop', loading: 'eager', alt: shop.name }}
+        {% elsif section.settings.logo_url != blank %}
+          <img class="pebble-header__logo pebble-header__logo--desktop" src="{{ section.settings.logo_url | escape }}" alt="{{ shop.name | escape }}" width="325" height="45" loading="eager">
+        {% else %}
+          <span class="pebble-header__brand-text">{{ shop.name }}</span>
+        {% endif %}
+        {% if section.settings.mobile_logo != blank %}
+          {{ section.settings.mobile_logo | image_url: width: 500 | image_tag: class: 'pebble-header__logo pebble-header__logo--mobile', loading: 'eager', alt: shop.name }}
+        {% elsif section.settings.mobile_logo_url != blank %}
+          <img class="pebble-header__logo pebble-header__logo--mobile" src="{{ section.settings.mobile_logo_url | escape }}" alt="{{ shop.name | escape }}" width="248" height="37" loading="eager">
+        {% endif %}
+      </a>
+
+      <div class="pebble-header__actions">
+        <form class="pebble-header__search" action="{{ routes.search_url }}" method="get" role="search">
+          <label class="visually-hidden" for="PebbleSearch-{{ section.id }}">{{ 'header.search' | t }}</label>
+          <input id="PebbleSearch-{{ section.id }}" type="search" name="q" placeholder="{{ section.settings.search_placeholder }}">
+          <button class="pebble-header__icon-button" type="submit" aria-label="{{ 'header.search' | t }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          </button>
+        </form>
+        <a class="pebble-header__icon-button pebble-header__account" href="{{ routes.account_url }}" aria-label="{{ 'header.account' | t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>
+        </a>
+        <a class="pebble-header__icon-button pebble-header__cart" href="{{ routes.cart_url }}" aria-label="{{ 'header.cart' | t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20.5 7H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          {% if cart.item_count > 0 %}<span class="pebble-header__cart-count">{{ cart.item_count }}</span>{% endif %}
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div id="PebbleMenu-{{ section.id }}" class="pebble-menu" data-pebble-menu hidden>
+    <button class="pebble-menu__backdrop" type="button" data-pebble-menu-close aria-label="{{ 'general.close' | t }}"></button>
+    <aside class="pebble-menu__panel" aria-label="{{ 'general.menu' | t }}">
+      <div class="pebble-menu__top">
+        <strong>{{ 'general.menu' | t }}</strong>
+        <button class="pebble-header__icon-button" type="button" data-pebble-menu-close aria-label="{{ 'general.close' | t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg>
+        </button>
+      </div>
+      <nav class="pebble-menu__links">
+        {% if section.settings.menu != blank %}
+          {% for link in section.settings.menu.links %}
+            <a href="{{ link.url }}"><span>{{ link.title }}</span><span aria-hidden="true">→</span></a>
+            {% for child_link in link.links %}<a class="pebble-menu__child" href="{{ child_link.url }}">{{ child_link.title }}</a>{% endfor %}
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}<a href="{{ block.settings.url | default: routes.all_products_collection_url }}"><span>{{ block.settings.label }}</span><span aria-hidden="true">→</span></a>{% endfor %}
+        {% endif %}
+      </nav>
+    </aside>
   </div>
-  <div class="site-header__inner page-width">
-    <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-      {% if settings.logo != blank %}
-        {{ settings.logo | image_url: width: 260 | image_tag: class: 'site-header__logo', alt: shop.name }}
-      {% else %}
-        <span>{{ settings.logo_text | escape }}</span>
-      {% endif %}
-    </a>
-    <nav class="site-header__nav" aria-label="Primary navigation">
-      {% if section.settings.menu != blank %}
-        {% for link in section.settings.menu.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-      {% else %}
-        {% for block in section.blocks %}
-          <a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
-        {% endfor %}
-      {% endif %}
-    </nav>
-    <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="MobileMenu">{{ 'header.open_menu' | t }}</button>
-  </div>
-  <div id="MobileMenu" class="mobile-menu page-width" hidden>
-    {% if section.settings.menu != blank %}
-      {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
-    {% else %}
-      {% for block in section.blocks %}<a href="{{ block.settings.url }}">{{ block.settings.label }}</a>{% endfor %}
-    {% endif %}
-  </div>
-</header>
+</div>
+
+{% stylesheet %}
+.pebble-header-shell { position: relative; z-index: 30; height: 0; font-family: var(--pebble-header-font, Arial, sans-serif); }
+.pebble-header { position: absolute; top: 30px; left: 0; width: 100%; padding-inline: clamp(16px, 3.472vw, 50px); color: #0a0a0a; transition: transform .25s ease-in-out, top .25s ease-in-out, padding .25s ease-in-out; }
+.pebble-header__surface { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 160px minmax(0, 1fr); align-items: center; min-height: 80px; padding: 16px 20px; gap: 12px; border-radius: 10px; background: #fff; transition: border-radius .1s ease-in-out, box-shadow .25s ease-in-out; }
+.pebble-header-shell.is-sticky .pebble-header { position: fixed; top: 0; padding-inline: 0; }
+.pebble-header-shell.is-sticky .pebble-header__surface { border-radius: 0; box-shadow: 0 6px 24px rgb(0 0 0 / 8%); }
+.pebble-header__nav { display: flex; align-items: center; min-width: 0; }
+.pebble-header__nav-item { position: relative; }
+.pebble-header__nav-item summary { display: flex; align-items: center; gap: 7px; min-height: 36px; padding: 6px 12px; list-style: none; cursor: pointer; font-size: 15px; font-weight: 500; line-height: 24px; white-space: nowrap; }
+.pebble-header__nav-item summary::-webkit-details-marker { display: none; }
+.pebble-header__nav-item summary > a { position: relative; z-index: 1; }
+.pebble-header__nav-item summary svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; transition: transform .25s ease; }
+.pebble-header__nav-item[open] summary svg { transform: rotate(180deg); }
+.pebble-header__dropdown { position: absolute; top: calc(100% + 14px); left: 0; display: grid; min-width: 210px; padding: 12px; border-radius: 10px; background: #fff; box-shadow: 0 12px 35px rgb(0 0 0 / 12%); }
+.pebble-header__dropdown a { padding: 9px 12px; border-radius: 7px; font-size: 14px; }
+.pebble-header__dropdown a:hover { background: #f3f3f3; }
+.pebble-header__brand { display: flex; align-items: center; justify-content: center; min-width: 0; }
+.pebble-header__logo { display: block; width: 160px; height: auto; }
+.pebble-header__logo--mobile { display: none; }
+.pebble-header__brand-text { font-size: 26px; font-weight: 700; white-space: nowrap; }
+.pebble-header__actions { display: flex; align-items: center; justify-content: flex-end; min-width: 0; }
+.pebble-header__search { display: flex; align-items: center; width: min(100%, 304px); }
+.pebble-header__search input { width: 100%; min-width: 0; height: 36px; padding: 6px 4px; border: 0; outline: 0; background: transparent; color: #555; font-family: inherit; font-size: 15px; font-weight: 500; line-height: 24px; }
+.pebble-header__search input::placeholder { color: #555; opacity: 1; }
+.pebble-header__icon-button { position: relative; display: grid; flex: 0 0 44px; width: 44px; height: 44px; padding: 0; place-items: center; border: 0; background: transparent; color: inherit; cursor: pointer; }
+.pebble-header__icon-button svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pebble-header__cart-count { position: absolute; top: 3px; right: 2px; display: grid; min-width: 17px; height: 17px; padding-inline: 4px; place-items: center; border-radius: 99px; background: #111; color: #fff; font-size: 10px; line-height: 1; }
+.pebble-header__mobile-left { display: none; }
+.pebble-menu { position: fixed; z-index: 60; inset: 0; }
+.pebble-menu[hidden] { display: none; }
+.pebble-menu__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(0 0 0 / 35%); }
+.pebble-menu__panel { position: relative; width: min(88vw, 390px); height: 100%; padding: 20px; background: #fff; animation: pebble-menu-in .45s cubic-bezier(.16,1,.3,1) both; }
+.pebble-menu__top { display: flex; align-items: center; justify-content: space-between; min-height: 52px; border-bottom: 1px solid #e8e8e8; font-size: 20px; }
+.pebble-menu__links { display: grid; padding-top: 18px; }
+.pebble-menu__links > a { display: flex; align-items: center; justify-content: space-between; min-height: 54px; border-bottom: 1px solid #ececec; font-size: 18px; font-weight: 600; }
+.pebble-menu__links > .pebble-menu__child { min-height: 38px; padding-left: 18px; font-size: 14px; font-weight: 500; }
+@keyframes pebble-menu-in { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+@media (max-width: 767px) {
+  .pebble-header-shell { height: 60px; }
+  .pebble-header { position: relative; top: 0; padding: 0; }
+  .pebble-header__surface { grid-template-columns: 60px 125px minmax(0, 1fr); min-height: 60px; padding: 0; gap: 15px; border-radius: 0; }
+  .pebble-header__mobile-left { display: block; height: 60px; border-right: 1px solid #e8e8e8; }
+  .pebble-header__mobile-left .pebble-header__icon-button { width: 60px; height: 60px; }
+  .pebble-header__nav { display: none; }
+  .pebble-header__brand { width: 125px; }
+  .pebble-header__logo--desktop { display: none; }
+  .pebble-header__logo--mobile { display: block; width: 125px; }
+  .pebble-header__brand-text { font-size: 21px; }
+  .pebble-header__actions { align-self: stretch; }
+  .pebble-header__search { width: 58px; height: 60px; border-left: 1px solid #e8e8e8; }
+  .pebble-header__search input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .pebble-header__search .pebble-header__icon-button,
+  .pebble-header__actions > .pebble-header__icon-button { flex-basis: 58px; width: 58px; height: 60px; border-right: 1px solid #e8e8e8; }
+  .pebble-header__actions > .pebble-header__icon-button:last-child { border-right: 0; }
+  .pebble-header-shell.is-sticky .pebble-header { position: fixed; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pebble-header, .pebble-header__surface, .pebble-menu__panel { transition: none; animation: none; }
+}
+{% endstylesheet %}
+
 {% javascript %}
-  const toggle = document.querySelector('.site-header__toggle');
-  const menu = document.querySelector('.mobile-menu');
-  if (toggle && menu) toggle.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); menu.hidden = open; });
+(function () {
+  function initHeader(root) {
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+    var menu = root.querySelector('[data-pebble-menu]');
+    var openButton = root.querySelector('[data-pebble-menu-open]');
+    var closeButtons = root.querySelectorAll('[data-pebble-menu-close]');
+    function setMenu(open) {
+      if (!menu || !openButton) return;
+      menu.hidden = !open;
+      openButton.setAttribute('aria-expanded', String(open));
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    }
+    openButton?.addEventListener('click', function () { setMenu(true); });
+    closeButtons.forEach(function (button) { button.addEventListener('click', function () { setMenu(false); }); });
+    function updateSticky() { root.classList.toggle('is-sticky', window.scrollY > 130); }
+    updateSticky();
+    window.addEventListener('scroll', updateSticky, { passive: true });
+  }
+  function boot() { document.querySelectorAll('[data-pebble-header]').forEach(initHeader); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  document.addEventListener('shopify:section:load', boot);
+})();
 {% endjavascript %}
+
 {% schema %}
 {
-  "name": "Header",
+  "name": "Pebble header",
   "settings": [
+    { "type": "font_picker", "id": "font_family", "label": "Typography", "default": "bricolage_grotesque_n5" },
     { "type": "link_list", "id": "menu", "label": "Menu" },
-    { "type": "text", "id": "announcement_left", "label": "Announcement left", "default": "KITO - Every day low price" },
-    { "type": "text", "id": "announcement_center", "label": "Announcement center", "default": "Free Delivery on orders over €120. Don't miss discount." },
-    { "type": "text", "id": "announcement_right", "label": "Announcement right", "default": "ENG   |   USD" }
+    { "type": "image_picker", "id": "logo", "label": "Desktop logo" },
+    { "type": "text", "id": "logo_url", "label": "Desktop logo URL fallback", "default": "https://pebble-little.myshopify.com/cdn/shop/files/logo.png?v=1762758319&width=325" },
+    { "type": "image_picker", "id": "mobile_logo", "label": "Mobile logo" },
+    { "type": "text", "id": "mobile_logo_url", "label": "Mobile logo URL fallback", "default": "https://pebble-little.myshopify.com/cdn/shop/files/logo-mobile.png?v=1762758320&width=248" },
+    { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "What are you looking for?" }
   ],
   "blocks": [
     { "type": "link", "name": "Navigation link", "settings": [
-      { "type": "text", "id": "label", "label": "Label", "default": "About" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Shop" },
       { "type": "url", "id": "url", "label": "Link" }
     ] }
   ],
-  "presets": [{ "name": "Header" }]
+  "presets": [{ "name": "Pebble header" }]
 }
 {% endschema %}
-

@@ -16,7 +16,11 @@
     "next": "Next"
   },
   "header": {
-    "open_menu": "Open menu"
+    "open_menu": "Open menu",
+    "primary_navigation": "Primary navigation",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart"
   },
   "footer": {
     "newsletter_label": "Email address",

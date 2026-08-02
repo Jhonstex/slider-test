@@ -13,13 +13,20 @@
   "sections": {
     "header": {
       "type": "header",
-      "disabled": true,
       "settings": {
         "menu": "",
-        "announcement_left": "KITO - Every day low price",
-        "announcement_center": "Free Delivery on orders over €120. Don't miss discount.",
-        "announcement_right": "ENG   |   USD"
-      }
+        "font_family": "bricolage_grotesque_n5",
+        "logo_url": "https://pebble-little.myshopify.com/cdn/shop/files/logo.png?v=1762758319&width=325",
+        "mobile_logo_url": "https://pebble-little.myshopify.com/cdn/shop/files/logo-mobile.png?v=1762758320&width=248",
+        "search_placeholder": "What are you looking for?"
+      },
+      "blocks": {
+        "shop": { "type": "link", "settings": { "label": "Shop", "url": "/collections/all" } },
+        "collections": { "type": "link", "settings": { "label": "Collections", "url": "/collections" } },
+        "pages": { "type": "link", "settings": { "label": "Pages", "url": "/pages/about-us" } },
+        "features": { "type": "link", "settings": { "label": "Features", "url": "/" } }
+      },
+      "block_order": ["shop", "collections", "pages", "features"]
     }
   },
   "order": [

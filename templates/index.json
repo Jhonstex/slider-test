@@ -84,9 +84,29 @@
         "overlay_color": "#000000",
         "overlay_opacity": 10
       }
+    },
+    "pebble_categories": {
+      "type": "pebble-categories",
+      "blocks": {
+        "boys_1": { "type": "category", "settings": { "audience": "boys", "title": "Sweaters", "count": "25", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-thumb-1-v2.webp?v=1773742835&width=720", "link": "/collections/sweaters" } },
+        "boys_2": { "type": "category", "settings": { "audience": "boys", "title": "Sets", "count": "30", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-2.jpg?v=1764574456&width=720", "link": "/collections/sets" } },
+        "boys_3": { "type": "category", "settings": { "audience": "boys", "title": "Outerwear", "count": "18", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-thumb-2-v2.webp?v=1773743075&width=720", "link": "/collections/outerwear" } },
+        "boys_4": { "type": "category", "settings": { "audience": "boys", "title": "Shirts", "count": "35", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/shirts-1.webp?v=1773903598&width=1194", "link": "/collections/shirts" } },
+        "boys_5": { "type": "category", "settings": { "audience": "boys", "title": "T-Shirts", "count": "21", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-thumb-3-v2.webp?v=1773743075&width=720", "link": "/collections/t-shirts" } },
+        "boys_6": { "type": "category", "settings": { "audience": "boys", "title": "Accessories", "count": "24", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-6.jpg?v=1762835765&width=720", "link": "/collections/accessories-1" } },
+        "boys_7": { "type": "category", "settings": { "audience": "boys", "title": "Pants", "count": "28", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-7.jpg?v=1762835765&width=720", "link": "/collections/pants" } },
+        "boys_8": { "type": "category", "settings": { "audience": "boys", "title": "Coats & Jackets", "count": "20", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-8.jpg?v=1762835767&width=720", "link": "/collections/coats-jackets" } },
+        "girls_1": { "type": "category", "settings": { "audience": "girls", "title": "Sweaters", "count": "20", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/sweaters-1.webp?v=1773903442&width=1194", "link": "/collections/sweaters-1" } },
+        "girls_2": { "type": "category", "settings": { "audience": "girls", "title": "Dresses", "count": "16", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-10.jpg?v=1762843745&width=720", "link": "/collections/dresses" } },
+        "girls_3": { "type": "category", "settings": { "audience": "girls", "title": "Accessories", "count": "24", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/bags-1.webp?v=1773903442&width=1194", "link": "/collections/accessories-2" } },
+        "girls_4": { "type": "category", "settings": { "audience": "girls", "title": "Outerwear", "count": "18", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-12.jpg?v=1762843745&width=720", "link": "/collections/outerwear-2" } },
+        "girls_5": { "type": "category", "settings": { "audience": "girls", "title": "Bags", "count": "21", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-13.jpg?v=1762843744&width=720", "link": "/collections/bags" } },
+        "girls_6": { "type": "category", "settings": { "audience": "girls", "title": "Skirts", "count": "22", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-14.jpg?v=1762843744&width=720", "link": "/collections/skirts" } },
+        "girls_7": { "type": "category", "settings": { "audience": "girls", "title": "Shoes", "count": "23", "image_url": "https://pebble-little.myshopify.com/cdn/shop/files/collection-tasb-15.jpg?v=1762843744&width=720", "link": "/collections/shoes" } }
+      },
+      "block_order": ["boys_1", "boys_2", "boys_3", "boys_4", "boys_5", "boys_6", "boys_7", "boys_8", "girls_1", "girls_2", "girls_3", "girls_4", "girls_5", "girls_6", "girls_7"],
+      "settings": { "font_family": "bricolage_grotesque_n5", "heading": "Explore Categories", "boys_label": "Boy’s", "girls_label": "Girl’s" }
     }
   },
-  "order": [
-    "pebble_slider"
-  ]
+  "order": ["pebble_slider", "pebble_categories"]
 }
