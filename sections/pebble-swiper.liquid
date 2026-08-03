@@ -674,13 +674,13 @@ body.template-index #MainContent {
       resetPointerState();
       restartAutoplay();
     }
-    function showSlide(index, stopAutoplay) {
+    function showSlide(index, shouldStopAutoplay) {
       if (slides.length < 2) return;
       var nextIndex = normalizeIndex(index);
       if (nextIndex === activeIndex) return;
       clearDragReset();
       clearDragStyles();
-      if (stopAutoplay) stopAutoplay();
+      if (shouldStopAutoplay) stopAutoplay();
       slides[activeIndex].classList.remove('is-active');
       slides[activeIndex].setAttribute('aria-hidden', 'true');
       activeIndex = nextIndex;
@@ -688,7 +688,7 @@ body.template-index #MainContent {
       slides[activeIndex].setAttribute('aria-hidden', 'false');
       updateCounter();
       animateProgress();
-      if (!stopAutoplay) scheduleAutoplay();
+      if (!shouldStopAutoplay) scheduleAutoplay();
     }
     if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, true); });
     if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, true); });
