@@ -690,8 +690,8 @@ body.template-index #MainContent {
       animateProgress();
       if (!shouldStopAutoplay) scheduleAutoplay();
     }
-    if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, true); });
-    if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, true); });
+    if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, false); });
+    if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, false); });
     root.addEventListener('pointerdown', function (event) {
       if (event.target.closest('a, button')) return;
       if (slides.length < 2 || event.button !== 0) return;
