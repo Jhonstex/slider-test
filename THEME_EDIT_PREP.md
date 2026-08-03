@@ -385,6 +385,8 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 ## 16. Triển khai lại Header Helix theo ghi chú (2026-08-04)
 
+> Ghi chú: mục này mô tả implementation trước đó. Implementation đó đã được thay thế bằng rebuild sạch ở mục 17.
+
 ### Đã triển khai
 
 - Thay lại `sections/header.liquid` theo cấu trúc header Helix đã phân tích:
@@ -453,3 +455,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Theme Check cục bộ: `0` offense.
 - `git diff --check`: không có whitespace error.
 - Shopify validator từ xa chưa chạy vì sẽ gửi code theme lên dịch vụ bên ngoài và chưa có quyền riêng cho việc đó.
+
+### Commit và backup của bản rebuild
+
+- Commit trên `main`: `ba495a314690131b26a2abfe4df04f8950bb12f5`.
+- Link commit: https://github.com/Jhonstex/slider-test/commit/ba495a314690131b26a2abfe4df04f8950bb12f5
+- Backup trước khi xóa header cũ: `backup/pre-header-rebuild-20260804`.
+- Link backup: https://github.com/Jhonstex/slider-test/tree/backup/pre-header-rebuild-20260804

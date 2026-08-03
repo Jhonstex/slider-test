@@ -461,8 +461,10 @@
 </div>
 
 {% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
+
   #{{ helix_header_id }} {
-    --helix-font: {% if section.settings.font_family != blank %}{{ section.settings.font_family.family }}, {{ section.settings.font_family.fallback_families }}{% else %}'Figtree', 'Open Sans', Arial, sans-serif{% endif %};
+    --helix-font: 'Figtree', {% if section.settings.font_family != blank %}{{ section.settings.font_family.family }}, {{ section.settings.font_family.fallback_families }}{% else %}'Open Sans', Arial, sans-serif{% endif %};
   }
 {% endstyle %}
 
