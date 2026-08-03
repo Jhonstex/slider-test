@@ -460,5 +460,6 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 - Commit trên `main`: `ba495a314690131b26a2abfe4df04f8950bb12f5`.
 - Link commit: https://github.com/Jhonstex/slider-test/commit/ba495a314690131b26a2abfe4df04f8950bb12f5
+- Commit hoàn thiện hiện tại trên `main` (bao gồm typography Figtree và cập nhật note): `9020d77`.
 - Backup trước khi xóa header cũ: `backup/pre-header-rebuild-20260804`.
 - Link backup: https://github.com/Jhonstex/slider-test/tree/backup/pre-header-rebuild-20260804
