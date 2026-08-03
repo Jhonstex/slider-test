@@ -413,6 +413,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 ### Trạng thái
 
-- Đã chỉnh code trong workspace local.
-- Chưa push GitHub và chưa publish theme Shopify.
-- Cần kiểm tra trực quan trong Theme Editor ở `1440px`, `1024px`, `768px`, `390px` và `375px` sau khi đồng bộ lên theme draft.
+- Đã fetch/pull bản mới nhất từ `origin/main` trước khi hợp nhất thay đổi.
+- Các commit remote mới về slider/button đã được merge, không ghi đè.
+- Commit đã push lên `main`: `74a199b73ec0fb62c36b763abd040243df17e264`.
+- Link commit: https://github.com/Jhonstex/slider-test/commit/74a199b73ec0fb62c36b763abd040243df17e264
+- Backup trước Header Helix: `backup/pre-helix-header-20260804`.
+- Link backup: https://github.com/Jhonstex/slider-test/tree/backup/pre-helix-header-20260804
+- Shopify theme draft có thể nhận đồng bộ từ `main`; cần kiểm tra trực quan ở `1440px`, `1024px`, `768px`, `390px` và `375px`.
