@@ -88,9 +88,9 @@
   position: sticky;
   top: 0;
   z-index: -1;
-  width: 100vw;
+  width: 100%;
   max-width: none;
-  margin-inline: calc(50% - 50vw);
+  margin-inline: 0;
   overflow: clip;
 }
 
@@ -103,6 +103,7 @@ body.template-index #MainContent {
 .pebble-swiper {
   --pebble-page-padding: 16px;
   --pebble-content-top-offset: 110px;
+  container-type: inline-size;
   width: 100%;
   max-width: none;
   color: var(--pebble-text-color, #fff);
@@ -114,7 +115,7 @@ body.template-index #MainContent {
 .pebble-swiper .swiper-wrapper {
   width: 100%;
   max-width: none;
-  height: min(var(--pebble-height), 52.083333vw, 100dvh);
+  height: min(var(--pebble-height), 52.083333cqw, 100dvh);
 }
 
 .pebble-swiper__container {
@@ -373,7 +374,7 @@ body.template-index #MainContent {
 
 @media (hover: hover) and (pointer: fine) {
   .pebble-swiper__button:hover .pebble-swiper__button-reveal {
-    clip-path: circle(150% at calc(100% - 25px) 50%);
+    clip-path: circle(180% at calc(100% - 25px) 50%);
   }
   .pebble-swiper__button:hover .pebble-swiper__button-icon svg {
     animation: pebble-button-arrow 1s infinite;
@@ -381,7 +382,7 @@ body.template-index #MainContent {
 }
 
 .pebble-swiper__button:focus-visible .pebble-swiper__button-reveal {
-  clip-path: circle(150% at calc(100% - 25px) 50%);
+  clip-path: circle(180% at calc(100% - 25px) 50%);
 }
 
 .pebble-swiper__controls {
@@ -453,7 +454,7 @@ body.template-index #MainContent {
   .section-pebble-swiper { top: 60px; }
   .pebble-swiper { --pebble-content-top-offset: 90px; }
   .pebble-swiper__container,
-  .pebble-swiper .swiper-wrapper { height: min(var(--pebble-mobile-height), 154.666667vw, 100dvh); }
+  .pebble-swiper .swiper-wrapper { height: min(var(--pebble-mobile-height), 154.666667cqw, 100dvh); }
   .pebble-swiper__content-wrap {
     align-items: flex-end;
     height: calc(100% - 84px - var(--pebble-content-top-offset));
@@ -671,13 +672,13 @@ body.template-index #MainContent {
       resetPointerState();
       restartAutoplay();
     }
-    function showSlide(index, stopAutoplay) {
+    function showSlide(index, shouldStopAutoplay) {
       if (slides.length < 2) return;
       var nextIndex = normalizeIndex(index);
       if (nextIndex === activeIndex) return;
       clearDragReset();
       clearDragStyles();
-      if (stopAutoplay) stopAutoplay();
+      if (shouldStopAutoplay) stopAutoplay();
       slides[activeIndex].classList.remove('is-active');
       slides[activeIndex].setAttribute('aria-hidden', 'true');
       activeIndex = nextIndex;
@@ -685,10 +686,10 @@ body.template-index #MainContent {
       slides[activeIndex].setAttribute('aria-hidden', 'false');
       updateCounter();
       animateProgress();
-      if (!stopAutoplay) scheduleAutoplay();
+      if (!shouldStopAutoplay) scheduleAutoplay();
     }
-    if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, true); });
-    if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, true); });
+    if (previousButton) previousButton.addEventListener('click', function () { showSlide(activeIndex - 1, false); });
+    if (nextButton) nextButton.addEventListener('click', function () { showSlide(activeIndex + 1, false); });
     root.addEventListener('pointerdown', function (event) {
       if (event.target.closest('a, button')) return;
       if (slides.length < 2 || event.button !== 0) return;
