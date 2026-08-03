@@ -420,3 +420,36 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Backup trước Header Helix: `backup/pre-helix-header-20260804`.
 - Link backup: https://github.com/Jhonstex/slider-test/tree/backup/pre-helix-header-20260804
 - Shopify theme draft có thể nhận đồng bộ từ `main`; cần kiểm tra trực quan ở `1440px`, `1024px`, `768px`, `390px` và `375px`.
+
+## 17. Rebuild Header Helix từ đầu (2026-08-04)
+
+### Lý do rebuild
+
+- Bản header trước chưa khớp reference ở lớp overlay/sticky, kích thước grid desktop/mobile và hành vi mega menu.
+- Trước khi xóa code cũ đã tạo backup hiện tại trên GitHub: `backup/pre-header-rebuild-20260804`.
+
+### Reference đã đối chiếu
+
+- Announcement bar cao khoảng `39px`, typography Figtree `14px/22.4px`, phần amount `5.000.000₫` được bold.
+- Desktop header cao khoảng `80px`, inner có lề ngang `50px` ở viewport `1265px`, grid ba phần `1fr / 110px / 1fr`.
+- Desktop nav: `Women`, `Men`, `Pages`, `Find your shoes`; center logo rộng `110px`; bên phải là `VND ₫`, Search, Account, Cart.
+- Mobile header cao `56px`, grid hamburger / logo `90px` / Search + Cart; Account và Currency nằm trong mobile menu.
+- Mega menu dùng mở theo hover, panel height/opacity reveal khoảng `0.3s`, item stagger, underline nav và chevron rotate.
+- Sticky desktop luôn hiện; mobile ẩn khi scroll xuống và hiện lại khi scroll lên với transition khoảng `0.5s cubic-bezier(.6, 0, .4, 1)`.
+
+### Thay đổi đã làm
+
+- Xóa implementation header cũ trong `sections/header.liquid` và dựng lại theo cấu trúc mới, không thay đổi slider/categories/footer.
+- Bổ sung six icon snippets dùng chung: `helix-icon-chevron`, `helix-icon-search`, `helix-icon-account`, `helix-icon-cart`, `helix-icon-menu`, `helix-icon-close`.
+- Giữ option logo/image picker, overlay, sticky, announcement, mega menu promo, localization, search drawer, cart drawer và mobile menu.
+- Cập nhật `sections/header-group.json` để dùng mặc định Helix: `Helix Theme`, `/collections/all-womens`, `/collections/all-mens`, `/pages/find-your-shoes`, `/blogs/news`.
+- Giới hạn schema header còn đúng `40` settings theo giới hạn Theme Check; các collection link mặc định dùng `routes.collections_url`.
+
+### Kiểm tra sau rebuild
+
+- Liquid AST: hợp lệ (`Document`).
+- Schema section: JSON hợp lệ, `40` settings, không có setting được tham chiếu nhưng chưa khai báo.
+- JavaScript: parse bằng `SourceTextModule` hợp lệ.
+- Theme Check cục bộ: `0` offense.
+- `git diff --check`: không có whitespace error.
+- Shopify validator từ xa chưa chạy vì sẽ gửi code theme lên dịch vụ bên ngoài và chưa có quyền riêng cho việc đó.
