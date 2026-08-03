@@ -259,3 +259,160 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Đổi viewport desktop/tablet sang `overflow: visible`; section ngoài vẫn `overflow: hidden` để clipping đúng tại mép màn hình.
 - Mobile tiếp tục dùng vùng cuộn ngang riêng và ẩn overflow dọc để giữ swipe tự nhiên.
 - Backup trước cập nhật: `backup/pre-category-full-bleed-20260802`, trỏ tới commit `6ac8cf2`.
+
+## 15. Ghi chú chuẩn bị edit Header Helix (2026-08-04)
+
+### Phạm vi và tài liệu tham chiếu
+
+- Storefront tham chiếu: https://helix-shoes-theme.myshopify.com/
+- Đã kiểm tra ở desktop và mobile; chưa chỉnh sửa code theme theo ghi chú này.
+- Mục tiêu khi edit: giữ đúng cấu trúc, trạng thái sticky, dropdown/drawer, overlay, typography và nhịp animation của header tham chiếu.
+- Không ghi lại thông tin đăng nhập trong repository; nội dung sản phẩm, logo và hình ảnh khi triển khai phải lấy từ setting/asset hợp lệ của theme hiện tại.
+
+### A. Cấu trúc desktop
+
+- Announcement bar cao khoảng `38px`, nền xanh nhạt.
+- Có hai message tự chuyển khoảng `5 giây/lần`:
+  - `Free shipping for all orders over 5.000.000₫`
+  - `Receive 20% off your first order. Shop now`
+- Announcement bar có nút Previous/Next; text đổi bằng fade kết hợp reveal theo chiều dọc.
+- Header chính cao khoảng `80px`, ban đầu overlay lên hero với nền trong suốt.
+- Bố cục header:
+  - Trái: `Women`, `Men`, `Pages`, `Find your shoes`.
+  - Giữa: logo Helix.
+  - Phải: chọn quốc gia/tiền tệ `Vietnam / VND ₫`, Search, Account và Cart.
+- Header desktop là sticky luôn (`header-sticky--always`), không biến mất khi cuộn xuống.
+- Khi scroll qua hero:
+  - Announcement bar cuộn khỏi màn hình.
+  - Header đổi sang thẻ trắng nổi, bo góc khoảng `16px`, có khoảng cách hai bên khoảng `50px` ở viewport `1440px`.
+  - Logo, menu và icon chuyển sang màu tối; header giữ nguyên trên màn hình khi tiếp tục cuộn.
+
+### B. Mega menu Women/Men
+
+- Mở khi hover vào `Women` hoặc `Men`, chiếm toàn bộ chiều rộng màn hình.
+- Các nhóm nội dung cần giữ:
+  - Top picks, Best sellers, Trending, New arrivals, On sale.
+  - By activity: Hiking, Running, Training, Tennis, Lifestyle, Shop all.
+  - By feature: Cushioned, Waterproof, Water-resistant, Breathable, Windproof.
+- Có hai banner hình ảnh ở khu vực menu, đi kèm nội dung sale/favorites và nút `Shop now`.
+- Khi mở menu:
+  - Background của header mở rộng/đổi chiều cao khoảng `0.3s`.
+  - Overlay cố định bên dưới header dùng nền tối `rgba(50, 50, 50, .5)` và `backdrop-filter: blur(20px)`.
+  - Khóa scroll của body.
+  - Các cột/menu item fade-in và dịch lên khoảng `15px`, có stagger delay khoảng `0.2–0.4s`.
+  - Chevron xoay `180deg` trong khoảng `0.5s` với easing dạng cubic-bezier.
+  - Underline của nav mở rộng trong khoảng `0.2s`.
+
+### C. Dropdown Pages và Currency
+
+- `Pages` mở dropdown trắng khoảng `270 × 260px`, bo góc `16px`, shadow nhẹ.
+- Nội dung Pages:
+  - About us
+  - Contact
+  - Faqs
+  - Store locations
+  - Recently viewed
+  - Our journal
+- Currency dropdown mở khi hover, kích thước quan sát được khoảng `330 × 443px`.
+- Có ô tìm quốc gia, cờ và danh sách 10 quốc gia: Australia, Belgium, Canada, France, Germany, Italy, Japan, Spain, United States, Vietnam.
+- Các dòng currency fade/slide vào theo stagger khoảng `0.4s`; chevron dùng cùng trạng thái xoay với nav.
+
+### D. Search và Cart drawer desktop
+
+- Search mở drawer trắng bên phải, panel rộng khoảng `550px`, inset khoảng `16px`.
+- Drawer dùng animation slide khoảng `0.5s`, easing gần `cubic-bezier(.7, 0, .2, 1)`.
+- Khi drawer mở, overlay tối kèm blur xuất hiện khoảng `0.7s`; body bị khóa scroll.
+- Search có input và Popular searches:
+  - Running shoes
+  - Trail running shoes
+  - Hiking shoes
+- Cart dùng cùng cơ chế drawer/overlay; trạng thái rỗng hiển thị `Your cart is empty` và ba nút `Trending`, `Best sellers`, `On sale`.
+
+### E. Cấu trúc mobile
+
+- Breakpoint quan sát được khoảng `990px`.
+- Header mobile cao khoảng `56px`, ban đầu vẫn có thể overlay lên hero.
+- Hàng đầu gồm:
+  - Trái: hamburger.
+  - Giữa: logo Helix khoảng `90 × 16px`.
+  - Phải: Search và Cart.
+- Account và currency được chuyển vào mobile menu.
+- Mobile menu là card trắng gần full màn hình, inset khoảng `8px`, bo góc `16px`; overlay phủ toàn viewport với nền tối và blur; body bị khóa scroll.
+- Menu mobile gồm: Women, Men, Pages, Find your shoes, Login, `VND ₫`, `English`.
+- Women/Men/Pages dùng accordion/details; submenu có nút back, nút close và chuyển cảnh khoảng `0.3s`.
+- Các nhóm `By activity` và `By feature` tiếp tục là accordion lồng nhau.
+- Submenu Pages phải giữ đủ 6 link như desktop.
+- VND mở panel danh sách quốc gia riêng; English mở panel ngôn ngữ riêng.
+
+### F. Search, Cart và sticky trên mobile
+
+- Search và Cart mở card gần full màn hình với cùng inset `8px`, bo góc `16px`, overlay blur và khóa body scroll.
+- Search input rộng khoảng `342px`, cao khoảng `44px`; popular search hiển thị dạng pill.
+- Cart rỗng giữ text và ba nút hành động giống desktop.
+- Drawer mobile chạy khoảng `0.5s`; overlay fade/blur khoảng `0.7s`.
+- Khi scroll xuống, header dịch lên khoảng `-51` đến `-62px` và ẩn.
+- Khi scroll lên, header xuất hiện lại, ghim ở đầu màn hình, nền trắng opacity `1`.
+- Transform dùng transition khoảng `0.5s` với easing gần `cubic-bezier(.6, 0, .4, 1)` và delay khoảng `0.2s`.
+- Có thêm mobile bottom dock cố định 6 cột ngoài header chính: `Home`, `Menu`, `Search`, `Shop`, `Cart`, `Account`; dock cũng có animation transform khoảng `0.5s` theo trạng thái scroll/active.
+
+### G. Hiệu ứng đặc biệt cần giữ khi triển khai
+
+- Header chuyển từ transparent overlay sang white floating header sau khi scroll.
+- Announcement text tự chuyển với fade + vertical reveal.
+- Mega menu có overlay blur, khóa body scroll, stagger item, xoay chevron và underline reveal.
+- Search/Cart dùng right drawer, overlay fade/blur và animation slide.
+- Mobile menu/submenu dùng card bo góc, accordion và chuyển cảnh back/forward.
+- Sticky mobile ẩn khi scroll xuống, hiện lại khi scroll lên.
+- Mobile bottom dock độc lập với header chính.
+- Tôn trọng `prefers-reduced-motion`; mọi trạng thái mở/đóng phải dùng button có label, focus rõ ràng và đóng được bằng `Esc`.
+
+### H. Checklist edit và QA
+
+- [ ] Xác nhận markup header hiện tại trước khi sửa; không làm hỏng `header-group` hoặc section slider.
+- [ ] Đối chiếu logo, font, font-weight, khoảng cách, màu, radius và icon ở desktop/mobile.
+- [ ] Kiểm tra header ở trạng thái top/transparent, sau scroll và khi scroll ngược lại.
+- [ ] Kiểm tra hover Women/Men, Pages, Currency và trạng thái đóng khi rời vùng hover.
+- [ ] Kiểm tra Search/Cart mở, đóng, overlay, khóa body scroll và focus.
+- [ ] Kiểm tra mobile menu, accordion, submenu back, close, currency/language panel.
+- [ ] Kiểm tra responsive tại tối thiểu `1440px`, `1024px`, `768px`, `390px` và `375px`.
+- [ ] Kiểm tra không che sai slider/section 2, không gây horizontal overflow và không làm hỏng autoplay slider.
+- [ ] Chạy Theme Check, kiểm tra JavaScript, `git diff --check`, tạo backup trước khi push.
+- [ ] Chỉ publish sau khi duyệt trực quan trên Shopify Theme Editor ở desktop, tablet và mobile.
+
+### Ghi chú ngoài header
+
+- Demo còn có tab khuyến mãi nổi dọc `Get 20% OFF` kèm nút close. Đây là widget global tùy chọn, không xem là phần bắt buộc của header; chỉ triển khai nếu theme hiện tại có yêu cầu tương ứng.
+
+## 16. Triển khai lại Header Helix theo ghi chú (2026-08-04)
+
+### Đã triển khai
+
+- Thay lại `sections/header.liquid` theo cấu trúc header Helix đã phân tích:
+  - Announcement bar gồm hai message, autoplay, Previous/Next và fade + vertical reveal.
+  - Header desktop overlay trên hero, logo giữa, nav Women/Men/Pages/Find your shoes và nhóm Currency/Search/Account/Cart.
+  - Sticky desktop chuyển thành white floating header sau khi scroll.
+  - Mega menu Women/Men với ba nhóm Top picks, By activity, By feature; overlay blur, khóa scroll, stagger item, underline và chevron rotation.
+  - Pages dropdown và Currency popover có animation, country search và localization form.
+  - Search drawer và Cart drawer bên phải, overlay blur, popular searches và empty-cart actions.
+  - Mobile header 56px với hamburger/logo/search/cart; mobile menu card, submenu back/close, accordion Women/Men/Pages, Currency và Language view.
+  - Mobile sticky ẩn khi scroll xuống, hiện khi scroll lên; bổ sung bottom dock sáu mục Home/Menu/Search/Shop/Cart/Account.
+  - Tôn trọng `prefers-reduced-motion`, focus state và phím `Esc`.
+- Cập nhật `sections/header-group.json` với cấu hình mặc định Helix và các URL/label tương ứng.
+- Cập nhật `locales/en.default.json` với các chuỗi accessibility và drawer/menu mới.
+- Logo và banner mega menu dùng `image_picker`; khi chưa upload asset, header dùng text/logo fallback an toàn thay vì phụ thuộc URL storefront demo.
+
+### Kiểm tra cục bộ
+
+- Liquid AST: hợp lệ.
+- Schema section: JSON hợp lệ, `43` settings.
+- Header group JSON: hợp lệ.
+- Locale JSON: hợp lệ sau khi loại phần comment metadata của file hiện có.
+- JavaScript: parse bằng `SourceTextModule` hợp lệ.
+- CSS trong `{% stylesheet %}` không còn chứa biến Liquid chưa render.
+- Shopify validator từ xa chưa chạy vì sẽ gửi nội dung theme lên dịch vụ bên ngoài và chưa có quyền riêng cho việc đó.
+
+### Trạng thái
+
+- Đã chỉnh code trong workspace local.
+- Chưa push GitHub và chưa publish theme Shopify.
+- Cần kiểm tra trực quan trong Theme Editor ở `1440px`, `1024px`, `768px`, `390px` và `375px` sau khi đồng bộ lên theme draft.

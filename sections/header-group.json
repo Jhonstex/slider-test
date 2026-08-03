@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "header",
   "name": "Header",
@@ -14,19 +5,50 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "",
         "font_family": "bricolage_grotesque_n5",
-        "logo_url": "https://pebble-little.myshopify.com/cdn/shop/files/logo.png?v=1762758319&width=325",
-        "mobile_logo_url": "https://pebble-little.myshopify.com/cdn/shop/files/logo-mobile.png?v=1762758320&width=248",
-        "search_placeholder": "What are you looking for?"
-      },
-      "blocks": {
-        "shop": { "type": "link", "settings": { "label": "Shop", "url": "/collections/all" } },
-        "collections": { "type": "link", "settings": { "label": "Collections", "url": "/collections" } },
-        "pages": { "type": "link", "settings": { "label": "Pages", "url": "/pages/about-us" } },
-        "features": { "type": "link", "settings": { "label": "Features", "url": "/" } }
-      },
-      "block_order": ["shop", "collections", "pages", "features"]
+        "logo": "",
+        "mobile_logo": "",
+        "logo_text": "Helix",
+        "overlay_header": true,
+        "sticky_header": true,
+        "overlay_text_color": "#ffffff",
+        "solid_text_color": "#111111",
+        "show_announcement": true,
+        "announcement_message_1": "Free shipping for all orders over 5.000.000₫",
+        "announcement_message_2": "Receive 20% off your first order. Shop now",
+        "announcement_interval": 5,
+        "announcement_background": "#dbe5dd",
+        "announcement_text_color": "#111111",
+        "women_label": "Women",
+        "women_url": "/collections/women",
+        "women_top_menu": "",
+        "women_activity_menu": "",
+        "women_feature_menu": "",
+        "women_banner": "",
+        "women_banner_title": "Find your favourites",
+        "women_banner_link": "",
+        "men_label": "Men",
+        "men_url": "/collections/men",
+        "men_top_menu": "",
+        "men_activity_menu": "",
+        "men_feature_menu": "",
+        "men_banner": "",
+        "men_banner_title": "The everyday edit",
+        "men_banner_link": "",
+        "pages_label": "Pages",
+        "pages_about_url": "/pages/about-us",
+        "pages_contact_url": "/pages/contact",
+        "pages_faq_url": "/pages/faqs",
+        "pages_store_url": "/pages/store-locations",
+        "pages_recent_url": "/pages/recently-viewed",
+        "pages_journal_url": "/blogs/journal",
+        "find_shoes_label": "Find your shoes",
+        "find_shoes_url": "/collections/all",
+        "search_placeholder": "What are you looking for?",
+        "trending_url": "/collections/trending",
+        "best_sellers_url": "/collections/best-sellers",
+        "sale_url": "/collections/sale"
+      }
     }
   },
   "order": [
