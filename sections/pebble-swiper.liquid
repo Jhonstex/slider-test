@@ -346,7 +346,8 @@ body.template-index #MainContent {
   background: #000;
   color: #fff;
   clip-path: circle(15px at calc(100% - 25px) 50%);
-  transition: clip-path .6s cubic-bezier(.4, 0, .2, 1);
+  will-change: clip-path;
+  transition: clip-path .45s cubic-bezier(.22, 1, .36, 1);
 }
 
 .pebble-swiper__button-icon {
@@ -372,11 +373,13 @@ body.template-index #MainContent {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .pebble-swiper__button:hover .pebble-swiper__button-reveal {
+  .pebble-swiper__button:hover .pebble-swiper__button-reveal,
+  .pebble-swiper__button:focus-visible .pebble-swiper__button-reveal {
     clip-path: circle(150% at calc(100% - 25px) 50%);
   }
-  .pebble-swiper__button:hover .pebble-swiper__button-icon svg {
-    animation: pebble-button-arrow 1s infinite;
+  .pebble-swiper__button:hover .pebble-swiper__button-icon svg,
+  .pebble-swiper__button:focus-visible .pebble-swiper__button-icon svg {
+    animation: pebble-button-arrow .65s cubic-bezier(.25, .46, .45, .94) both;
   }
 }
 
@@ -489,6 +492,7 @@ body.template-index #MainContent {
   .pebble-swiper__body,
   .pebble-swiper__button,
   .pebble-swiper__button-reveal { transition: none; }
+  .pebble-swiper__button-icon svg { animation: none !important; }
   .pebble-swiper__image,
   .pebble-swiper__placeholder { transform: none; }
 }
