@@ -486,7 +486,7 @@
   <div class="helix-header__mobile-menu" id="{{ helix_header_id }}-mobile-menu" data-helix-mobile-menu aria-hidden="true">
     <div class="helix-header__mobile-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'header.menu' | t }}" tabindex="-1">
       <div class="helix-header__mobile-menu-top">
-        <strong>{{ 'header.menu' | t }}</strong>
+        <a class="helix-header__mobile-menu-logo" href="{{ routes.root_url }}" aria-label="{{ helix_logo_text }}">{{ helix_logo_text }}</a>
         <button class="helix-header__close-button" type="button" data-helix-close-mobile aria-label="{{ 'general.close' | t }}">
           {% render 'helix-icon-close' %}
         </button>
@@ -512,23 +512,27 @@
                 <a href="{{ helix_womens_new_arrivals_url }}">New arrivals</a>
                 <a href="{{ helix_womens_sale_url }}">On sale</a>
               </div>
-              <div class="helix-header__mobile-submenu-group">
-                <p class="helix-header__mobile-submenu-label">By activity</p>
-                <a href="{{ helix_collections_url }}/womens-hiking">Hiking</a>
-                <a href="{{ helix_collections_url }}/women-s-running">Running</a>
-                <a href="{{ helix_collections_url }}/women-s-training">Training</a>
-                <a href="{{ helix_collections_url }}/womens-tennis">Tennis</a>
-                <a href="{{ helix_collections_url }}/womens-lifestyle">Lifestyle</a>
-                <a href="{{ helix_women_url }}">Shop all</a>
-              </div>
-              <div class="helix-header__mobile-submenu-group">
-                <p class="helix-header__mobile-submenu-label">By feature</p>
-                <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
-                <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
-                <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
-                <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
-                <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
-              </div>
+              <details class="helix-header__mobile-submenu-details">
+                <summary><span>By activity</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
+                <div class="helix-header__mobile-submenu-details-content">
+                  <a href="{{ helix_collections_url }}/womens-hiking">Hiking</a>
+                  <a href="{{ helix_collections_url }}/women-s-running">Running</a>
+                  <a href="{{ helix_collections_url }}/women-s-training">Training</a>
+                  <a href="{{ helix_collections_url }}/womens-tennis">Tennis</a>
+                  <a href="{{ helix_collections_url }}/womens-lifestyle">Lifestyle</a>
+                  <a href="{{ helix_women_url }}">Shop all</a>
+                </div>
+              </details>
+              <details class="helix-header__mobile-submenu-details">
+                <summary><span>By feature</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
+                <div class="helix-header__mobile-submenu-details-content">
+                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
+                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
+                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
+                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
+                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
+                </div>
+              </details>
             </div>
           </div>
         </details>
@@ -552,23 +556,27 @@
                 <a href="{{ helix_mens_new_arrivals_url }}">New arrivals</a>
                 <a href="{{ helix_mens_sale_url }}">On sale</a>
               </div>
-              <div class="helix-header__mobile-submenu-group">
-                <p class="helix-header__mobile-submenu-label">By activity</p>
-                <a href="{{ helix_collections_url }}/mens-hiking">Hiking</a>
-                <a href="{{ helix_collections_url }}/mens-running">Running</a>
-                <a href="{{ helix_collections_url }}/mens-training">Training</a>
-                <a href="{{ helix_collections_url }}/mens-tennis">Tennis</a>
-                <a href="{{ helix_collections_url }}/mens-lifestyle">Lifestyle</a>
-                <a href="{{ helix_men_url }}">Shop all</a>
-              </div>
-              <div class="helix-header__mobile-submenu-group">
-                <p class="helix-header__mobile-submenu-label">By feature</p>
-                <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
-                <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
-                <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
-                <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
-                <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
-              </div>
+              <details class="helix-header__mobile-submenu-details">
+                <summary><span>By activity</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
+                <div class="helix-header__mobile-submenu-details-content">
+                  <a href="{{ helix_collections_url }}/mens-hiking">Hiking</a>
+                  <a href="{{ helix_collections_url }}/mens-running">Running</a>
+                  <a href="{{ helix_collections_url }}/mens-training">Training</a>
+                  <a href="{{ helix_collections_url }}/mens-tennis">Tennis</a>
+                  <a href="{{ helix_collections_url }}/mens-lifestyle">Lifestyle</a>
+                  <a href="{{ helix_men_url }}">Shop all</a>
+                </div>
+              </details>
+              <details class="helix-header__mobile-submenu-details">
+                <summary><span>By feature</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
+                <div class="helix-header__mobile-submenu-details-content">
+                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
+                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
+                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
+                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
+                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
+                </div>
+              </details>
             </div>
           </div>
         </details>
@@ -613,6 +621,20 @@
             {% endfor %}
           </div>
         </details>
+        <div class="helix-header__mobile-socials" aria-label="Social links">
+          <a href="{{ routes.root_url }}" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z" fill="currentColor"></path></svg>
+          </a>
+          <a href="{{ routes.root_url }}" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"></circle></svg>
+          </a>
+          <a href="{{ routes.root_url }}" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 8.2a2.8 2.8 0 0 0-2-2C17.2 5.7 12 5.7 12 5.7s-5.2 0-7 .5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2.5 12 29 29 0 0 0 3 15.8a2.8 2.8 0 0 0 2 2c1.8.5 7 .5 7 .5s5.2 0 7-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-3.8 29 29 0 0 0-.5-3.8ZM10 15.2V8.8l5.5 3.2-5.5 3.2Z" fill="currentColor"></path></svg>
+          </a>
+          <a href="{{ routes.root_url }}" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 4c.4 2.3 1.7 3.7 4 4v3.1a8.4 8.4 0 0 1-4-1.2v6.4a5.2 5.2 0 1 1-4.6-5.2v3.2a2.1 2.1 0 1 0 1.5 2V4h3.1Z" fill="currentColor"></path></svg>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -1779,6 +1801,15 @@
     font-weight: 600;
   }
 
+  .helix-header__mobile-menu-logo {
+    color: inherit;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
   .helix-header__close-button {
     display: grid;
     width: 40px;
@@ -1916,6 +1947,49 @@
     font-weight: 600;
   }
 
+  .helix-header__mobile-submenu-details {
+    border-bottom: 1px solid rgba(26, 19, 18, .12);
+  }
+
+  .helix-header__mobile-submenu-details > summary {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    list-style: none;
+    font-size: 16px;
+  }
+
+  .helix-header__mobile-submenu-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .helix-header__mobile-submenu-details > summary span:last-child {
+    display: inline-flex;
+    transform: rotate(-90deg);
+    transition: transform .3s cubic-bezier(.6, .14, 0, 1);
+  }
+
+  .helix-header__mobile-submenu-details[open] > summary span:last-child {
+    transform: rotate(0deg);
+  }
+
+  .helix-header__mobile-submenu-details-content {
+    display: flex;
+    max-height: 0;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .35s cubic-bezier(.6, .14, 0, 1), opacity .2s ease, padding .35s cubic-bezier(.6, .14, 0, 1);
+  }
+
+  .helix-header__mobile-submenu-details[open] .helix-header__mobile-submenu-details-content {
+    max-height: 360px;
+    padding-bottom: 12px;
+    opacity: 1;
+  }
+
   .helix-header__mobile-submenu-label {
     margin: 0 0 4px;
     color: rgba(26, 19, 18, .58);
@@ -1931,6 +2005,34 @@
     gap: 14px;
     padding-top: 14px;
     border-top: 1px solid rgba(26, 19, 18, .14);
+  }
+
+  .helix-header__mobile-socials {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .helix-header__mobile-socials a {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 50%;
+    background: #edf0f2;
+    color: #323232;
+    transition: transform .25s ease, background .25s ease;
+  }
+
+  .helix-header__mobile-socials a:hover,
+  .helix-header__mobile-socials a:focus-visible {
+    background: #e3e7ea;
+    transform: translateY(-2px);
+  }
+
+  .helix-header__mobile-socials svg {
+    width: 18px;
+    height: 18px;
   }
 
   .helix-header__mobile-login {
@@ -2245,6 +2347,90 @@
       display: none;
     }
 
+    .helix-header__mobile-menu {
+      inset: 8px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .helix-header__mobile-menu-panel {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border-radius: inherit;
+      box-shadow: none;
+    }
+
+    .helix-header__mobile-menu-top {
+      min-height: 69px;
+      margin: 0;
+      padding: 16px;
+      border-bottom: 1px solid rgba(26, 19, 18, .14);
+    }
+
+    .helix-header__mobile-menu-top .helix-header__close-button,
+    .helix-header__mobile-submenu-header .helix-header__close-button {
+      width: 32px;
+      height: 32px;
+      border: 0;
+    }
+
+    .helix-header__mobile-menu-panel.is-mobile-submenu-open .helix-header__mobile-menu-top {
+      display: none;
+    }
+
+    .helix-header__mobile-nav {
+      position: static;
+      overflow: visible;
+      padding: 20px 16px 0;
+    }
+
+    .helix-header__mobile-nav > a,
+    .helix-header__mobile-nav > details > summary {
+      min-height: 56px;
+      padding: 0;
+      font-size: 16px;
+    }
+
+    .helix-header__mobile-submenu {
+      z-index: 3;
+    }
+
+    .helix-header__mobile-submenu-header {
+      min-height: 69px;
+      flex: 0 0 auto;
+      padding: 16px;
+    }
+
+    .helix-header__mobile-submenu-inner {
+      padding: 20px 16px 30px;
+    }
+
+    .helix-header__mobile-submenu-group--featured {
+      gap: 0;
+    }
+
+    .helix-header__mobile-submenu-group--featured a {
+      min-height: 33px;
+      padding: 0;
+      border-bottom: 0;
+      font-size: 16px;
+      line-height: 25.6px;
+    }
+
+    .helix-header__mobile-submenu-details > summary {
+      min-height: 56px;
+    }
+
+    .helix-header__mobile-menu-footer {
+      gap: 14px;
+      padding: 14px 16px 16px;
+    }
+
+    .helix-header__mobile-login {
+      min-height: 44px;
+    }
+
     .helix-header__mobile-bar {
       display: block;
       min-height: 56px;
@@ -2366,6 +2552,10 @@
     const menProductsNext = select('[data-helix-men-products-next]', menProducts);
     let menProductsOffset = 0;
 
+    const syncMobileSubmenuState = () => {
+      mobileMenuPanel?.classList.toggle('is-mobile-submenu-open', mobileSections.some((section) => section.open));
+    };
+
     const normalizeAnnouncementMessage = () => {
       const firstMessage = select('[data-helix-announcement-message]');
       if (!firstMessage) return;
@@ -2428,6 +2618,7 @@
       mobileSections.forEach((section) => {
         section.open = false;
       });
+      syncMobileSubmenuState();
       select('[data-helix-mobile-open]')?.setAttribute('aria-expanded', 'false');
       setBodyLock();
     };
@@ -2503,10 +2694,12 @@
 
     mobileSections.forEach((section) => {
       section.addEventListener('toggle', () => {
-        if (!section.open) return;
-        mobileSections.forEach((otherSection) => {
-          if (otherSection !== section) otherSection.open = false;
-        });
+        if (section.open) {
+          mobileSections.forEach((otherSection) => {
+            if (otherSection !== section) otherSection.open = false;
+          });
+        }
+        window.setTimeout(syncMobileSubmenuState, 0);
       });
     });
 
@@ -2528,6 +2721,7 @@
       if (mobileBack) {
         event.preventDefault();
         mobileBack.closest('[data-helix-mobile-section]')?.removeAttribute('open');
+        syncMobileSubmenuState();
         return;
       }
 
