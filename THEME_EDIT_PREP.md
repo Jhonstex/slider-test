@@ -545,3 +545,29 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Storefront preview trực tiếp đã nhận compiled asset mới, có đủ `replayDesktopHeaderReveal`, `switchingDropdown` và `is-replaying-menu-reveal`.
 - Commit: `57e6f2c` — replay transition đúng trên mega-menu panel trắng.
 - Backup: `backup/pre-menu-switch-reveal-20260804`.
+
+## 21. Sửa mega menu Men và bo góc Pages theo demo Helix (2026-08-04)
+
+### Đối chiếu trực tiếp bằng Google Chrome
+
+- Đã mở đồng thời storefront demo `https://helix-shoes-theme.myshopify.com/` và preview storefront của theme hiện tại `https://beae-anna.myshopify.com/` bằng Chrome; không dùng Shopify Theme Editor để đo layout.
+- Mega menu `Men` của demo là panel full-width, phần link bên trái gồm ba nhóm `Top picks`, `By activity`, `By feature`; phần bên phải là carousel `Best deals 🔥`.
+- Carousel demo dùng card rộng khoảng `292px`, ảnh vuông bo góc `16px`, khoảng cách card khoảng `12px`, có 5 sản phẩm nối ngang và nút Previous/Next ở góc phải.
+- Card có badge giảm giá, swatches, tên sản phẩm, giá hiện tại/giá gạch ngang; khi hover ảnh thứ hai fade vào và nút `Quick add` nổi lên từ phía dưới.
+- Mega menu `Men` của theme trước đó chỉ render một banner fallback nên không khớp cấu trúc demo.
+- Panel `Pages` của demo có nền trắng, shadow nhẹ và `border-radius: 16px`; theme hiện tại đang bị `border-radius: 0px`.
+
+### Thay đổi đã chuẩn bị trong code
+
+- Thay banner fallback của `Men` bằng carousel 5 product cards theo đúng nhịp layout demo; ưu tiên các handle sản phẩm Helix và fallback về 5 sản phẩm đầu trong `collections.all` nếu store hiện tại không có các handle demo.
+- Thêm animation stagger khoảng `0.35s`–`0.51s` cho các card khi mega menu mở, hover fade ảnh phụ và reveal nút `Quick add`.
+- Thêm nút điều khiển Previous/Next, translate track theo bước `304px`, tự disable nút ở hai đầu và đồng bộ lại khi resize.
+- Căn lại mega menu theo reference: inner padding dọc `40px`, khoảng cách hai vùng `40px`, link grid tối đa `600px`, product region chiếm khoảng `50%`.
+- Thêm `border-radius: 16px` cho panel `Pages`.
+
+### Kiểm tra cục bộ
+
+- Shopify Theme Check chạy hoàn toàn cục bộ: `0` offense.
+- JavaScript trong `sections/header.liquid` parse hợp lệ.
+- `git diff --check`: không có whitespace error.
+- Chưa chạy validator từ xa vì validator đó upload source theme ra ngoài; không cần cho bước kiểm tra cục bộ này.
