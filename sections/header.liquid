@@ -609,6 +609,11 @@
     overflow-x: hidden;
   }
 
+  html.helix-header-lock,
+  html.helix-header-lock body {
+    overflow: hidden;
+  }
+
   .helix-header button,
   .helix-header input {
     color: inherit;
@@ -2121,7 +2126,7 @@
     menProductsNext?.addEventListener('click', () => stepMenProducts(1));
 
     const setBodyLock = () => {
-      const locked = root.classList.contains('is-mobile-menu-open') || root.classList.contains('is-search-open') || root.classList.contains('is-cart-open');
+      const locked = dropdowns.some((dropdown) => dropdown.open) || root.classList.contains('is-mobile-menu-open') || root.classList.contains('is-search-open') || root.classList.contains('is-cart-open');
       document.documentElement.classList.toggle('helix-header-lock', locked);
     };
 
@@ -2174,6 +2179,7 @@
         if (dropdown.open) menuHeight = panelHeight;
       });
       root.style.setProperty('--helix-menu-height', `${menuHeight}px`);
+      setBodyLock();
       syncMenProducts();
     };
 
