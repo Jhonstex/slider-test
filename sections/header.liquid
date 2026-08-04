@@ -533,6 +533,26 @@
                   <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
                 </div>
               </details>
+              <div class="helix-header__mobile-promos">
+                <a class="helix-header__mobile-promo" href="{{ helix_collections_url }}/womens-on-sale">
+                  <span class="helix-header__mobile-promo-media">
+                    {% # theme-check-disable RemoteAsset %}
+                    <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/banner_mega_menu_1.webp?v=1777884363&amp;width=450" width="450" height="302" loading="lazy" alt="">
+                    {% # theme-check-enable RemoteAsset %}
+                  </span>
+                  <strong>Women's sale</strong>
+                  <span>Shop now <span aria-hidden="true">↗</span></span>
+                </a>
+                <a class="helix-header__mobile-promo" href="{{ helix_women_url }}?sort_by=best-selling">
+                  <span class="helix-header__mobile-promo-media">
+                    {% # theme-check-disable RemoteAsset %}
+                    <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/banner_mega_menu_2.webp?v=1777884363&amp;width=450" width="450" height="302" loading="lazy" alt="">
+                    {% # theme-check-enable RemoteAsset %}
+                  </span>
+                  <strong>Women’s favorites</strong>
+                  <span>Shop now <span aria-hidden="true">↗</span></span>
+                </a>
+              </div>
             </div>
           </div>
         </details>
@@ -577,6 +597,70 @@
                   <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
                 </div>
               </details>
+              <div class="helix-header__mobile-products">
+                <p class="helix-header__mobile-products-title">Best deals <span aria-hidden="true">🔥</span></p>
+                <div class="helix-header__mobile-products-grid">
+                  {% for helix_men_mobile_handle in helix_men_featured_handles limit: 5 %}
+                    {% assign helix_men_mobile_product = all_products[helix_men_mobile_handle] %}
+                    {% if helix_men_mobile_product == blank and collections.all.products[forloop.index0] != blank %}
+                      {% assign helix_men_mobile_product = collections.all.products[forloop.index0] %}
+                    {% endif %}
+                    {% if helix_men_mobile_product != blank %}
+                      {% assign helix_men_mobile_variant = helix_men_mobile_product.selected_or_first_available_variant %}
+                      {% assign helix_men_mobile_compare_at = helix_men_mobile_variant.compare_at_price %}
+                      {% assign helix_men_mobile_discount = 0 %}
+                      {% if helix_men_mobile_compare_at > helix_men_mobile_variant.price %}
+                        {% assign helix_men_mobile_difference = helix_men_mobile_compare_at | minus: helix_men_mobile_variant.price %}
+                        {% assign helix_men_mobile_discount = helix_men_mobile_difference | times: 100 | divided_by: helix_men_mobile_compare_at | round %}
+                      {% endif %}
+                      {% assign helix_men_mobile_secondary = helix_men_mobile_product.images[1] %}
+                      {% assign helix_men_mobile_option = helix_men_mobile_product.options_with_values | first %}
+                      <article class="helix-header__mega-product helix-header__mobile-product">
+                        <div class="helix-header__mega-product-media">
+                          <a href="{{ helix_men_mobile_product.url }}" aria-label="{{ helix_men_mobile_product.title | escape }}">
+                            {% if helix_men_mobile_product.featured_image != blank %}
+                              {{ helix_men_mobile_product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '294,441,588,700', sizes: '160px', alt: helix_men_mobile_product.title, class: 'helix-header__mega-product-image' }}
+                            {% endif %}
+                            {% if helix_men_mobile_secondary != blank %}
+                              {{ helix_men_mobile_secondary | image_url: width: 700 | image_tag: loading: 'lazy', widths: '294,441,588,700', sizes: '160px', alt: helix_men_mobile_product.title, class: 'helix-header__mega-product-image helix-header__mega-product-image--secondary' }}
+                            {% endif %}
+                          </a>
+                          {% if helix_men_mobile_discount > 0 %}<span class="helix-header__mega-product-badge">-{{ helix_men_mobile_discount }}%</span>{% endif %}
+                          <a class="helix-header__mega-product-quick-view" href="{{ helix_men_mobile_product.url }}" aria-label="Quick view">
+                            {% render 'helix-icon-cart' %}
+                          </a>
+                        </div>
+                        <div class="helix-header__mega-product-details">
+                          {% if helix_men_mobile_option != blank and helix_men_mobile_option.values != blank %}
+                            <ul class="helix-header__mega-product-swatches" role="list" aria-label="{{ helix_men_mobile_option.name | escape }}">
+                              {% for helix_men_mobile_option_value in helix_men_mobile_option.values limit: 4 %}
+                                {% assign helix_men_mobile_option_variant = blank %}
+                                {% for helix_men_mobile_variant_item in helix_men_mobile_product.variants %}
+                                  {% if helix_men_mobile_variant_item.option1 == helix_men_mobile_option_value or helix_men_mobile_variant_item.option2 == helix_men_mobile_option_value or helix_men_mobile_variant_item.option3 == helix_men_mobile_option_value %}
+                                    {% assign helix_men_mobile_option_variant = helix_men_mobile_variant_item %}
+                                    {% break %}
+                                  {% endif %}
+                                {% endfor %}
+                                {% assign helix_men_mobile_option_image = helix_men_mobile_option_variant.featured_image %}
+                                {% if helix_men_mobile_option_image == blank %}{% assign helix_men_mobile_option_image = helix_men_mobile_product.images[forloop.index0] %}{% endif %}
+                                {% if helix_men_mobile_option_image == blank %}{% assign helix_men_mobile_option_image = helix_men_mobile_product.featured_image %}{% endif %}
+                                <li><a href="{{ helix_men_mobile_product.url }}{% if helix_men_mobile_option_variant != blank %}?variant={{ helix_men_mobile_option_variant.id }}{% endif %}" aria-label="{{ helix_men_mobile_option_value | escape }}"><span title="{{ helix_men_mobile_option_value | escape }}" style="--helix-swatch-image: url('{{ helix_men_mobile_option_image | image_url: width: 80 }}');"></span></a></li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                          <div class="helix-header__mega-product-info">
+                            <a href="{{ helix_men_mobile_product.url }}">{{ helix_men_mobile_product.title }}</a>
+                            <div>
+                              <span{% if helix_men_mobile_compare_at > helix_men_mobile_variant.price %} class="helix-header__mega-product-sale-price"{% endif %}>{{ helix_men_mobile_variant.price | money }}</span>
+                              {% if helix_men_mobile_compare_at > helix_men_mobile_variant.price %}<s>{{ helix_men_mobile_compare_at | money }}</s>{% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
             </div>
           </div>
         </details>
@@ -2420,6 +2504,107 @@
 
     .helix-header__mobile-submenu-details > summary {
       min-height: 56px;
+    }
+
+    .helix-header__mobile-promos {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 36px;
+    }
+
+    .helix-header__mobile-promo {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: #323232;
+    }
+
+    .helix-header__mobile-promo-media {
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 1.5;
+      border-radius: 16px;
+      background: #f1f3f4;
+    }
+
+    .helix-header__mobile-promo-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .helix-header__mobile-promo strong {
+      font-size: 16px;
+      line-height: 22.4px;
+    }
+
+    .helix-header__mobile-promo > span:last-child {
+      display: inline-flex;
+      width: fit-content;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 22.4px;
+    }
+
+    .helix-header__mobile-products {
+      margin-top: 36px;
+    }
+
+    .helix-header__mobile-products-title {
+      margin: 0 0 24px;
+      color: #323232;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 25.2px;
+    }
+
+    .helix-header__mobile-products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 8px;
+    }
+
+    .helix-header__mobile-products .helix-header__mobile-product {
+      width: auto;
+      min-width: 0;
+      opacity: 1;
+      transform: none;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-media {
+      background: #f1f3f4;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-quick-view {
+      top: auto;
+      right: 8px;
+      bottom: 8px;
+      width: 32px;
+      height: 32px;
+      opacity: 1;
+      transform: none;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-quick-view svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-quick-add {
+      display: none;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-details {
+      min-height: 0;
+      gap: 8px;
+      padding-top: 12px;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-info {
+      font-size: 14px;
+      line-height: 22.4px;
     }
 
     .helix-header__mobile-menu-footer {

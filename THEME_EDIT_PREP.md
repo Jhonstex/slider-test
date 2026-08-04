@@ -707,6 +707,7 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Cấu trúc mobile được đổi theo demo: Women, Men và Pages mở thành panel con trượt từ phải vào, có header riêng, nút Back và Close; Women/Men được chia thành nhóm Top picks, By activity và By feature.
 - Drawer mobile được căn theo demo 390px: inset `8px`, radius `16px`, header có logo HELIX; khi mở submenu header chính ẩn để không bị chồng hai hàng.
 - `By activity` và `By feature` trong Women/Men chuyển thành details con đóng/mở riêng; footer thêm Login, localization và bốn social icon giống cấu trúc demo.
+- Women mobile submenu thêm hai promo cards; Men mobile submenu thêm grid Best deals 2 cột với sale badge, ảnh variant, giá và quick-view icon theo style product card của demo.
 - Đưa Login và Country/Region xuống footer của mobile drawer; country buttons vẫn submit localization form hiện có.
 - Thêm reset submenu khi đóng bằng scrim, Close hoặc Escape; chỉ một submenu được mở tại một thời điểm.
 - Search và Cart đều mở drawer tương ứng bằng trigger nội bộ giống demo, vẫn giữ fallback link khi JavaScript không chạy.
