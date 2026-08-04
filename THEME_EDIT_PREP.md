@@ -524,3 +524,24 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Transition live được xác nhận là `transform 0.3s cubic-bezier(.6, .14, 0, 1)` và opacity `0.2s cubic-bezier(.6, 0, .4, 1)`, khớp timing đã đo trên demo.
 - Desktop preview trực tiếp kiểm tra ở `1280px`; mobile preview trực tiếp kiểm tra ở `390px`, mobile bar cao `56px`, announcement khoảng `39px` và hamburger vùng click `40px`.
 - Live mobile stylesheet vẫn giữ `transform: translateY(-100%)` cho `.helix-header.is-scroll-hidden .helix-header__mobile-bar`; không đổi logic scroll khi thêm desktop reveal.
+
+## 20. Fix animation khi chuyển Women/Men lần thứ hai (2026-08-04)
+
+### Nguyên nhân
+
+- Khi pointer chuyển trực tiếp từ dropdown đang mở sang dropdown khác, dropdown cũ đóng và dropdown mới mở trong cùng một frame.
+- `is-menu-open` vẫn giữ nguyên, nên pseudo-layer trắng đang ở `scaleY(1)` không có điểm bắt đầu mới để chạy reveal.
+
+### Thay đổi
+
+- Thêm `switchingDropdown` để nhận biết chuyển giữa hai dropdown desktop đang mở.
+- Khi chuyển menu, thêm class tạm `is-replaying-menu-reveal`, tắt transition và reset layer về `opacity: 0; transform: scaleY(0)`.
+- Ép browser layout một lần, sau đó bỏ class tạm để transition `scaleY(0) → scaleY(1)` chạy lại đầy đủ.
+- Không thay đổi logic mobile, autoplay slider hoặc hành vi mở menu lần đầu.
+
+### Xác nhận
+
+- Local Theme Check: `0` offense; JavaScript parse hợp lệ; `git diff --check` sạch.
+- Storefront preview trực tiếp đã nhận compiled asset mới, có đủ `replayDesktopHeaderReveal`, `switchingDropdown` và `is-replaying-menu-reveal`.
+- Commit: `6dfb6da` — reset transition giữa các menu.
+- Backup: `backup/pre-menu-switch-reveal-20260804`.
