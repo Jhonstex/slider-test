@@ -808,6 +808,10 @@
     line-height: 1;
   }
 
+  .helix-header__desktop-inner > .helix-header__brand {
+    height: 19px;
+  }
+
   .helix-header__brand--mobile {
     width: var(--helix-mobile-logo-width);
     min-width: var(--helix-mobile-logo-width);
@@ -953,7 +957,7 @@
     width: 1px;
     height: 16px;
     flex: 0 0 1px;
-    margin-right: 10px;
+    margin-right: 20px;
     border-right: 1px solid #e5e5e5;
   }
 
@@ -963,8 +967,8 @@
 
   .helix-header__icon-button {
     display: inline-flex;
-    width: 44px;
-    height: 44px;
+    width: 24px;
+    height: 24px;
     align-items: center;
     justify-content: center;
     border: 0;
@@ -976,6 +980,10 @@
   .helix-header__icon-button:focus-visible {
     opacity: .62;
     transform: translateY(-1px);
+  }
+
+  .helix-header__icon-button + .helix-header__icon-button {
+    margin-left: 20px;
   }
 
   .helix-header__icon-button svg {
