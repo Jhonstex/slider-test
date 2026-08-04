@@ -8,7 +8,7 @@
   assign helix_announcement_1 = section.settings.announcement_message_1 | default: 'Free shipping for all orders over 5.000.000₫'
   assign helix_announcement_1 = helix_announcement_1 | replace: 'Free shipping for all orders over 5.000.000₫Free shipping for all orders over 5.000.000₫', 'Free shipping for all orders over 5.000.000₫'
   assign helix_announcement_1 = helix_announcement_1 | replace: 'Free shipping for all orders over 5.000.000₫Free shipping for all orders over', 'Free shipping for all orders over 5.000.000₫'
-  if helix_announcement_1 contains 'Free shipping for all orders over' and helix_announcement_1 contains '5.000.000₫'
+  if helix_announcement_1 contains 'Free shipping for all orders over'
     assign helix_announcement_1 = 'Free shipping for all orders over 5.000.000₫'
   endif
   assign helix_announcement_2 = section.settings.announcement_message_2 | default: 'Receive 20% off your first order. Shop now'
