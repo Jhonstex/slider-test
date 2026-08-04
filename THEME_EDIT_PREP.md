@@ -653,3 +653,41 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Commit `605de50`: `Restore header white reveal animation`.
 - Commit `fe24936`: `Match header reveal transition timing`.
 - Cả hai commit đã push lên `main`; preview storefront đã nhận CSS mới sau reload.
+
+## 25. Khớp animation, typography và variant của cả 3 mega menu (2026-08-04)
+
+### Đối chiếu trực tiếp bằng Google Chrome
+
+- Đã kiểm tra trực tiếp demo `https://helix-shoes-theme.myshopify.com/` và preview `https://beae-anna.myshopify.com/`, không dùng Shopify Theme Editor; viewport desktop `1920×889`.
+- Demo khóa scroll của body khi mega menu mở. Preview đã đồng bộ hành vi này để panel dùng toàn bộ viewport, dành scrollbar nội bộ `6px` và không bị lệch `15px` do scrollbar trang.
+- Men demo sau khi mở ổn định: panel `1920×535px`, content client width `1914px`, product region khoảng `899.5px`, card đầu tiên tại `x=957px`, rộng khoảng `294.33px`, ảnh vuông `294.33px`, details khoảng `113.78px`.
+- Women demo sau khi mở ổn định: panel khoảng `1920×455px`, promo rộng `447.5px`, promo cao khoảng `377.3px`; Pages panel tại `x=204.28px, y=118.8px`, rộng `270px`, cao khoảng `260px`, radius `16px`, shadow `0 4px 20px rgba(0,0,0,.1)`.
+
+### Animation đã khớp
+
+- Columns của Women/Men: `0.4s`, delay lần lượt `.2s`, `.25s`, `.3s`, keyframe `opacity 0 → 1` và `translate3d(0, 15px, 0) → translate3d(0, 0, 0)`.
+- Promo Women: delay `.35s` và `.4s`.
+- Header `Best deals 🔥` của Men: delay `.35s`; product cards delay `.4s`, `.45s`, `.5s`, `.55s`, `.6s`.
+- Pages: mỗi link xuất hiện từ phải sang trái bằng `translate3d(15px, 0, 0)`; delay `.15s` đến `.4s` theo thứ tự 6 item.
+- Khi chuyển trực tiếp Men ↔ Women, logic replay vẫn giữ reveal panel và lớp nền trắng chạy lại; không reset sai trạng thái hoặc làm mất animation.
+
+### Typography, spacing và product variant
+
+- `Best deals` dùng Archivo `700 18px/25.2px`, letter-spacing `.36px`, đúng kích thước demo; Archivo được import cùng Figtree.
+- Promo heading dùng Archivo `700 16px/24px`; promo link dùng Figtree `500 14px`, letter-spacing `.28px`; chiều cao promo đã căn theo cấu trúc overlay demo.
+- Product title/price dùng Figtree `14px/22.4px`; card gap `12px`; media radius `16px`; details padding-top `14px`; swatches là ảnh variant `40×40px`, radius `6px`, gap `8px`, link đúng `?variant=`.
+- Sale badge giữ nền đỏ `#e80303`, chữ trắng Figtree `500 12px`, letter-spacing `.06em`; Quick add là pill trắng cao `44px`, padding `6px 22px`, Figtree `500 14px`, letter-spacing `.28px`.
+- Card vẫn ưu tiên product handles cấu hình của Men và fallback về `collections.all`; dữ liệu sản phẩm của store có thể khác demo nhưng cấu trúc, variant image, badge và animation giữ đúng mẫu.
+
+### Thay đổi code và kiểm tra
+
+- Thêm stagger animation riêng cho heading/product/promo/Pages; thêm keyframe reveal ngang cho Pages.
+- Căn panel full viewport, scrollbar nội bộ `6px`, product viewport bỏ padding-top dư `10px`, panel height trừ đúng `2px` overflow theo demo.
+- Khi mở mega menu, thêm scroll lock trên `html/body` để width và vị trí card khớp demo.
+- Sau push, live preview xác nhận: Men card `x=957px`, `294.33×408.09px`; `Best deals` `122.48×25.2px`; panel Men `1920×535px`; Women panel `1920×455px`; Pages links có đủ delay và fade/translate.
+- Đã chạy `git diff --check`, JavaScript parse và CSS brace-balance cục bộ đều đạt. Không chạy validator từ xa vì công cụ đó upload source theme riêng tư ra ngoài.
+
+### Publish và backup
+
+- Backup trước nhóm thay đổi: `backup/pre-mega-menu-item-stagger-20260804`.
+- Các commit đã push lên `main`, commit cuối của nhóm: `54002ed` — `Match mega menu card and promo styling`.
