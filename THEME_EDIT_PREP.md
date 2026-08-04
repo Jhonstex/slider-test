@@ -577,3 +577,20 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Commit đã push lên `main`: `63c4570` — `Fix Men mega menu carousel and Pages radius`.
 - Restore point: `backup/pre-men-pages-mega-menu-20260804`.
 - Preview storefront live bằng Chrome đã nhận 5 product cards; panel Men full-width khoảng `1905px`, product card `292px`, nút Next di chuyển track `304px` và Pages panel trả về `border-radius: 16px`.
+
+## 22. Khớp height reveal khi chuyển Men/Women và vị trí Pages (2026-08-04)
+
+### Sai khác đã xác định trên Chrome
+
+- Demo dùng một lớp `.header-menu-background` chung: khi mega menu mở, nền trắng bắt đầu ở đầu header và có height bằng `header + mega menu`; khi đổi `Men → Women`, lớp nền không reset về `0` mà chuyển trực tiếp từ chiều cao menu cũ sang menu mới bằng `height .3s cubic-bezier(.6, .14, 0, 1)`.
+- Theme trước đó chỉ dùng pseudo-layer trắng trong desktop surface và replay panel từ `height: 0`, vì vậy lúc đổi tab phần trắng bị rút hết rồi mới mở lại.
+- Demo Pages panel bắt đầu ngay dưới desktop header tại khoảng `y=118.8px`, kích thước khoảng `270×260px`, bo góc `16px`, shadow `0 4px 20px rgba(0,0,0,.1)`; panel cũ của theme nằm cao hơn và nhỏ hơn.
+
+### Thay đổi và xác nhận live
+
+- Thêm `.helix-header__menu-background` dùng chung cho desktop; height thay đổi theo `80px + --helix-menu-height`, giữ nền trắng khi chuyển giữa các mega menu.
+- JS đo chiều cao panel đã bị giới hạn thực tế bởi `max-height`, nhờ đó background và panel không còn thừa khoảng trắng; carousel viewport bỏ khoảng đệm đáy dư `10px`.
+- Pages panel được căn xuống đáy header, đổi thành `270px` rộng, padding/list rhythm tương đương demo, giữ `border-radius:16px` và shadow đúng mẫu.
+- Preview storefront live trên Chrome: Men panel `1905×536px`, lớp nền `616px`; khi chuyển sang Women lớp nền co trực tiếp còn `532px`, không reset. Pages panel đạt khoảng `270×260px` tại `y=119.2px`.
+- Commit mới nhất: `99a1a5a` — `Align mega menu reveal height with panel`.
+- Restore point trước lần sửa: `backup/pre-menu-height-transition-pages-20260804`.
