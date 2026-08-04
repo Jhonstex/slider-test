@@ -1032,8 +1032,6 @@
     height: var(--helix-mega-height, 0px);
     max-height: min(540px, calc(100vh - 80px));
     overflow: hidden;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
     background: #fff;
     color: #1a1312;
     opacity: 0;
@@ -1053,8 +1051,8 @@
   }
 
   .helix-header__mega-inner {
-    width: 100%;
-    margin-inline: auto;
+    width: calc(100% - 6px);
+    margin-inline: 0;
     padding: 40px 0;
   }
 
