@@ -514,23 +514,49 @@
               </div>
               <details class="helix-header__mobile-submenu-details">
                 <summary><span>By activity</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
-                <div class="helix-header__mobile-submenu-details-content">
-                  <a href="{{ helix_collections_url }}/womens-hiking">Hiking</a>
-                  <a href="{{ helix_collections_url }}/women-s-running">Running</a>
-                  <a href="{{ helix_collections_url }}/women-s-training">Training</a>
-                  <a href="{{ helix_collections_url }}/womens-tennis">Tennis</a>
-                  <a href="{{ helix_collections_url }}/womens-lifestyle">Lifestyle</a>
-                  <a href="{{ helix_women_url }}">Shop all</a>
+                <div class="helix-header__mobile-submenu helix-header__mobile-submenu--child">
+                  <div class="helix-header__mobile-submenu-header">
+                    <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
+                      <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+                      <span>By activity</span>
+                    </button>
+                    <button class="helix-header__close-button" type="button" data-helix-close-mobile aria-label="{{ 'general.close' | t }}">
+                      {% render 'helix-icon-close' %}
+                    </button>
+                  </div>
+                  <div class="helix-header__mobile-submenu-inner">
+                    <div class="helix-header__mobile-submenu-group">
+                      <a href="{{ helix_collections_url }}/womens-hiking">Hiking</a>
+                      <a href="{{ helix_collections_url }}/women-s-running">Running</a>
+                      <a href="{{ helix_collections_url }}/women-s-training">Training</a>
+                      <a href="{{ helix_collections_url }}/womens-tennis">Tennis</a>
+                      <a href="{{ helix_collections_url }}/womens-lifestyle">Lifestyle</a>
+                      <a href="{{ helix_women_url }}">Shop all</a>
+                    </div>
+                  </div>
                 </div>
               </details>
               <details class="helix-header__mobile-submenu-details">
                 <summary><span>By feature</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
-                <div class="helix-header__mobile-submenu-details-content">
-                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
-                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
-                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
-                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
-                  <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
+                <div class="helix-header__mobile-submenu helix-header__mobile-submenu--child">
+                  <div class="helix-header__mobile-submenu-header">
+                    <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
+                      <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+                      <span>By feature</span>
+                    </button>
+                    <button class="helix-header__close-button" type="button" data-helix-close-mobile aria-label="{{ 'general.close' | t }}">
+                      {% render 'helix-icon-close' %}
+                    </button>
+                  </div>
+                  <div class="helix-header__mobile-submenu-inner">
+                    <div class="helix-header__mobile-submenu-group">
+                      <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
+                      <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
+                      <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
+                      <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
+                      <a href="{{ helix_women_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
+                    </div>
+                  </div>
                 </div>
               </details>
               <div class="helix-header__mobile-promos">
@@ -578,23 +604,49 @@
               </div>
               <details class="helix-header__mobile-submenu-details">
                 <summary><span>By activity</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
-                <div class="helix-header__mobile-submenu-details-content">
-                  <a href="{{ helix_collections_url }}/mens-hiking">Hiking</a>
-                  <a href="{{ helix_collections_url }}/mens-running">Running</a>
-                  <a href="{{ helix_collections_url }}/mens-training">Training</a>
-                  <a href="{{ helix_collections_url }}/mens-tennis">Tennis</a>
-                  <a href="{{ helix_collections_url }}/mens-lifestyle">Lifestyle</a>
-                  <a href="{{ helix_men_url }}">Shop all</a>
+                <div class="helix-header__mobile-submenu helix-header__mobile-submenu--child">
+                  <div class="helix-header__mobile-submenu-header">
+                    <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
+                      <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+                      <span>By activity</span>
+                    </button>
+                    <button class="helix-header__close-button" type="button" data-helix-close-mobile aria-label="{{ 'general.close' | t }}">
+                      {% render 'helix-icon-close' %}
+                    </button>
+                  </div>
+                  <div class="helix-header__mobile-submenu-inner">
+                    <div class="helix-header__mobile-submenu-group">
+                      <a href="{{ helix_collections_url }}/mens-hiking">Hiking</a>
+                      <a href="{{ helix_collections_url }}/mens-running">Running</a>
+                      <a href="{{ helix_collections_url }}/mens-training">Training</a>
+                      <a href="{{ helix_collections_url }}/mens-tennis">Tennis</a>
+                      <a href="{{ helix_collections_url }}/mens-lifestyle">Lifestyle</a>
+                      <a href="{{ helix_men_url }}">Shop all</a>
+                    </div>
+                  </div>
                 </div>
               </details>
               <details class="helix-header__mobile-submenu-details">
                 <summary><span>By feature</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
-                <div class="helix-header__mobile-submenu-details-content">
-                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
-                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
-                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
-                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
-                  <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
+                <div class="helix-header__mobile-submenu helix-header__mobile-submenu--child">
+                  <div class="helix-header__mobile-submenu-header">
+                    <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
+                      <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+                      <span>By feature</span>
+                    </button>
+                    <button class="helix-header__close-button" type="button" data-helix-close-mobile aria-label="{{ 'general.close' | t }}">
+                      {% render 'helix-icon-close' %}
+                    </button>
+                  </div>
+                  <div class="helix-header__mobile-submenu-inner">
+                    <div class="helix-header__mobile-submenu-group">
+                      <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Cushioned">Cushioned</a>
+                      <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Waterproof">Waterproof</a>
+                      <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Water-resistant">Water-resistant</a>
+                      <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Breathable">Breathable</a>
+                      <a href="{{ helix_men_url }}?filter.p.m.custom.feature=Windproof">Windproof</a>
+                    </div>
+                  </div>
                 </div>
               </details>
               <div class="helix-header__mobile-products">
@@ -2059,6 +2111,10 @@
     transform: rotate(0deg);
   }
 
+  .helix-header__mobile-submenu-details > .helix-header__mobile-submenu--child {
+    z-index: 4;
+  }
+
   .helix-header__mobile-submenu-details-content {
     display: flex;
     max-height: 0;
@@ -2724,6 +2780,8 @@
     const cartDrawer = select('[data-helix-cart-drawer]');
     const mobileMenuPanel = select('.helix-header__mobile-menu-panel');
     const mobileSections = selectAll('[data-helix-mobile-section]');
+    const mobileDetails = selectAll('.helix-header__mobile-nav details');
+    const mobileSubmenuSections = selectAll('.helix-header__mobile-submenu-details');
     const searchPanel = select('.helix-header__drawer--search .helix-header__drawer-panel');
     const cartPanel = select('.helix-header__drawer--cart .helix-header__drawer-panel');
     let announcementIndex = 0;
@@ -2800,7 +2858,7 @@
     const closeLayers = () => {
       root.classList.remove('is-mobile-menu-open', 'is-search-open', 'is-cart-open');
       [mobileMenu, searchDrawer, cartDrawer].forEach((layer) => layer?.setAttribute('aria-hidden', 'true'));
-      mobileSections.forEach((section) => {
+      mobileDetails.forEach((section) => {
         section.open = false;
       });
       syncMobileSubmenuState();
@@ -2888,6 +2946,17 @@
       });
     });
 
+    mobileSubmenuSections.forEach((section) => {
+      section.addEventListener('toggle', () => {
+        if (section.open) {
+          mobileSubmenuSections.forEach((otherSection) => {
+            if (otherSection !== section && otherSection.parentElement === section.parentElement) otherSection.open = false;
+          });
+        }
+        window.setTimeout(syncMobileSubmenuState, 0);
+      });
+    });
+
     document.addEventListener('click', (event) => {
       if (!root.contains(event.target)) {
         closeDropdowns();
@@ -2905,7 +2974,7 @@
 
       if (mobileBack) {
         event.preventDefault();
-        mobileBack.closest('[data-helix-mobile-section]')?.removeAttribute('open');
+        mobileBack.closest('details')?.removeAttribute('open');
         syncMobileSubmenuState();
         return;
       }
