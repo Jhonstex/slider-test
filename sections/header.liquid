@@ -2024,6 +2024,25 @@
     transition-delay: 0s;
   }
 
+  @keyframes helix-mobile-slide-out {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  .helix-header__mobile-nav details[open] > .helix-header__mobile-submenu.is-mobile-submenu-closing {
+    opacity: 1;
+    pointer-events: none;
+    transform: translateX(100%);
+    visibility: visible;
+    animation: helix-mobile-slide-out .3s ease-in-out both;
+    transition: none;
+  }
+
   .helix-header__mobile-submenu-header {
     display: flex;
     min-height: 56px;
@@ -2799,6 +2818,48 @@
       mobileMenuPanel?.classList.toggle('is-mobile-submenu-open', mobileSections.some((section) => section.open));
     };
 
+    const getMobileSubmenuPanel = (section) => section?.querySelector(':scope > .helix-header__mobile-submenu');
+
+    const resetMobileSubmenuTransition = (section) => {
+      getMobileSubmenuPanel(section)?.classList.remove('is-mobile-submenu-closing');
+      section?.removeAttribute('data-helix-mobile-closing');
+    };
+
+    const closeMobileSubmenu = (section) => {
+      if (!section?.open) return;
+
+      const panel = getMobileSubmenuPanel(section);
+      if (!panel) {
+        section.removeAttribute('open');
+        syncMobileSubmenuState();
+        return;
+      }
+
+      if (section.dataset.helixMobileClosing === 'true') return;
+
+      section.dataset.helixMobileClosing = 'true';
+      panel.classList.add('is-mobile-submenu-closing');
+
+      let fallbackTimer;
+      let finished = false;
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        panel.removeEventListener('animationend', handleAnimationEnd);
+        window.clearTimeout(fallbackTimer);
+        panel.classList.remove('is-mobile-submenu-closing');
+        section.removeAttribute('data-helix-mobile-closing');
+        section.removeAttribute('open');
+        syncMobileSubmenuState();
+      };
+      const handleAnimationEnd = (event) => {
+        if (event.animationName === 'helix-mobile-slide-out') finish();
+      };
+
+      panel.addEventListener('animationend', handleAnimationEnd);
+      fallbackTimer = window.setTimeout(finish, 360);
+    };
+
     const normalizeAnnouncementMessage = () => {
       const firstMessage = select('[data-helix-announcement-message]');
       if (!firstMessage) return;
@@ -2859,6 +2920,7 @@
       root.classList.remove('is-mobile-menu-open', 'is-search-open', 'is-cart-open');
       [mobileMenu, searchDrawer, cartDrawer].forEach((layer) => layer?.setAttribute('aria-hidden', 'true'));
       mobileDetails.forEach((section) => {
+        resetMobileSubmenuTransition(section);
         section.open = false;
       });
       syncMobileSubmenuState();
@@ -2949,6 +3011,7 @@
     mobileSubmenuSections.forEach((section) => {
       section.addEventListener('toggle', () => {
         if (section.open) {
+          resetMobileSubmenuTransition(section);
           mobileSubmenuSections.forEach((otherSection) => {
             if (otherSection !== section && otherSection.parentElement === section.parentElement) otherSection.open = false;
           });
@@ -2974,8 +3037,7 @@
 
       if (mobileBack) {
         event.preventDefault();
-        mobileBack.closest('details')?.removeAttribute('open');
-        syncMobileSubmenuState();
+        closeMobileSubmenu(mobileBack.closest('details'));
         return;
       }
 
