@@ -598,6 +598,7 @@
   .helix-header {
     position: relative;
     z-index: 30;
+    width: 100vw;
     color: var(--helix-solid-text);
     font-family: var(--helix-font, 'Figtree', 'Open Sans', Arial, sans-serif);
     font-size: 14px;
@@ -768,7 +769,7 @@
     position: relative;
     z-index: 1;
     display: grid;
-    width: min(1805px, calc(100% - 100px));
+    width: min(1820px, calc(100% - 100px));
     min-height: 80px;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
@@ -1021,8 +1022,8 @@
     position: absolute;
     z-index: 8;
     top: 100%;
-    right: 0;
-    left: 0;
+    right: -50px;
+    left: -50px;
     height: var(--helix-mega-height, 0px);
     max-height: min(540px, calc(100vh - 80px));
     overflow: hidden;
@@ -1264,13 +1265,13 @@
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    padding: 8px 16px;
-    border-radius: 999px;
+    padding: 6px 22px;
+    border-radius: 9990px;
     background: #fff;
     color: #1a1312;
     font-size: 14px;
-    font-weight: 600;
-    line-height: 22.4px;
+    font-weight: 500;
+    line-height: normal;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity .25s ease, transform .35s cubic-bezier(.6, .14, 0, 1);
