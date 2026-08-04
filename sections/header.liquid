@@ -1099,7 +1099,7 @@
   .helix-header__mega-products-viewport {
     overflow: hidden;
     margin: 0 -10px;
-    padding: 10px;
+    padding: 10px 10px 0;
   }
 
   .helix-header__mega-products-track {
@@ -2017,13 +2017,15 @@
 
     const syncMegaPanelHeight = (dropdown) => {
       const panel = select('[data-helix-mega-panel]', dropdown);
-      if (!panel) return;
+      if (!panel) return 0;
       if (!dropdown.open) {
         panel.style.setProperty('--helix-mega-height', '0px');
-        return;
+        return 0;
       }
-      const maxHeight = Math.max(0, window.innerHeight - 80);
-      panel.style.setProperty('--helix-mega-height', `${Math.min(panel.scrollHeight, maxHeight)}px`);
+      const maxHeight = Math.min(540, Math.max(0, window.innerHeight - 80));
+      const panelHeight = Math.min(panel.scrollHeight, maxHeight);
+      panel.style.setProperty('--helix-mega-height', `${panelHeight}px`);
+      return panelHeight;
     };
 
     const syncDropdownState = () => {
@@ -2031,11 +2033,8 @@
       root.classList.toggle('is-menu-open', open);
       let menuHeight = 0;
       dropdowns.forEach((dropdown) => {
-        syncMegaPanelHeight(dropdown);
-        if (dropdown.open) {
-          const panel = select('[data-helix-mega-panel]', dropdown);
-          menuHeight = Number.parseFloat(panel?.style.getPropertyValue('--helix-mega-height')) || 0;
-        }
+        const panelHeight = syncMegaPanelHeight(dropdown);
+        if (dropdown.open) menuHeight = panelHeight;
       });
       root.style.setProperty('--helix-menu-height', `${menuHeight}px`);
       syncMenProducts();
