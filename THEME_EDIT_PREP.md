@@ -722,4 +722,4 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Giữ nút Back trong header panel để quay lại bằng animation trượt hiện có, không làm thay đổi luồng mở menu con.
 - Ẩn scrollbar trình duyệt của vùng submenu nhưng vẫn giữ khả năng cuộn; nội dung và promo card trở lại đúng chiều rộng demo.
 - Căn header submenu về `69px`, padding trái `12px`, nút Close drawer ngoài `36×36px`, tiêu đề `Archivo 700 17px/17px`.
-- Căn nhóm link featured về `25.6px` mỗi dòng, thêm khoảng cách `16px` trước các row By activity/By feature và dùng weight `500` cho row điều hướng.
+- Căn nhóm link featured về `25.6px` mỗi dòng, gap `8px`, thêm khoảng cách `16px` trước các row By activity/By feature và dùng weight `500` cho row điều hướng.
