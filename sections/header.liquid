@@ -1450,10 +1450,13 @@
     transform: scaleY(1);
   }
 
-  .helix-header.is-replaying-menu-reveal .helix-header__desktop-surface::before {
+  .helix-header.is-replaying-menu-reveal .helix-header__mega-panel {
+    height: 0;
+    border-color: transparent;
     opacity: 0;
-    transform: scaleY(0);
+    pointer-events: none;
     transition: none;
+    visibility: hidden;
   }
 
   .helix-header.is-menu-open .helix-header__logo--normal,
@@ -1689,7 +1692,7 @@
       dropdowns.forEach(syncMegaPanelHeight);
     };
 
-    const replayDesktopHeaderReveal = () => {
+    const replayMegaPanelReveal = () => {
       if (!desktopQuery.matches || !root.classList.contains('is-menu-open')) return;
       root.classList.add('is-replaying-menu-reveal');
       void root.offsetWidth;
@@ -1718,7 +1721,7 @@
         });
         dropdown.open = true;
         syncDropdownState();
-        if (switchingDropdown) replayDesktopHeaderReveal();
+        if (switchingDropdown) replayMegaPanelReveal();
       });
 
       dropdown.addEventListener('pointerleave', () => {
