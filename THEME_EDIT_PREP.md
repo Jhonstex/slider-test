@@ -697,5 +697,6 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Giữ nguyên sản phẩm, giá và ảnh đang có trên store; không hard-code catalog hoặc asset của demo Helix.
 - Product card vẫn dùng product handle cấu hình và fallback `collections.all` như trước.
 - Sửa phần details thành layout dọc: variant image tiles nằm ngay dưới ảnh sản phẩm, sau đó mới đến tên và giá; khoảng cách, kích thước tile `40×40px`, radius `6px`, gap `8px` và padding-top `14px` khớp demo.
+- Typography của card khớp demo: text product `#323232`, giá sale `#d82727`, compare-at `11.9px/19.04px` màu `#131313` và gạch ngang.
 - Giữ nguyên các hiệu ứng style đã có: ảnh thứ hai fade-in khi hover, sale badge đỏ, Quick view hình tròn và Quick add dạng pill.
 - `sections/header.liquid` đã pass Shopify Liquid validation; `git diff --check` không phát hiện lỗi whitespace.
