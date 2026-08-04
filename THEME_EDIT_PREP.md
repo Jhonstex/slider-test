@@ -594,3 +594,36 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Preview storefront live trên Chrome: Men panel `1905×536px`, lớp nền `616px`; khi chuyển sang Women lớp nền co trực tiếp còn `532px`, không reset. Pages panel đạt khoảng `270×260px` tại `y=119.2px`.
 - Commit mới nhất: `99a1a5a` — `Align mega menu reveal height with panel`.
 - Restore point trước lần sửa: `backup/pre-menu-height-transition-pages-20260804`.
+
+## 23. Khớp product card Men và width/spacing announcement + header (2026-08-04)
+
+### Đo trực tiếp bằng Google Chrome
+
+- Đã đối chiếu trực tiếp storefront demo `https://helix-shoes-theme.myshopify.com/` với storefront preview `https://beae-anna.myshopify.com/`, không dùng Shopify Theme Editor cho phần đo desktop này.
+- Ở viewport desktop `1920px`, demo có announcement rộng toàn viewport, cao `38.39px`; header desktop bắt đầu tại `y=38.39px`, inner rộng `1820px`, bắt đầu tại `x=50px`, cao `80.39px`.
+- Logo demo rộng `110px`, tâm tại `x=905px`; nav dùng Figtree `500 14px/22.4px`, letter-spacing `0.28px`. Các trigger Men/Pages khớp lần lượt khoảng `x=132.02px/w=72.27px` và `x=204.28px/w=83.17px`.
+- Announcement dùng track giữa rộng `700px`, hai nút hai bên rộng `32px`; font live được xác nhận là `Figtree 14px/22.4px`.
+- Khi Men mở, demo có product list rộng khoảng `907px`, card đầu tiên tại `x=957px`, rộng `294.33px`, ảnh vuông cùng kích thước; quick view `44px` hình tròn và quick add cao `44px` dạng pill.
+
+### Product card Men đã sửa
+
+- Variant không còn là chấm màu đơn giản: mỗi variant lấy `featured_image` của variant và render thành tile ảnh `40×40px`, bo góc `6px`, đồng thời link tới đúng `?variant=`.
+- Badge sale dùng nền đỏ `#e80303`, chữ trắng, dạng pill; nút Quick view là vòng tròn trắng `44px`, nút Quick add là pill trắng cao `44px`, font Figtree `500 14px`.
+- Ảnh chính dùng `object-fit: contain`; ảnh thứ hai fade-in khi hover; Quick view/Quick add reveal bằng opacity + transform giống nhịp hover của demo.
+- Chiều rộng card đổi sang công thức `(100% - 24px) / 3`. Với product region `907px` và gap `12px`, kết quả là `294.33px`, khớp card demo và giữ responsive khi vùng menu thay đổi.
+- Store hiện tại không có các product handle riêng của Helix nên code giữ fallback sang sản phẩm trong `collections.all`; cấu trúc, ảnh variant và animation vẫn theo đúng mẫu.
+
+### Width và spacing header đã sửa
+
+- Desktop inner dùng `width: min(1820px, calc(100vw - 100px))`, `margin-left: 50px`, `margin-right: 0`; nhờ đó không bị lệch action/logo khi trang có scrollbar dọc.
+- Mega panel Men/Women bleed từ `left: -50px` và `right: -44px`, khớp vùng nội dung demo sau khi vùng cuộn nội bộ dành khoảng `6px` cho scrollbar.
+- Announcement giữ `min-height: 38.4px`, grid `32px / 700px / 32px`, padding ngang `16px`; vertical scrolling của storefront vẫn hoạt động, chỉ khóa overflow ngang.
+- Font live sau khi sync được xác nhận là Figtree cho announcement, nav, brand và action; logo vẫn rộng `110px`, header inner vẫn đúng `x=50px..1870px`.
+
+### Đồng bộ và kiểm tra
+
+- Đã tạo restore point trước nhóm thay đổi: `backup/pre-men-card-layout-header-spacing-20260804`.
+- Đã chạy `git diff --check` sạch; Theme Check cục bộ trước đó là `0` offense.
+- Commit đã push lên `main`: `f6a3264` — `Match product card width and mega menu viewport`.
+- Sau khi chờ storefront nhận GitHub sync, live stylesheet xác nhận các rule mới: inner dùng `100vw`, panel `right: -44px`, product card dùng `calc((100% - 24px) / 3)`.
+- Không chạy validator từ xa vì công cụ đó upload source theme lên dịch vụ bên ngoài; kiểm tra được thực hiện cục bộ và bằng live stylesheet trên storefront.
