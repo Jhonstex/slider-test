@@ -700,3 +700,12 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Typography của card khớp demo: text product `#323232`, giá sale `#d82727`, compare-at `11.9px/19.04px` màu `#131313` và gạch ngang.
 - Giữ nguyên các hiệu ứng style đã có: ảnh thứ hai fade-in khi hover, sale badge đỏ, Quick view hình tròn và Quick add dạng pill.
 - `sections/header.liquid` đã pass Shopify Liquid validation; `git diff --check` không phát hiện lỗi whitespace.
+
+## 27. Sửa mobile header và submenu (2026-08-04)
+
+- Sửa lỗi hamburger không mở menu: JavaScript trước đó tạo class `is-mobile-open` trong khi CSS/logic chờ `is-mobile-menu-open`.
+- Cấu trúc mobile được đổi theo demo: Women, Men và Pages mở thành panel con trượt từ phải vào, có header riêng, nút Back và Close; Women/Men được chia thành nhóm Top picks, By activity và By feature.
+- Đưa Login và Country/Region xuống footer của mobile drawer; country buttons vẫn submit localization form hiện có.
+- Thêm reset submenu khi đóng bằng scrim, Close hoặc Escape; chỉ một submenu được mở tại một thời điểm.
+- Sửa announcement mobile để không lặp chuỗi mặc định và giới hạn track theo viewport, tránh tràn ngang trên màn hình nhỏ.
+- Đã pass Shopify Liquid validation và kiểm tra JavaScript/CSS syntax cục bộ.
