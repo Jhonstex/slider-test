@@ -691,3 +691,11 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 - Backup trước nhóm thay đổi: `backup/pre-mega-menu-item-stagger-20260804`.
 - Các commit đã push lên `main`, commit cuối của nhóm: `54002ed` — `Match mega menu card and promo styling`.
+
+## 26. Căn lại product card theo style demo (2026-08-04)
+
+- Giữ nguyên sản phẩm, giá và ảnh đang có trên store; không hard-code catalog hoặc asset của demo Helix.
+- Product card vẫn dùng product handle cấu hình và fallback `collections.all` như trước.
+- Sửa phần details thành layout dọc: variant image tiles nằm ngay dưới ảnh sản phẩm, sau đó mới đến tên và giá; khoảng cách, kích thước tile `40×40px`, radius `6px`, gap `8px` và padding-top `14px` khớp demo.
+- Giữ nguyên các hiệu ứng style đã có: ảnh thứ hai fade-in khi hover, sale badge đỏ, Quick view hình tròn và Quick add dạng pill.
+- `sections/header.liquid` đã pass Shopify Liquid validation; `git diff --check` không phát hiện lỗi whitespace.
