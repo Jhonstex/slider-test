@@ -495,3 +495,25 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Local Theme Check: `0` offense.
 - Liquid AST: `Document`; JavaScript parse hợp lệ; schema section `40` settings và header group JSON hợp lệ.
 - Đã chạy `git diff --check`; chưa publish Shopify cho tới khi preview sau push được kiểm tra lại ở desktop/mobile.
+
+## 19. Kiểm tra trực tiếp storefront Helix desktop/mobile và sửa reveal header (2026-08-04)
+
+### Cách kiểm tra
+
+- Đã kiểm tra trực tiếp tại `https://helix-shoes-theme.myshopify.com/` bằng storefront browser, không dùng Shopify Theme Editor cho lần đối chiếu này.
+- Desktop được kiểm tra ở viewport `1280px`; mobile ở viewport `390px`.
+- Lần mở đầu storefront preview trực tiếp của theme hiện tại (`https://beae-anna.myshopify.com/?preview_theme_id=161043677397`) chuyển tới trang password; sau khi được cấp quyền truy cập storefront, preview đã mở trực tiếp và hiển thị thanh `slider-test/main` ở trạng thái Draft.
+
+### Hành vi reference đã xác nhận
+
+- Desktop: khi hover `Women`, `Men` hoặc `Pages`, mega menu mở bằng height/opacity reveal; header đổi từ transparent sang white và chữ/icon đổi màu theo transition.
+- Lớp nền trắng của header không xuất hiện tức thời: nó được reveal từ cạnh trên xuống trong khoảng `0.3s` với easing gần `cubic-bezier(.6, .14, 0, 1)`.
+- Nav underline reveal trong khoảng `0.2s`; chevron xoay khi dropdown mở; các item bên trong mega menu xuất hiện theo stagger.
+- Mobile không có hover dropdown; header cao khoảng `56px`, ẩn khi scroll xuống và hiện lại khi scroll lên với transform transition khoảng `0.5s cubic-bezier(.6, 0, .4, 1)`.
+
+### Thay đổi lần này
+
+- Bỏ việc đổi `background: #fff` tức thời trên desktop surface khi menu mở.
+- Thêm pseudo-layer trắng riêng cho desktop surface, animate `scaleY(0)` → `scaleY(1)` từ `transform-origin: top center`, giữ panel mega menu và nội dung ở lớp trên.
+- Giữ nguyên logic mobile và transition ẩn/hiện khi cuộn; pseudo-layer chỉ nằm trên desktop surface.
+- Tạo backup trước khi sửa: `backup/pre-header-reveal-20260804`.
