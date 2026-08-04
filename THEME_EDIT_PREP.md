@@ -571,3 +571,9 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - JavaScript trong `sections/header.liquid` parse hợp lệ.
 - `git diff --check`: không có whitespace error.
 - Chưa chạy validator từ xa vì validator đó upload source theme ra ngoài; không cần cho bước kiểm tra cục bộ này.
+
+### Publish và xác nhận live
+
+- Commit đã push lên `main`: `63c4570` — `Fix Men mega menu carousel and Pages radius`.
+- Restore point: `backup/pre-men-pages-mega-menu-20260804`.
+- Preview storefront live bằng Chrome đã nhận 5 product cards; panel Men full-width khoảng `1905px`, product card `292px`, nút Next di chuyển track `304px` và Pages panel trả về `border-radius: 16px`.
