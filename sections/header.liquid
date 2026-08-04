@@ -1032,20 +1032,20 @@
     height: var(--helix-mega-height, 0px);
     max-height: min(540px, calc(100vh - 80px));
     overflow: hidden;
-    border-top: 1px solid transparent;
+    scrollbar-gutter: stable;
     background: #fff;
     color: #1a1312;
     opacity: 0;
     pointer-events: none;
     transform: none;
-    transition: height .3s cubic-bezier(.6, .14, 0, 1), border-color .3s cubic-bezier(.6, .14, 0, 1) .1s, opacity .2s cubic-bezier(.6, .14, 0, 1), visibility 0s linear .3s;
+    transition: height .3s cubic-bezier(.6, .14, 0, 1), opacity .2s cubic-bezier(.6, .14, 0, 1), visibility 0s linear .3s;
     visibility: hidden;
   }
 
   .helix-header__dropdown[open] > .helix-header__mega-panel {
     height: var(--helix-mega-height, min(540px, calc(100vh - 80px)));
-    border-color: rgba(26, 19, 18, .12);
     opacity: 1;
+    overflow: auto;
     pointer-events: auto;
     transition-delay: 0s;
     visibility: visible;
@@ -1161,7 +1161,7 @@
   .helix-header__mega-products-viewport {
     overflow: hidden;
     margin: 0 -10px;
-    padding: 10px 10px 0;
+    padding: 0 10px;
   }
 
   .helix-header__mega-products-track {
@@ -1887,7 +1887,6 @@
 
   .helix-header.is-replaying-menu-reveal .helix-header__mega-panel {
     height: 0;
-    border-color: transparent;
     opacity: 0;
     pointer-events: none;
     transition: none;
