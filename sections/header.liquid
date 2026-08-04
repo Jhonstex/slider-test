@@ -275,10 +275,10 @@
                               <div class="helix-header__mega-product-media">
                                 <a href="{{ helix_men_product.url }}" aria-label="{{ helix_men_product.title | escape }}">
                                   {% if helix_men_product.featured_image != blank %}
-                                    {{ helix_men_product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '292,438,584,700', sizes: '292px', alt: helix_men_product.title, class: 'helix-header__mega-product-image' }}
+                                    {{ helix_men_product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '294,441,588,700', sizes: '294px', alt: helix_men_product.title, class: 'helix-header__mega-product-image' }}
                                   {% endif %}
                                   {% if helix_men_secondary_image != blank %}
-                                    {{ helix_men_secondary_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '292,438,584,700', sizes: '292px', alt: helix_men_product.title, class: 'helix-header__mega-product-image helix-header__mega-product-image--secondary' }}
+                                    {{ helix_men_secondary_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '294,441,588,700', sizes: '294px', alt: helix_men_product.title, class: 'helix-header__mega-product-image helix-header__mega-product-image--secondary' }}
                                   {% endif %}
                                 </a>
                                 {% if helix_men_discount > 0 %}
@@ -773,11 +773,12 @@
     position: relative;
     z-index: 1;
     display: grid;
-    width: min(1820px, calc(100% - 100px));
+    width: min(1820px, calc(100vw - 100px));
     min-height: 80px;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    margin-inline: auto;
+    margin-left: 50px;
+    margin-right: 0;
     gap: 10px;
     padding: 24px 0;
   }
@@ -1026,7 +1027,7 @@
     position: absolute;
     z-index: 8;
     top: 100%;
-    right: -50px;
+    right: -44px;
     left: -50px;
     height: var(--helix-mega-height, 0px);
     max-height: min(540px, calc(100vh - 80px));
@@ -1161,9 +1162,9 @@
   }
 
   .helix-header__mega-product {
-    width: 292px;
-    min-width: 292px;
-    flex: 0 0 292px;
+    width: calc((100% - 24px) / 3);
+    min-width: calc((100% - 24px) / 3);
+    flex: 0 0 calc((100% - 24px) / 3);
     opacity: 0;
     transform: translateY(10px);
   }
