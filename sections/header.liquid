@@ -128,6 +128,7 @@
   {% endif %}
 
   <div class="helix-header__desktop-bar" data-helix-desktop-bar>
+    <div class="helix-header__menu-background" data-helix-menu-background aria-hidden="true"></div>
     <div class="helix-header__desktop-surface">
       <div class="helix-header__desktop-inner">
         <nav class="helix-header__desktop-nav" aria-label="{{ 'header.primary_navigation' | t }}">
@@ -719,20 +720,24 @@
 
   .helix-header__desktop-surface {
     position: relative;
+    z-index: 1;
     isolation: isolate;
   }
 
-  .helix-header__desktop-surface::before {
+  .helix-header__menu-background {
     position: absolute;
     z-index: 0;
-    inset: 0;
-    background: #fff;
-    content: '';
-    opacity: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+    background: transparent;
     pointer-events: none;
-    transform: scaleY(0);
-    transform-origin: top center;
-    transition: transform .3s cubic-bezier(.6, .14, 0, 1), opacity .2s cubic-bezier(.6, 0, .4, 1);
+    transition: height .3s cubic-bezier(.6, .14, 0, 1), background-color .2s cubic-bezier(.6, 0, .4, 1);
+  }
+
+  .helix-header__desktop-surface::before {
+    display: none;
   }
 
   .helix-header__desktop-inner {
@@ -1415,12 +1420,26 @@
   }
 
   .helix-header__pages-panel {
+    top: calc(100% + 24px);
     left: 0;
     right: auto;
+    width: 270px;
+    min-width: 270px;
     display: flex;
     flex-direction: column;
     gap: 2px;
+    padding: 10px 0;
+    border: 0;
     border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+  }
+
+  .helix-header__pages-panel a {
+    width: 100%;
+    max-width: none;
+    min-height: 38.4px;
+    align-items: center;
+    padding: 8px 10px;
   }
 
   .helix-header__country-list {
@@ -1741,9 +1760,9 @@
     color: var(--helix-solid-text);
   }
 
-  .helix-header.is-menu-open .helix-header__desktop-surface::before {
-    opacity: 1;
-    transform: scaleY(1);
+  .helix-header.is-menu-open .helix-header__menu-background {
+    height: calc(80px + var(--helix-menu-height, 0px));
+    background: #fff;
   }
 
   .helix-header.is-replaying-menu-reveal .helix-header__mega-panel {
@@ -2010,7 +2029,15 @@
     const syncDropdownState = () => {
       const open = dropdowns.some((dropdown) => dropdown.open);
       root.classList.toggle('is-menu-open', open);
-      dropdowns.forEach(syncMegaPanelHeight);
+      let menuHeight = 0;
+      dropdowns.forEach((dropdown) => {
+        syncMegaPanelHeight(dropdown);
+        if (dropdown.open) {
+          const panel = select('[data-helix-mega-panel]', dropdown);
+          menuHeight = Number.parseFloat(panel?.style.getPropertyValue('--helix-mega-height')) || 0;
+        }
+      });
+      root.style.setProperty('--helix-menu-height', `${menuHeight}px`);
       syncMenProducts();
     };
 
