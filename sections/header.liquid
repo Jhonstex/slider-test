@@ -421,7 +421,7 @@
             {% render 'helix-icon-account' %}
             <span class="visually-hidden">{{ 'header.account' | t }}</span>
           </a>
-          <a class="helix-header__icon-button helix-header__cart-link" href="{{ routes.cart_url }}" aria-label="{{ 'header.cart' | t }}">
+          <a class="helix-header__icon-button helix-header__cart-link" href="{{ routes.cart_url }}" data-helix-open-cart aria-label="{{ 'header.cart' | t }}">
             <span class="helix-header__cart-icon">
               {% render 'helix-icon-cart' %}
               {% if cart.item_count > 0 %}<span class="helix-header__cart-count">{{ cart.item_count }}</span>{% endif %}
@@ -471,7 +471,7 @@
         <a class="helix-header__mobile-icon" href="{{ routes.search_url }}" data-helix-open-search aria-label="{{ 'header.search' | t }}">
           {% render 'helix-icon-search' %}
         </a>
-        <a class="helix-header__mobile-icon helix-header__cart-link" href="{{ routes.cart_url }}" aria-label="{{ 'header.cart' | t }}">
+        <a class="helix-header__mobile-icon helix-header__cart-link" href="{{ routes.cart_url }}" data-helix-open-cart aria-label="{{ 'header.cart' | t }}">
           <span class="helix-header__cart-icon">
             {% render 'helix-icon-cart' %}
             {% if cart.item_count > 0 %}<span class="helix-header__cart-count">{{ cart.item_count }}</span>{% endif %}
@@ -2509,6 +2509,7 @@
 
     root.addEventListener('click', (event) => {
       const searchTrigger = event.target.closest('[data-helix-open-search]');
+      const cartTrigger = event.target.closest('[data-helix-open-cart]');
       const mobileTrigger = event.target.closest('[data-helix-mobile-open]');
       const mobileBack = event.target.closest('[data-helix-mobile-back]');
       const closeTrigger = event.target.closest('[data-helix-close-layer], [data-helix-close-mobile]');
@@ -2523,6 +2524,11 @@
       if (searchTrigger) {
         event.preventDefault();
         openLayer('search');
+      }
+
+      if (cartTrigger) {
+        event.preventDefault();
+        openLayer('cart');
       }
 
       if (mobileTrigger) {
