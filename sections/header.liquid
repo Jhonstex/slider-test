@@ -1041,6 +1041,20 @@
     visibility: hidden;
   }
 
+  .helix-header__mega-panel::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .helix-header__mega-panel::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    background: rgba(26, 19, 18, .2);
+  }
+
+  .helix-header__mega-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   .helix-header__dropdown[open] > .helix-header__mega-panel {
     height: var(--helix-mega-height, min(540px, calc(100vh - 80px)));
     opacity: 1;
@@ -1051,8 +1065,8 @@
   }
 
   .helix-header__mega-inner {
-    width: calc(100% - 6px);
-    margin-inline: 0;
+    width: 100%;
+    margin-inline: auto;
     padding: 40px 0;
   }
 
