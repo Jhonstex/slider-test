@@ -487,7 +487,7 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Sửa announcement tránh vỡ dòng trong iframe preview, căn track/nút theo đúng layout Helix và đổi icon mũi tên sang chevron SVG.
 - Đổi mặc định header sang Figtree, logo fallback `HELIX`, announcement background `#d3f285`; thêm cờ country và divider action.
 - Đồng bộ màu surface khi hover menu, giữ transparent overlay khi sticky, bổ sung click navigation cho Women/Men và đo height mega panel bằng JS để animation ổn định.
-- Sắp xếp lại mega menu thành 3 cột link + vùng banner; thêm hai banner tham chiếu của Helix cho trạng thái mặc định Women, đồng thời giữ image picker để có thể thay asset trong Theme Editor.
+- Sắp xếp lại mega menu thành 3 cột link + vùng banner; thêm hai banner và logo tham chiếu của Helix cho trạng thái mặc định Women/desktop/mobile, đồng thời giữ image picker để có thể thay asset trong Theme Editor.
 
 ### Backup và kiểm tra
 

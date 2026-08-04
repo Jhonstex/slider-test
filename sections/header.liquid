@@ -286,8 +286,16 @@
               {% endif %}
             </span>
           {% else %}
-            <span class="helix-header__logo-text helix-header__logo-text--normal">{{ helix_logo_text }}</span>
-            <span class="helix-header__logo-text helix-header__logo-text--overlay" aria-hidden="true">{{ helix_logo_text }}</span>
+            <span class="helix-header__logo helix-header__logo--normal">
+              {% # theme-check-disable RemoteAsset %}
+              <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/logo.svg?v=1776243138&amp;width=220" width="110" height="19" loading="eager" alt="{{ helix_logo_text }}">
+              {% # theme-check-enable RemoteAsset %}
+            </span>
+            <span class="helix-header__logo helix-header__logo--overlay" aria-hidden="true">
+              {% # theme-check-disable RemoteAsset %}
+              <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/logo-white.svg?v=1776243137&amp;width=220" width="110" height="19" loading="eager" alt="">
+              {% # theme-check-enable RemoteAsset %}
+            </span>
           {% endif %}
         </a>
 
@@ -357,8 +365,16 @@
             {% endif %}
           </span>
         {% else %}
-          <span class="helix-header__logo-text helix-header__logo-text--normal">{{ helix_logo_text }}</span>
-          <span class="helix-header__logo-text helix-header__logo-text--overlay" aria-hidden="true">{{ helix_logo_text }}</span>
+          <span class="helix-header__logo helix-header__logo--normal">
+            {% # theme-check-disable RemoteAsset %}
+            <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/logo.svg?v=1776243138&amp;width=180" width="90" height="16" loading="eager" alt="{{ helix_logo_text }}">
+            {% # theme-check-enable RemoteAsset %}
+          </span>
+          <span class="helix-header__logo helix-header__logo--overlay" aria-hidden="true">
+            {% # theme-check-disable RemoteAsset %}
+            <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/logo-white.svg?v=1776243137&amp;width=180" width="90" height="16" loading="eager" alt="">
+            {% # theme-check-enable RemoteAsset %}
+          </span>
         {% endif %}
       </a>
 
