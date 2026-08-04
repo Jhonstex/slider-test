@@ -715,3 +715,11 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Sửa announcement mobile để không lặp chuỗi mặc định, thêm fallback normalize khi setting cũ đã lưu chuỗi lỗi và giới hạn track theo viewport, tránh tràn ngang trên màn hình nhỏ.
 - Đã pass Shopify Liquid validation và kiểm tra JavaScript/CSS syntax cục bộ.
 - Đã test trực tiếp preview ở viewport `390×844`: hamburger mở được, Women/Men/Pages mở submenu, Back/Close hoạt động, nested By activity mở được, Search và Cart mở/đóng đúng drawer; demo Helix cũng được đối chiếu cùng viewport.
+
+## 28. Tinh chỉnh panel submenu mobile theo demo (2026-08-04)
+
+- Chỉ giữ nút Close ở drawer menu ngoài; các panel Women, Men, Pages và panel con By activity/By feature không còn hiển thị dấu X riêng.
+- Giữ nút Back trong header panel để quay lại bằng animation trượt hiện có, không làm thay đổi luồng mở menu con.
+- Ẩn scrollbar trình duyệt của vùng submenu nhưng vẫn giữ khả năng cuộn; nội dung và promo card trở lại đúng chiều rộng demo.
+- Căn header submenu về `69px`, padding trái `12px`, nút Close drawer ngoài `36×36px`, tiêu đề `Archivo 700 17px/17px`.
+- Căn nhóm link featured về `25.6px` mỗi dòng, thêm khoảng cách `16px` trước các row By activity/By feature và dùng weight `500` cho row điều hướng.
