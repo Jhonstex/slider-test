@@ -463,3 +463,35 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Commit hoàn thiện hiện tại trên `main` (bao gồm typography Figtree và cập nhật note): `9020d77`.
 - Backup trước khi xóa header cũ: `backup/pre-header-rebuild-20260804`.
 - Link backup: https://github.com/Jhonstex/slider-test/tree/backup/pre-header-rebuild-20260804
+
+## 18. Đối chiếu lại Helix trên Google Chrome và tinh chỉnh lần 2 (2026-08-04)
+
+### Reference desktop đã xác nhận
+
+- Announcement bar cao `38.4px`, nền xanh lime `#d3f285`, chữ Figtree `14px/22.4px`; message nằm giữa một track rộng `700px`, hai nút Previous/Next rộng `32px` đặt sát hai bên track.
+- Header desktop cao `80.4px`, inner lề `50px`, logo thật rộng `110px`; khi overlay nền hero, chữ và icon là màu trắng.
+- Cụm phải gồm cờ Việt Nam `16px`, `VND ₫`, chevron `16px`, divider dọc `1px × 16px`, Search/Account/Cart `24px` với vùng click `44px`.
+- Nav dùng Figtree `500 14px/22.4px`, letter-spacing khoảng `0.28px`; underline cao `1px` chạy từ phải sang trái trong khoảng `0.2s`.
+- Khi hover `Women` hoặc `Men`, mega menu mở tự động; toàn bộ header chuyển sang nền trắng/chữ đen, chevron xoay lên, underline hiện, panel mở bằng height/opacity transition `0.3s/0.2s`.
+- Mega menu Women có ba cột link ở vị trí gần `50px`, `250px`, `450px` và hai banner bên phải; item reveal dùng animation khoảng `0.4s` với stagger `0.2s`, `0.25s`, `0.3s`.
+- Khi rời vùng hover, dropdown đóng; khi click label Women/Men, link collection được mở như demo.
+
+### Responsive và sticky
+
+- Mobile giữ announcement ở trên, header cao `56px`, grid hamburger / logo / Search + Cart; desktop nav và currency ẩn khỏi hàng mobile.
+- Overlay header vẫn trong suốt khi cuộn trên hero; chỉ header không-overlay mới đổi sang white floating surface khi sticky. Khi mega menu mở, surface luôn chuyển white để giữ contrast.
+- CUA/hover trên Chrome đã được dùng để kiểm tra trực tiếp trạng thái mở menu; Shopify Theme Editor preview cũng đã được mở cùng lúc để so sánh.
+
+### Thay đổi lần 2
+
+- Sửa announcement tránh vỡ dòng trong iframe preview, căn track/nút theo đúng layout Helix và đổi icon mũi tên sang chevron SVG.
+- Đổi mặc định header sang Figtree, logo fallback `HELIX`, announcement background `#d3f285`; thêm cờ country và divider action.
+- Đồng bộ màu surface khi hover menu, giữ transparent overlay khi sticky, bổ sung click navigation cho Women/Men và đo height mega panel bằng JS để animation ổn định.
+- Sắp xếp lại mega menu thành 3 cột link + vùng banner; thêm hai banner tham chiếu của Helix cho trạng thái mặc định Women, đồng thời giữ image picker để có thể thay asset trong Theme Editor.
+
+### Backup và kiểm tra
+
+- Backup trước lần tinh chỉnh này: `backup/pre-helix-match-20260804`.
+- Local Theme Check: `0` offense.
+- Liquid AST: `Document`; JavaScript parse hợp lệ; schema section `40` settings và header group JSON hợp lệ.
+- Đã chạy `git diff --check`; chưa publish Shopify cho tới khi preview sau push được kiểm tra lại ở desktop/mobile.
