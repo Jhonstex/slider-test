@@ -284,13 +284,37 @@
                                 {% if helix_men_discount > 0 %}
                                   <span class="helix-header__mega-product-badge">-{{ helix_men_discount }}%</span>
                                 {% endif %}
+                                <a class="helix-header__mega-product-quick-view" href="{{ helix_men_product.url }}" aria-label="Quick view">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M1.718 10.291a.75.75 0 0 1 0-.582A9.04 9.04 0 0 1 10 4.168a9.04 9.04 0 0 1 8.282 5.541.75.75 0 0 1 0 .582A9.04 9.04 0 0 1 10 15.832a9.04 9.04 0 0 1-8.282-5.541Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.25"/>
+                                  </svg>
+                                </a>
                                 <a class="helix-header__mega-product-quick-add" href="{{ helix_men_product.url }}">Quick add</a>
                               </div>
                               <div class="helix-header__mega-product-details">
                                 {% if helix_men_product_option != blank and helix_men_product_option.values != blank %}
                                   <ul class="helix-header__mega-product-swatches" role="list" aria-label="{{ helix_men_product_option.name | escape }}">
                                     {% for helix_men_option_value in helix_men_product_option.values limit: 4 %}
-                                      <li><span style="--helix-swatch-index: {{ forloop.index0 }}" title="{{ helix_men_option_value | escape }}"></span></li>
+                                      {% assign helix_men_option_variant = blank %}
+                                      {% for helix_men_variant in helix_men_product.variants %}
+                                        {% if helix_men_variant.option1 == helix_men_option_value or helix_men_variant.option2 == helix_men_option_value or helix_men_variant.option3 == helix_men_option_value %}
+                                          {% assign helix_men_option_variant = helix_men_variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% endfor %}
+                                      {% assign helix_men_option_image = helix_men_option_variant.featured_image %}
+                                      {% if helix_men_option_image == blank %}
+                                        {% assign helix_men_option_image = helix_men_product.images[forloop.index0] %}
+                                      {% endif %}
+                                      {% if helix_men_option_image == blank %}
+                                        {% assign helix_men_option_image = helix_men_product.featured_image %}
+                                      {% endif %}
+                                      <li>
+                                        <a href="{{ helix_men_product.url }}{% if helix_men_option_variant != blank %}?variant={{ helix_men_option_variant.id }}{% endif %}" aria-label="{{ helix_men_option_value | escape }}">
+                                          <span title="{{ helix_men_option_value | escape }}" style="--helix-swatch-image: url('{{ helix_men_option_image | image_url: width: 80 }}');"></span>
+                                        </a>
+                                      </li>
                                     {% endfor %}
                                   </ul>
                                 {% endif %}
@@ -602,7 +626,7 @@
     grid-template-columns: 32px minmax(0, 700px) 32px;
     align-items: center;
     justify-content: center;
-    padding: 8px 16px;
+    padding: 0 16px;
     overflow: hidden;
     background: var(--helix-announcement-bg);
     color: var(--helix-announcement-text);
@@ -657,7 +681,7 @@
   .helix-header__announcement-side button {
     display: grid;
     width: 32px;
-    height: 32px;
+    height: 38.4px;
     padding: 0;
     place-items: center;
     border: 0;
@@ -682,8 +706,8 @@
   }
 
   .helix-header__announcement-side button svg {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
   }
 
   .helix-header__announcement-side button:hover,
@@ -701,7 +725,7 @@
   .helix-header__mobile-bar {
     position: absolute;
     z-index: 3;
-    top: 39px;
+    top: 38.4px;
     right: 0;
     left: 0;
     color: var(--helix-solid-text);
@@ -744,11 +768,13 @@
     position: relative;
     z-index: 1;
     display: grid;
-    width: 100%;
+    width: min(1805px, calc(100% - 100px));
     min-height: 80px;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    padding-inline: clamp(30px, 3.94vw, 50px);
+    margin-inline: auto;
+    gap: 10px;
+    padding: 24px 0;
   }
 
   .helix-header__desktop-nav,
@@ -761,6 +787,7 @@
   .helix-header__desktop-nav {
     justify-content: flex-start;
     gap: 0;
+    margin-left: -12px;
   }
 
   .helix-header__actions {
@@ -821,7 +848,7 @@
     display: inline-flex;
     min-height: 32px;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     padding: 5px 12px;
     border: 0;
     background: transparent;
@@ -872,6 +899,12 @@
   .helix-header__chevron svg {
     width: 20px;
     height: 20px;
+  }
+
+  .helix-header__desktop-nav .helix-header__chevron,
+  .helix-header__desktop-nav .helix-header__chevron svg {
+    width: 16px;
+    height: 16px;
   }
 
   .helix-header__dropdown[open] > summary .helix-header__chevron {
@@ -1133,7 +1166,7 @@
     overflow: hidden;
     aspect-ratio: 1;
     border-radius: 16px;
-    background: #f4f4f4;
+    background: transparent;
   }
 
   .helix-header__mega-product-media > a {
@@ -1148,7 +1181,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: opacity .45s cubic-bezier(.6, .14, 0, 1);
   }
 
@@ -1165,19 +1198,53 @@
 
   .helix-header__mega-product-badge {
     position: absolute;
+    z-index: 2;
     top: 12px;
     left: 12px;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: #1a1312;
+    display: inline-flex;
+    min-height: 20px;
+    align-items: center;
+    padding: 3px 8.5px;
+    border-radius: 9990px;
+    background: #e80303;
     color: #fff;
     font-size: 12px;
     font-weight: 500;
-    line-height: 18px;
+    line-height: normal;
+  }
+
+  .helix-header__mega-product-quick-view {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+    color: #1a1312;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity .3s cubic-bezier(.4, 0, .2, 1), transform .3s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .helix-header__mega-product-quick-view svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .helix-header__mega-product-media:hover .helix-header__mega-product-quick-view,
+  .helix-header__mega-product-media:focus-within .helix-header__mega-product-quick-view {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .helix-header__mega-product-quick-add {
     position: absolute;
+    z-index: 2;
     right: 12px;
     bottom: 12px;
     left: 12px;
@@ -1223,18 +1290,28 @@
     list-style: none;
   }
 
-  .helix-header__mega-product-swatches li,
-  .helix-header__mega-product-swatches li span {
-    display: block;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
+  .helix-header__mega-product-swatches li {
+    display: flex;
+    width: 40px;
+    height: 45px;
+    align-items: flex-start;
   }
 
-  .helix-header__mega-product-swatches li:nth-child(1) span { background: #1a1312; }
-  .helix-header__mega-product-swatches li:nth-child(2) span { background: #e7e1dc; }
-  .helix-header__mega-product-swatches li:nth-child(3) span { background: #747b82; }
-  .helix-header__mega-product-swatches li:nth-child(4) span { background: #d0b294; }
+  .helix-header__mega-product-swatches li a {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+
+  .helix-header__mega-product-swatches li span {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: var(--helix-swatch-image) center / cover no-repeat;
+  }
 
   .helix-header__mega-product-info {
     display: flex;
