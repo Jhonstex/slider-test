@@ -535,13 +535,13 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 ### Thay đổi
 
 - Thêm `switchingDropdown` để nhận biết chuyển giữa hai dropdown desktop đang mở.
-- Khi chuyển menu, thêm class tạm `is-replaying-menu-reveal`, tắt transition và reset layer về `opacity: 0; transform: scaleY(0)`.
-- Ép browser layout một lần, sau đó bỏ class tạm để transition `scaleY(0) → scaleY(1)` chạy lại đầy đủ.
+- Khi chuyển menu, thêm class tạm `is-replaying-menu-reveal`, tắt transition và reset `.helix-header__mega-panel` về `height: 0; opacity: 0; visibility: hidden`.
+- Ép browser layout một lần, sau đó bỏ class tạm để transition `height: 0 → mega-height` và opacity của panel trắng chạy lại đầy đủ.
 - Không thay đổi logic mobile, autoplay slider hoặc hành vi mở menu lần đầu.
 
 ### Xác nhận
 
 - Local Theme Check: `0` offense; JavaScript parse hợp lệ; `git diff --check` sạch.
 - Storefront preview trực tiếp đã nhận compiled asset mới, có đủ `replayDesktopHeaderReveal`, `switchingDropdown` và `is-replaying-menu-reveal`.
-- Commit: `6dfb6da` — reset transition giữa các menu.
+- Commit: `57e6f2c` — replay transition đúng trên mega-menu panel trắng.
 - Backup: `backup/pre-menu-switch-reveal-20260804`.
