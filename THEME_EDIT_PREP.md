@@ -627,3 +627,29 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Commit đã push lên `main`: `f6a3264` — `Match product card width and mega menu viewport`.
 - Sau khi chờ storefront nhận GitHub sync, live stylesheet xác nhận các rule mới: inner dùng `100vw`, panel `right: -44px`, product card dùng `calc((100% - 24px) / 3)`.
 - Không chạy validator từ xa vì công cụ đó upload source theme lên dịch vụ bên ngoài; kiểm tra được thực hiện cục bộ và bằng live stylesheet trên storefront.
+
+## 24. Khôi phục hiệu ứng đổ trắng từ trên xuống ở header (2026-08-04)
+
+### Nguyên nhân
+
+- Demo Helix đặt `.header-menu-background` ở trạng thái đóng với `height: 0`; khi hover Women/Men, lớp này mở rộng xuống dưới bằng `height .3s cubic-bezier(.6, .14, 0, 1)`.
+- Theme trước đó đặt `.helix-header__menu-background` mặc định `height: 80px`, nên vùng header trên đã tồn tại sẵn và chỉ đổi màu; cảm giác trắng xuất hiện tức thời thay vì được đổ từ trên xuống.
+
+### Thay đổi
+
+- Đổi height mặc định của `.helix-header__menu-background` từ `80px` về `0`.
+- Giữ trạng thái mở `calc(80px + var(--helix-menu-height))` để lớp trắng bao phủ từ đầu header xuống hết mega menu.
+- Bỏ `background-color` transition riêng; chỉ transition height như demo, vì vậy nền trắng được giới hạn trong vùng đang mở rộng.
+
+### Đối chiếu live sau khi push
+
+- Preview storefront live: trạng thái đóng `height: 0`, nền transparent; khi hover Men, sau khoảng `35ms` lớp trắng đã bắt đầu ở đầu header (`height khoảng 69px`), sau `300ms` đạt `height 618px`.
+- Demo Helix: khi hover Women, lớp nền đạt `height khoảng 535.38px`; transition live được xác nhận là `height 0.3s cubic-bezier(.6, .14, 0, 1)`.
+- Hướng reveal, easing và cách nền trắng mở từ trên xuống đã khớp; khác biệt chiều cao cuối chỉ do nội dung mega menu Men/Women của hai storefront khác nhau.
+
+### Publish và backup
+
+- Backup trước nhóm sửa: `backup/pre-header-top-white-reveal-20260804`.
+- Commit `605de50`: `Restore header white reveal animation`.
+- Commit `fe24936`: `Match header reveal transition timing`.
+- Cả hai commit đã push lên `main`; preview storefront đã nhận CSS mới sau reload.
