@@ -585,7 +585,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
 
   #{{ helix_header_id }} {
-    --helix-font: 'Figtree', {% if section.settings.font_family != blank %}{{ section.settings.font_family.family }}, {{ section.settings.font_family.fallback_families }}{% else %}'Open Sans', Arial, sans-serif{% endif %};
+    --helix-font: {% if section.settings.font_family != blank %}{{ section.settings.font_family.family }}, {{ section.settings.font_family.fallback_families }}{% else %}'Figtree', sans-serif{% endif %};
   }
 {% endstyle %}
 
@@ -686,8 +686,8 @@
     place-items: center;
     border: 0;
     background: transparent;
-    font-size: 18px;
-    line-height: 1;
+    font-size: 14px;
+    line-height: 22.4px;
     transition: transform .2s ease, opacity .2s ease;
   }
 
@@ -934,9 +934,11 @@
 
   .helix-header__currency-trigger {
     min-height: 32px;
+    height: 16px;
     gap: 8px;
-    padding-inline: 0;
+    padding: 0;
     font-weight: 400;
+    line-height: 14px;
   }
 
   .helix-header__currency-trigger .helix-header__chevron,
