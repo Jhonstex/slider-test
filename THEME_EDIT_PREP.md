@@ -718,7 +718,7 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 ## 28. Tinh chỉnh panel submenu mobile theo demo (2026-08-04)
 
-- Chỉ giữ nút Close ở drawer menu ngoài; các panel Women, Men, Pages và panel con By activity/By feature không còn hiển thị dấu X riêng.
+- Drawer ngoài và panel cấp một Women/Men/Pages giữ nút Close như demo; các panel con By activity/By feature không còn hiển thị dấu X riêng.
 - Giữ nút Back trong header panel để quay lại bằng animation trượt hiện có, không làm thay đổi luồng mở menu con.
 - Ẩn scrollbar trình duyệt của vùng submenu nhưng vẫn giữ khả năng cuộn; nội dung và promo card trở lại đúng chiều rộng demo.
 - Căn header submenu về `69px`, padding trái `12px`, nút Close drawer ngoài `36×36px`, tiêu đề `Archivo 700 17px/17px`.
