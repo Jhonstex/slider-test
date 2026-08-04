@@ -708,5 +708,5 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Đưa Login và Country/Region xuống footer của mobile drawer; country buttons vẫn submit localization form hiện có.
 - Thêm reset submenu khi đóng bằng scrim, Close hoặc Escape; chỉ một submenu được mở tại một thời điểm.
 - Search và Cart đều mở drawer tương ứng bằng trigger nội bộ giống demo, vẫn giữ fallback link khi JavaScript không chạy.
-- Sửa announcement mobile để không lặp chuỗi mặc định và giới hạn track theo viewport, tránh tràn ngang trên màn hình nhỏ.
+- Sửa announcement mobile để không lặp chuỗi mặc định, thêm fallback normalize khi setting cũ đã lưu chuỗi lỗi và giới hạn track theo viewport, tránh tràn ngang trên màn hình nhỏ.
 - Đã pass Shopify Liquid validation và kiểm tra JavaScript/CSS syntax cục bộ.

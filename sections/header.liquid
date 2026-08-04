@@ -2366,6 +2366,16 @@
     const menProductsNext = select('[data-helix-men-products-next]', menProducts);
     let menProductsOffset = 0;
 
+    const normalizeAnnouncementMessage = () => {
+      const firstMessage = select('[data-helix-announcement-message]');
+      if (!firstMessage) return;
+      const messageText = firstMessage.textContent.replace(/\\s+/g, ' ').trim();
+      if (!messageText.includes('Free shipping for all orders over') || !messageText.includes('5.000.000₫Free shipping for all orders over')) return;
+      firstMessage.innerHTML = 'Free shipping for all orders over <strong>5.000.000₫</strong>';
+    };
+
+    normalizeAnnouncementMessage();
+
     const syncMenProducts = () => {
       if (!menProductsViewport || !menProductsTrack) return;
       const maxOffset = Math.max(0, menProductsTrack.scrollWidth - menProductsViewport.clientWidth);
