@@ -517,3 +517,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Thêm pseudo-layer trắng riêng cho desktop surface, animate `scaleY(0)` → `scaleY(1)` từ `transform-origin: top center`, giữ panel mega menu và nội dung ở lớp trên.
 - Giữ nguyên logic mobile và transition ẩn/hiện khi cuộn; pseudo-layer chỉ nằm trên desktop surface.
 - Tạo backup trước khi sửa: `backup/pre-header-reveal-20260804`.
+
+### Xác nhận sau khi push
+
+- Sau commit `d3b0134`, storefront preview trực tiếp đã nhận CSS mới; live stylesheet có đúng rule `.helix-header.is-menu-open .helix-header__desktop-surface::before` với `opacity: 0`/`transform: scaleY(0)` khi đóng và chuyển sang `opacity: 1`/`transform: scaleY(1)` khi mở.
+- Transition live được xác nhận là `transform 0.3s cubic-bezier(.6, .14, 0, 1)` và opacity `0.2s cubic-bezier(.6, 0, .4, 1)`, khớp timing đã đo trên demo.
+- Desktop preview trực tiếp kiểm tra ở `1280px`; mobile preview trực tiếp kiểm tra ở `390px`, mobile bar cao `56px`, announcement khoảng `39px` và hamburger vùng click `40px`.
+- Live mobile stylesheet vẫn giữ `transform: translateY(-100%)` cho `.helix-header.is-scroll-hidden .helix-header__mobile-bar`; không đổi logic scroll khi thêm desktop reveal.
