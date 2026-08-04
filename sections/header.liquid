@@ -321,7 +321,7 @@
                 <div class="helix-header__mega-product-info">
                   <a href="{{ helix_men_product.url }}">{{ helix_men_product.title }}</a>
                   <div>
-                    <span>{{ helix_men_product_variant.price | money }}</span>
+                    <span{% if helix_men_compare_at_price > helix_men_product_variant.price %} class="helix-header__mega-product-sale-price"{% endif %}>{{ helix_men_product_variant.price | money }}</span>
                     {% if helix_men_compare_at_price > helix_men_product_variant.price %}
                       <s>{{ helix_men_compare_at_price | money }}</s>
                     {% endif %}
@@ -1368,13 +1368,14 @@
     min-width: 0;
     flex-direction: column;
     gap: 2px;
+    color: #323232;
     font-size: 14px;
     line-height: 22.4px;
   }
 
   .helix-header__mega-product-info > a {
     overflow: hidden;
-    color: #1a1312;
+    color: #323232;
     font-size: 14px;
     line-height: 22.4px;
     text-overflow: ellipsis;
@@ -1387,8 +1388,14 @@
     gap: 6px;
   }
 
+  .helix-header__mega-product-sale-price {
+    color: #d82727;
+  }
+
   .helix-header__mega-product-info s {
-    color: rgba(26, 19, 18, .5);
+    color: #131313;
+    font-size: 85%;
+    line-height: 1.6;
   }
 
   .helix-header__mega-column,
