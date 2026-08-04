@@ -1683,6 +1683,13 @@
       dropdowns.forEach(syncMegaPanelHeight);
     };
 
+    const replayDesktopHeaderReveal = () => {
+      if (!desktopQuery.matches || !root.classList.contains('is-menu-open')) return;
+      root.classList.remove('is-menu-open');
+      void root.offsetWidth;
+      root.classList.add('is-menu-open');
+    };
+
     dropdowns.forEach((dropdown) => {
       const summary = select('summary', dropdown);
       dropdown.addEventListener('toggle', syncDropdownState);
@@ -1699,11 +1706,13 @@
       dropdown.addEventListener('pointerenter', () => {
         if (!desktopQuery.matches || !dropdown.hasAttribute('data-helix-hover-dropdown')) return;
         window.clearTimeout(closeDropdownTimer);
+        const switchingDropdown = dropdowns.some((item) => item !== dropdown && item.open);
         dropdowns.forEach((item) => {
           if (item !== dropdown) item.open = false;
         });
         dropdown.open = true;
         syncDropdownState();
+        if (switchingDropdown) replayDesktopHeaderReveal();
       });
 
       dropdown.addEventListener('pointerleave', () => {
