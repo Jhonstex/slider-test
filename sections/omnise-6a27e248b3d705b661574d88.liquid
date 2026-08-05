@@ -1,0 +1,582 @@
+
+            {% assign omnise_root_url = routes.root_url %}
+            {% if omnise_root_url != '/'%}
+                {% assign omnise_root_url = routes.root_url | append: '/' %}
+            {% endif %}
+        <link rel="stylesheet" id="omnise-exported-page-css" media="all" href="{{'omnise-6a27e248b3d705b661574d88.css' | asset_url}}"><div data-beae-export-section-id="beae-pyy35f" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-pyy35f" data-bnode-index="1" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-content-list beae-scrolling-wrapper" data-bnode="beae-8nle07" data-direction="right"><div class="beae-scrolling-track"><div class="beae-scrolling-content"><div class="beae-slide-item beae-item-content" data-bnode="be-ctl-item" data-bnode-index="1" data-bnode-loop-index="0"><div class="beae-heading beae-h6" data-bnode="beae-m291vh" data-bnode-index="1" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_fpen87' | t }}</div></div><div class="beae-slide-item beae-item-content" data-bnode="be-ctl-item" data-bnode-index="2" data-bnode-loop-index="1"><div class="beae-heading beae-h6" data-bnode="beae-m291vh" data-bnode-index="1" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_fpen87' | t }}</div></div><div class="beae-slide-item beae-item-content" data-bnode="be-ctl-item" data-bnode-index="3" data-bnode-loop-index="2"><div class="beae-heading beae-h6" data-bnode="beae-m291vh" data-bnode-index="1" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_fpen87' | t }}</div></div></div></div></div></div></section></div></div><div data-beae-export-section-id="beae-nf5l5c" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-nf5l5c" data-bnode-index="2" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-9ch871" data-bnode-index="1"><div class="beae-slot" data-bnode="beae-dh0cwe" data-bnode-index="1"><p class="beae-paragraph beae-p3" data-bnode="beae-tnkpo7" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_93y43d' | t }}</p><h3 class="beae-heading beae-h1" data-bnode="beae-0o1l7r" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_ph3o1a' | t }}</h3><a data-bnode="beae-42cp6t" data-bnode-index="3" class="beae-btn-button beae-btn-pr" beae-btn-po="right" href="#">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_a1ye4z' | t }}</a></div><div class="beae-slot" data-bnode="beae-klfpbk" data-bnode-index="2"><div class="beae-slot beae-virtual-slot" data-bnode-index="1">
+        {% assign originalProduct = product %}
+        
+        {% if product != blank and product.id != blank %}
+          {% assign variant = product.selected_or_first_available_variant %}
+          {% assign formId = 'beae-product-form-' | append: product.id %}
+          {% form 'product', product, id: formId, class: 'form', style: 'width:100%;', novalidate: 'novalidate', data-type: 'add-to-cart-form' %}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            
+            <script type="application/json" class="product-json-data">
+              {
+                "id": {{ product.id }},
+                "title": {{ product.title | json }},
+                "handle": {{ product.handle | json }},
+                "vendor": {{ product.vendor | json }},
+                "type": {{ product.type | json }},
+                "options": {{ product.options | json }},
+                "tags": {{ product.tags | json }},
+                "price": {{ product.price | default: 0 }},
+                "price_min": {{ product.price_min }},
+                "price_max": {{ product.price_max }},
+                "price_varies": {{ product.price_varies | json }},
+                "compare_at_price_varies": {{ product.compare_at_price_varies | json }},
+                "requires_selling_plan": {{ product.requires_selling_plan | json }},
+                "available": {{ product.available | json }},
+                "created_at": {{ product.created_at | date: "%Y-%m-%dT%H:%M:%S%:z" | json }},
+                "published_at": {{ product.published_at | date: "%Y-%m-%dT%H:%M:%S%:z" | json }},
+                "description": {{ product.description | json }},
+                "featured_image": {{ product.featured_image.src | img_url: 'master' | json }},
+                "images": [
+                  {% for image in product.images %}
+                    {{ image | img_url: 'master' | json }}{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ],
+                "media": [
+                  {% for media in product.media %}
+                    {
+                      "alt": {{ media.alt | json }},
+                      "media_type": {{ media.media_type | json }},
+                      "preview_image": {{ media.preview_image.src | img_url: 'master' | json }},
+                      "sources": {{ media.sources | json }}
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ],
+                "variants": [
+                  {% for variant in product.variants %}
+                    {
+                      "id": {{ variant.id }},
+                      "title": {{ variant.title | json }},
+                      "available": {{ variant.available | json }},
+                      "price": {{ variant.price | default: 0 }},
+                      "compare_at_price": {{ variant.compare_at_price | default: 0 }},
+                      "inventory_quantity": {{ variant.inventory_quantity | default: 0 }},
+                      "sku": {{ variant.sku | json }},
+                      "barcode": {{ variant.barcode | json }},
+                      "options": {{ variant.options | json }},
+                      "featured_image": {
+                        "src": {{ variant.featured_image.src | img_url: 'master' | json }}
+                      }
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ]
+              }
+            </script>
+      <div class="beae-slot beae-featured-product" data-bnode="beae-z1h0ts" data-bnode-index="1"><script type="application/json" class="product-json-data">{"id":"gid://shopify/Product/8690209226909","handle":"example-product-title-8","title":"Example product title with variant","vendor":"Vendor","productType":"Product type","tags":["New"],"status":"ACTIVE","publishedAt":"2025-08-22T01:53:12Z","onlineStoreUrl":null,"priceRangeV2":{"minVariantPrice":{"amount":"9.0","currencyCode":"USD"},"maxVariantPrice":{"amount":"12.0","currencyCode":"USD"}},"compareAtPriceRange":{"minVariantCompareAtPrice":{"amount":"10.0","currencyCode":"USD"},"maxVariantCompareAtPrice":{"amount":"12.0","currencyCode":"USD"}},"descriptionHtml":"<p>The Example product title with variant is engineered for professionals who demand precision and versatility. Its carefully designed variants allow customization to suit specific expert applications, ensuring optimal performance and reliability. This product combines advanced features with practical adaptability, making it an essential choice for specialized tasks.</p>","featuredImage":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595","altText":"Gray"},"options":[{"name":"Color","values":["Black","Yellow","Red","Green","Grey","Navy","Brown","Crimson Shadow","Gold Tone","Orange"]},{"name":"Size","values":["S","M","L","XL"]}],"images":{"edges":[{"node":{"id":"gid://shopify/ProductImage/40315960459421","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595","altText":"Gray"}},{"node":{"id":"gid://shopify/ProductImage/40315960492189","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595","altText":"Yellow"}},{"node":{"id":"gid://shopify/ProductImage/40315960524957","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595","altText":"Red"}},{"node":{"id":"gid://shopify/ProductImage/40315960557725","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595","altText":"Green"}}]},"variants":{"edges":[{"node":{"id":"gid://shopify/ProductVariant/47100413968541","title":"Black / S","inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"sku":"BEAEBS","availableForSale":true,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414001309","title":"Black / M","availableForSale":true,"inventoryQuantity":10,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414034077","title":"Black / L","availableForSale":true,"inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414066845","title":"Black / XL","availableForSale":true,"inventoryQuantity":11,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414099613","title":"Yellow / S","availableForSale":true,"inventoryQuantity":18,"price":"12.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414132381","title":"Yellow / M","availableForSale":true,"inventoryQuantity":19,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414165149","title":"Yellow / L","availableForSale":true,"inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414197917","title":"Yellow / XL","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414230685","title":"Red / S","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414263453","title":"Red / M","availableForSale":true,"inventoryQuantity":1,"price":"0.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414296221","title":"Red / L","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414328989","title":"Red / XL","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414361757","title":"Green / S","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":"24.0","selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414394525","title":"Green / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414427293","title":"Green / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414460061","title":"Green / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486090909","title":"Grey / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486123677","title":"Grey / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486156445","title":"Grey / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486189213","title":"Grey / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486221981","title":"Navy / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486254749","title":"Navy / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486287517","title":"Navy / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486320285","title":"Navy / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486353053","title":"Brown / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486385821","title":"Brown / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486418589","title":"Brown / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486451357","title":"Brown / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486484125","title":"Crimson Shadow / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486516893","title":"Crimson Shadow / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486549661","title":"Crimson Shadow / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486582429","title":"Crimson Shadow / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486615197","title":"Gold Tone / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486647965","title":"Gold Tone / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486680733","title":"Gold Tone / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486713501","title":"Gold Tone / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486746269","title":"Orange / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486779037","title":"Orange / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486811805","title":"Orange / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486844573","title":"Orange / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"XL"}],"image":null}}]},"metafields":{"edges":[{"node":{"namespace":"shopify","key":"color-pattern","value":"[\"gid://shopify/Metaobject/102857605277\",\"gid://shopify/Metaobject/103613792413\",\"gid://shopify/Metaobject/103613759645\",\"gid://shopify/Metaobject/102692978845\",\"gid://shopify/Metaobject/103613726877\",\"gid://shopify/Metaobject/102857670813\",\"gid://shopify/Metaobject/102857638045\",\"gid://shopify/Metaobject/102857572509\",\"gid://shopify/Metaobject/102857506973\",\"gid://shopify/Metaobject/102693077149\"]","type":"list.metaobject_reference"}},{"node":{"namespace":"custom","key":"summary","value":"{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"children\":[{\"type\":\"text\",\"value\":\"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.\"}]}]}","type":"rich_text_field"}}]}}</script><div class="beae-slot" data-bnode="beae-wi79xe" data-bnode-index="1"><div class="beae-slot beae-virtual-slot" data-bnode-index="1">
+
+
+<a 
+  href="{{ product.url | default: '#' }}"
+  class="beae-product-picture "
+  data-bnode="beae-onabso" data-bnode-index="1"
+>
+    {% if product != blank %}
+
+      <img
+        srcset="{%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+        {%- if product.featured_media.width >= 330 -%}{{ product.featured_media | image_url: width: 330 }} 330w,{%- endif -%}
+        {%- if product.featured_media.width >= 535 -%}{{ product.featured_media | image_url: width: 535 }} 535w,{%- endif -%}
+        {{ product.featured_media | image_url }} {{ product.featured_media.width }}w"
+        src="{{ product.featured_media | image_url: width: 535 }}"
+        alt="{{ product.featured_media.alt | escape }}"
+        loading="lazy"
+        class="beae-img-main"
+      >
+    
+
+    {% else %}
+
+      <img
+        src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"
+        alt="Default Product"
+        class="beae-img-main"
+        loading="lazy"
+      >
+    {% endif %}
+</a></div></div><div class="beae-slot" data-bnode="beae-n1p456" data-bnode-index="2"><div class="beae-slot" data-bnode="beae-9kt9ik" data-bnode-index="1">
+
+<h3 class="beae-product-title beae-h6" 
+     data-bnode="beae-m55t11" data-bnode-index="1">
+ {{ product.title }}
+</h3>
+    
+        <div class="beae-product-price-wrapper {% if product.compare_at_price > product.price %} beae-on-sale {% endif %} beae-p" data-bnode="beae-cbq7ls" data-bnode-index="2">
+          <span class="beae-product-price beae-price-sale">
+            {{ product.price | money_with_currency | strip_html | escape }}
+          </span>
+          <span class="beae-product-price-compare" {% unless product.compare_at_price > product.price %} style="display:none;"  {% endunless %}>
+            {{ product.compare_at_price | money_with_currency | strip_html | escape }}
+          </span>
+        </div>
+    </div></div></div>
+          {% endform %}
+        {% else %}
+          <div class="beae-product-not-found">Product not found</div>
+        {% endif %}
+        {% assign product = originalProduct %}
+      </div></div></div><div class="beae-slot beae-virtual-slot" data-bnode-index="2"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-un9wau" data-bnode-index="2" style="--beae-image-position: 39% 50%; --beae-image-position-ta: 50% 50%; --beae-image-position-mo: 50% 50%;"><img width="1152" height="720" sizes="min(1900px, 100vw)" alt="Image" fetchpriority="high" loading="eager" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_24_57eddfb9-ddb4-470b-bdd7-e8a52acdc893.png?v=1778469534&amp;width=2400 2400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_24_57eddfb9-ddb4-470b-bdd7-e8a52acdc893.png?v=1778469534&amp;width=1800 1800w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_24_57eddfb9-ddb4-470b-bdd7-e8a52acdc893.png?v=1778469534&amp;width=1200 1200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_24_57eddfb9-ddb4-470b-bdd7-e8a52acdc893.png?v=1778469534&amp;width=600 600w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_24_57eddfb9-ddb4-470b-bdd7-e8a52acdc893.png?v=1778469534&amp;width=2400"></div></div></div></section></div></div><div data-beae-export-section-id="beae-9dx4ps" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-9dx4ps" data-bnode-index="3" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-zks4fk" data-bnode-index="1"><p class="beae-paragraph beae-p3" data-bnode="beae-yv6ri6" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_9r28pf' | t }}</p><div class="beae-slot" data-bnode="beae-kra5cr" data-bnode-index="2"><div class="beae-slot" data-bnode="beae-krl0yt" data-bnode-index="1"><div class="beae-slot" data-bnode="beae-ciuijd" data-bnode-index="1"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-4oayov" data-bnode-index="1" style="--beae-image-position: 0% 50%;"><img width="128" height="128" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon.png?v=1778471490&amp;width=300 300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon.png?v=1778471490&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon.png?v=1778471490&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon.png?v=1778471490&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon.png?v=1778471490&amp;width=300"></div><h1 class="beae-heading beae-h1" data-bnode="beae-u8mwha" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_t2b4oo' | t }}</h1></div><h1 class="beae-heading beae-h1" data-bnode="beae-caklhl" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_nx8ov6' | t }}</h1></div><div class="beae-slot" data-bnode="beae-djega4" data-bnode-index="2"><h1 class="beae-heading beae-h1" data-bnode="beae-gubba2" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_uwh4s3' | t }}</h1><div class="beae-media-wrapper beae-media-card" data-bnode="beae-g5j5s6" data-bnode-index="2" style="--beae-image-position: 0% 50%;"><img width="128" height="128" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_1.png?v=1778471605&amp;width=300 300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_1.png?v=1778471605&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_1.png?v=1778471605&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_1.png?v=1778471605&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_1.png?v=1778471605&amp;width=300"></div></div><div class="beae-slot" data-bnode="beae-ibmiws" data-bnode-index="3"><h1 class="beae-heading beae-h1" data-bnode="beae-ngm2ob" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_2zsnrh' | t }}</h1></div></div></div></div></section></div></div><div data-beae-export-section-id="beae-5epi8s" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-5epi8s" data-bnode-index="4" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-17gi1x" data-bnode-index="1"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-u8o8za" data-bnode-index="1" style="--beae-image-position: 0% 50%;"><img width="1024" height="1024" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/1d960ccf20f8e226c97d599cfcf6eab944ed895f.jpg?v=1776673374&amp;width=2100 2100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/1d960ccf20f8e226c97d599cfcf6eab944ed895f.jpg?v=1776673374&amp;width=1600 1600w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/1d960ccf20f8e226c97d599cfcf6eab944ed895f.jpg?v=1776673374&amp;width=1100 1100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/1d960ccf20f8e226c97d599cfcf6eab944ed895f.jpg?v=1776673374&amp;width=600 600w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/1d960ccf20f8e226c97d599cfcf6eab944ed895f.jpg?v=1776673374&amp;width=2100"></div><div class="beae-slot" data-bnode="beae-8u7prr" data-bnode-index="2"><h3 class="beae-heading beae-h4" data-bnode="beae-fjw5d9" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_rcin39' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-u7jgt0" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_iiedw9' | t }}</p></div></div><div class="beae-slot" data-bnode="beae-wxxov1" data-bnode-index="2"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-l20pra" data-bnode-index="1" style="--beae-image-position: 0% 50%;"><img width="1616" height="1386" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=3300 3300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=2500 2500w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=1700 1700w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=1300 1300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=1000 1000w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=700 700w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=400 400w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/ce6887a191d622453fa26adab4f1a9d7b3668f5c.jpg?v=1776673377&amp;width=3300"></div><div class="beae-slot" data-bnode="beae-mud6fx" data-bnode-index="2"><h3 class="beae-heading beae-h4" data-bnode="beae-0jmj4n" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_dbihyu' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-rgj2vv" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_kxfjl9' | t }}</p></div></div></div></section></div></div><div data-beae-export-section-id="beae-zsm9ep" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-zsm9ep" data-bnode-index="5" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-qebqjv" data-bnode-index="1"><picture class="beae-media-wrapper beae-media-card" data-bnode="beae-zin8d1" data-bnode-index="1" style="--beae-image-position: 50% 50%; --beae-image-position-mo: 50% 50%;"><source media="(max-width: 767px)" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_17.webp?v=1776671855&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_17.webp?v=1776671855&amp;width=600 600w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_17.webp?v=1776671855&amp;width=700 700w" width="343" height="294"><source media="(max-width: 991px)" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=900 900w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=1300 1300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=1700 1700w" width="808" height="693"><img width="808" height="693" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=1700 1700w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=1300 1300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=900 900w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=500 500w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_17.webp?v=1776671855&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_17.webp?v=1776671855&amp;width=600 600w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_17.webp?v=1776671855&amp;width=700 700w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Image_16.webp?v=1776671853&amp;width=1700"></picture></div><div class="beae-slot" data-bnode="beae-eo47pp" data-bnode-index="2"><div class="beae-slot" data-bnode="beae-czm1yy" data-bnode-index="1"><p class="beae-paragraph beae-p2" data-bnode="beae-snmcbw" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_y5mxt9' | t }}</p><h3 class="beae-heading beae-h2" data-bnode="beae-10e01h" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_tqlf64' | t }}</h3></div><div class="beae-slot" data-bnode="beae-7cwkov" data-bnode-index="2"><div class="beae-carousel beae-content-list" data-bnode="beae-c703ms" data-bnode-index="1" data-gap-control=":scope &gt; .beae-slider-wrapper &gt; .beae-slider-items"><div class="beae-slider-wrapper" data-navigation="navi-type-1" data-pagination="none" data-dir="left" data-effect="slide" data-scroll="1" data-align="start" data-desktop-layout="grid" data-tablet-layout="grid" data-mobile-layout="slider" data-item="1" data-item-tablet="1" data-item-mobile="1" data-loop="true" data-play="false" data-transition="5s"><div class="beae-slider-items"><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="1" data-bnode-loop-index="0"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-szs3z0" data-bnode-index="1" data-bnode-loop-index="0" style="--beae-image-position: 0% 50%;"><img width="108" height="108" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/water_1_1_9c40c130-b24d-43b0-bc91-b076603e93be.png?v=1779158227&amp;width=300 300w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/water_1_1_9c40c130-b24d-43b0-bc91-b076603e93be.png?v=1779158227&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/water_1_1_9c40c130-b24d-43b0-bc91-b076603e93be.png?v=1779158227&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/water_1_1_9c40c130-b24d-43b0-bc91-b076603e93be.png?v=1779158227&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/water_1_1_9c40c130-b24d-43b0-bc91-b076603e93be.png?v=1779158227&amp;width=300"></div><div class="beae-slot" data-bnode="beae-cj6o7g" data-bnode-index="2" data-bnode-loop-index="0"><h3 class="beae-heading beae-h5" data-bnode="beae-i4j50p" data-bnode-index="1" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_vnj4of' | t }}</h3><div class="beae-paragraph beae-p" data-bnode="beae-l0sgc6" data-bnode-index="2" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_m8ilmg' | t }}</div></div></div></div><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="2" data-bnode-loop-index="1"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-szs3z0" data-bnode-index="1" data-bnode-loop-index="1" style="--beae-image-position: 0% 50%;"><img width="72" height="72" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/healthy-living_1_1_df271ae9-0550-4c12-816b-2bd6854acf18.png?v=1779158130&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/healthy-living_1_1_df271ae9-0550-4c12-816b-2bd6854acf18.png?v=1779158130&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/healthy-living_1_1_df271ae9-0550-4c12-816b-2bd6854acf18.png?v=1779158130&amp;width=100 100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/healthy-living_1_1_df271ae9-0550-4c12-816b-2bd6854acf18.png?v=1779158130&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/healthy-living_1_1_df271ae9-0550-4c12-816b-2bd6854acf18.png?v=1779158130&amp;width=200"></div><div class="beae-slot" data-bnode="beae-cj6o7g" data-bnode-index="2" data-bnode-loop-index="1"><h3 class="beae-heading beae-h5" data-bnode="beae-i4j50p" data-bnode-index="1" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_s1t91l' | t }}</h3><div class="beae-paragraph beae-p" data-bnode="beae-l0sgc6" data-bnode-index="2" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_9riw35' | t }}</div></div></div></div><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="3" data-bnode-loop-index="2"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-szs3z0" data-bnode-index="1" data-bnode-loop-index="2" style="--beae-image-position: 0% 50%;"><img width="72" height="72" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/clean_3_1_5c5f72a1-0876-4aa5-93b3-edd3747a21dd.png?v=1779158206&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/clean_3_1_5c5f72a1-0876-4aa5-93b3-edd3747a21dd.png?v=1779158206&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/clean_3_1_5c5f72a1-0876-4aa5-93b3-edd3747a21dd.png?v=1779158206&amp;width=100 100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/clean_3_1_5c5f72a1-0876-4aa5-93b3-edd3747a21dd.png?v=1779158206&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/clean_3_1_5c5f72a1-0876-4aa5-93b3-edd3747a21dd.png?v=1779158206&amp;width=200"></div><div class="beae-slot" data-bnode="beae-cj6o7g" data-bnode-index="2" data-bnode-loop-index="2"><h3 class="beae-heading beae-h5" data-bnode="beae-i4j50p" data-bnode-index="1" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_2u5xql' | t }}</h3><div class="beae-paragraph beae-p" data-bnode="beae-l0sgc6" data-bnode-index="2" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_i9oiwa' | t }}</div></div></div></div></div></div><div class="beae-slider-controls"><div class="beae-slider-controls-wrp"><div class="beae-slider-nav-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 12 12"><path d="M7.047 3.711a.625.625 0 0 0-.844-.922l-3 2.75a.626.626 0 0 0 0 .922l3 2.75.1.075a.626.626 0 0 0 .829-.902l-.085-.095-2.497-2.289z" fill="currentColor"></path></svg></div><div class="beae-slider-nav-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 12 12"><path d="M4.953 3.71a.625.625 0 0 1 .844-.921l3 2.75a.626.626 0 0 1 0 .922l-3 2.75-.1.075a.626.626 0 0 1-.829-.902l.085-.095 2.497-2.289z" fill="currentColor"></path></svg></div></div></div></div></div></div></div></section></div></div><div data-beae-export-section-id="beae-ummgm7" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-ummgm7" data-bnode-index="6" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-y9ase3" data-bnode-index="1"><div class="beae-slot" data-bnode="beae-34q8dj" data-bnode-index="1"><p class="beae-paragraph beae-p2" data-bnode="beae-yiawh0" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_btrl3o' | t }}</p><div class="beae-slot" data-bnode="beae-vm11oz" data-bnode-index="2"><div class="beae-slot beae-virtual-slot" data-bnode-index="1"><h3 class="beae-heading beae-h1" data-bnode="beae-zkmp67" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_o1w1n5' | t }}</h3></div></div></div><div class="beae-slot" data-bnode="beae-2sldgj" data-bnode-index="2"><div class="beae-countdown-wrapper" data-bnode="beae-nr4kmt" data-bnode-index="1" data-gap-control=":scope" data-hours="138" data-action-time-out="refresh" data-type-start="first_visit"><div class="beae-countdown-item beae-countdown-day" data-gap-item="true"><div class="beae-countdown-number beae-h2">00</div><div class="beae-countdown-label beae-p2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_19i0n' | t }}</div></div><span class="beae-h2 beae-separator-hidden" data-gap-item="true">:</span><div class="beae-countdown-item beae-countdown-hour" data-gap-item="true"><div class="beae-countdown-number beae-h2">00</div><div class="beae-countdown-label beae-p2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_15mju7' | t }}</div></div><span class="beae-h2 beae-separator-hidden" data-gap-item="true">:</span><div class="beae-countdown-item beae-countdown-minute" data-gap-item="true"><div class="beae-countdown-number beae-h2">00</div><div class="beae-countdown-label beae-p2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_pw07r5' | t }}</div></div><span class="beae-h2 beae-separator-hidden" data-gap-item="true">:</span><div class="beae-countdown-item beae-countdown-second" data-gap-item="true"><div class="beae-countdown-number beae-h2">00</div><div class="beae-countdown-label beae-p2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_ax2qw1' | t }}</div></div></div><a data-bnode="beae-c8fd8g" data-bnode-index="2" class="beae-btn-button beae-btn-se" beae-btn-po="left" href="#">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_2mbnh9' | t }}</a></div></div></div></section></div></div><div data-beae-export-section-id="beae-rs3cdg" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-rs3cdg" data-bnode-index="7" class="beae-section beae-scheme-1"><div class="beae-section-container"><h3 class="beae-heading beae-h2" data-bnode="beae-vd92x3" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_1419x5' | t }}</h3><div class="beae-carousel beae-content-list" data-bnode="beae-ak4e3f" data-bnode-index="2" data-gap-control=":scope &gt; .beae-slider-wrapper &gt; .beae-slider-items"><div class="beae-slider-wrapper" data-navigation="navi-type-1" data-pagination="dots" data-dir="left" data-effect="slide" data-scroll="1" data-align="start" data-desktop-layout="slider" data-tablet-layout="slider" data-mobile-layout="slider" data-item="3.04" data-item-tablet="1.7" data-item-mobile="1" data-loop="true" data-play="false" data-transition="500"><div class="beae-slider-items"><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="1" data-bnode-loop-index="0"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-x0dw0r" data-bnode-index="1" data-bnode-loop-index="0" style="--beae-image-position: 50% 50%;"><img width="448" height="320" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_46.png?v=1776656860&amp;width=900 900w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_46.png?v=1776656860&amp;width=700 700w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_46.png?v=1776656860&amp;width=500 500w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_46.png?v=1776656860&amp;width=300 300w" src="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_46.png?v=1776656860&amp;width=900"></div><div class="beae-slot beae-content-item" data-bnode="beae-pphtiy" data-bnode-index="2" data-bnode-loop-index="0"><div class="beae-slot" data-bnode="beae-t8buz2" data-bnode-index="1" data-bnode-loop-index="0"><p class="beae-paragraph beae-p" data-bnode="beae-tsnmpo" data-bnode-index="1" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_aaz6ln' | t }}</p><span class="beae-icon" data-bnode="beae-hajlx1" data-bnode-index="2" data-bnode-loop-index="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m10 15.17l9.192-9.191l1.414 1.414L10 17.999l-6.364-6.364l1.414-1.414z"></path></svg></span><p class="beae-paragraph beae-p" data-bnode="beae-ynnnuu" data-bnode-index="3" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_6phcrx' | t }}</p></div><h3 class="beae-heading beae-h5" data-bnode="beae-c9qlnj" data-bnode-index="2" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_u82p9' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-1m8033" data-bnode-index="3" data-bnode-loop-index="0">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_43pgca' | t }}</p></div></div></div><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="2" data-bnode-loop-index="1"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-x0dw0r" data-bnode-index="1" data-bnode-loop-index="1" style="--beae-image-position: 50% 50%;"><img width="448" height="320" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_47.png?v=1776656888&amp;width=900 900w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_47.png?v=1776656888&amp;width=700 700w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_47.png?v=1776656888&amp;width=500 500w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_47.png?v=1776656888&amp;width=300 300w" src="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_47.png?v=1776656888&amp;width=900"></div><div class="beae-slot beae-content-item" data-bnode="beae-pphtiy" data-bnode-index="2" data-bnode-loop-index="1"><div class="beae-slot" data-bnode="beae-t8buz2" data-bnode-index="1" data-bnode-loop-index="1"><p class="beae-paragraph beae-p" data-bnode="beae-tsnmpo" data-bnode-index="1" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_dabigz' | t }}</p><span class="beae-icon" data-bnode="beae-hajlx1" data-bnode-index="2" data-bnode-loop-index="1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m10 15.17l9.192-9.191l1.414 1.414L10 17.999l-6.364-6.364l1.414-1.414z"></path></svg></span><p class="beae-paragraph beae-p" data-bnode="beae-ynnnuu" data-bnode-index="3" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_6phcrx' | t }}</p></div><h3 class="beae-heading beae-h5" data-bnode="beae-c9qlnj" data-bnode-index="2" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_xzsx1p' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-1m8033" data-bnode-index="3" data-bnode-loop-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_58fnuf' | t }}</p></div></div></div><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="3" data-bnode-loop-index="2"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-x0dw0r" data-bnode-index="1" data-bnode-loop-index="2" style="--beae-image-position: 50% 50%;"><img width="448" height="320" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_48.png?v=1776656910&amp;width=900 900w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_48.png?v=1776656910&amp;width=700 700w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_48.png?v=1776656910&amp;width=500 500w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_48.png?v=1776656910&amp;width=300 300w" src="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_48.png?v=1776656910&amp;width=900"></div><div class="beae-slot beae-content-item" data-bnode="beae-pphtiy" data-bnode-index="2" data-bnode-loop-index="2"><div class="beae-slot" data-bnode="beae-t8buz2" data-bnode-index="1" data-bnode-loop-index="2"><p class="beae-paragraph beae-p" data-bnode="beae-tsnmpo" data-bnode-index="1" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_2zpms' | t }}</p><span class="beae-icon" data-bnode="beae-hajlx1" data-bnode-index="2" data-bnode-loop-index="2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m10 15.17l9.192-9.191l1.414 1.414L10 17.999l-6.364-6.364l1.414-1.414z"></path></svg></span><p class="beae-paragraph beae-p" data-bnode="beae-ynnnuu" data-bnode-index="3" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_6phcrx' | t }}</p></div><h3 class="beae-heading beae-h5" data-bnode="beae-c9qlnj" data-bnode-index="2" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_56hdwk' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-1m8033" data-bnode-index="3" data-bnode-loop-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_g5eo8k' | t }}</p></div></div></div><div class="beae-slider-item" data-gap-item="true"><div class="beae-slot" data-bnode="be-ctl-item" data-bnode-index="4" data-bnode-loop-index="3"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-x0dw0r" data-bnode-index="1" data-bnode-loop-index="3" style="--beae-image-position: 50% 50%;"><img width="256" height="320" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_49.png?v=1776656971&amp;width=600 600w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_49.png?v=1776656971&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_49.png?v=1776656971&amp;width=300 300w,https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_49.png?v=1776656971&amp;width=200 200w" src="https://cdn.shopify.com/s/files/1/0780/8892/9522/files/Image_49.png?v=1776656971&amp;width=600"></div><div class="beae-slot beae-content-item" data-bnode="beae-pphtiy" data-bnode-index="2" data-bnode-loop-index="3"><div class="beae-slot" data-bnode="beae-t8buz2" data-bnode-index="1" data-bnode-loop-index="3"><p class="beae-paragraph beae-p" data-bnode="beae-tsnmpo" data-bnode-index="1" data-bnode-loop-index="3">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_m8n1dj' | t }}</p><span class="beae-icon" data-bnode="beae-hajlx1" data-bnode-index="2" data-bnode-loop-index="3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m10 15.17l9.192-9.191l1.414 1.414L10 17.999l-6.364-6.364l1.414-1.414z"></path></svg></span><p class="beae-paragraph beae-p" data-bnode="beae-ynnnuu" data-bnode-index="3" data-bnode-loop-index="3">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_6phcrx' | t }}</p></div><h3 class="beae-heading beae-h5" data-bnode="beae-c9qlnj" data-bnode-index="2" data-bnode-loop-index="3">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_rclqlk' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-1m8033" data-bnode-index="3" data-bnode-loop-index="3">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_i3vnk4' | t }}</p></div></div></div></div></div><div class="beae-slider-controls"><div class="beae-slider-controls-wrp"><div class="beae-slider-nav-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 12 12"><path d="M7.047 3.711a.625.625 0 0 0-.844-.922l-3 2.75a.626.626 0 0 0 0 .922l3 2.75.1.075a.626.626 0 0 0 .829-.902l-.085-.095-2.497-2.289z" fill="currentColor"></path></svg></div><div class="beae-slider-pagination-wrp"><div class="beae-slider-pagination-wrapper"></div></div><div class="beae-slider-nav-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 12 12"><path d="M4.953 3.71a.625.625 0 0 1 .844-.921l3 2.75a.626.626 0 0 1 0 .922l-3 2.75-.1.075a.626.626 0 0 1-.829-.902l.085-.095 2.497-2.289z" fill="currentColor"></path></svg></div></div></div></div></div></section></div></div><div data-beae-export-section-id="beae-gor91d" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-gor91d" data-bnode-index="8" class="beae-section beae-scheme-1"><div class="beae-section-container">
+        {% assign originalProduct = product %}
+        
+        {% if product != blank and product.id != blank %}
+          {% assign variant = product.selected_or_first_available_variant %}
+          {% assign formId = 'beae-product-form-' | append: product.id %}
+          {% form 'product', product, id: formId, class: 'form', style: 'width:100%;', novalidate: 'novalidate', data-type: 'add-to-cart-form' %}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            
+            <script type="application/json" class="product-json-data">
+              {
+                "id": {{ product.id }},
+                "title": {{ product.title | json }},
+                "handle": {{ product.handle | json }},
+                "vendor": {{ product.vendor | json }},
+                "type": {{ product.type | json }},
+                "options": {{ product.options | json }},
+                "tags": {{ product.tags | json }},
+                "price": {{ product.price | default: 0 }},
+                "price_min": {{ product.price_min }},
+                "price_max": {{ product.price_max }},
+                "price_varies": {{ product.price_varies | json }},
+                "compare_at_price_varies": {{ product.compare_at_price_varies | json }},
+                "requires_selling_plan": {{ product.requires_selling_plan | json }},
+                "available": {{ product.available | json }},
+                "created_at": {{ product.created_at | date: "%Y-%m-%dT%H:%M:%S%:z" | json }},
+                "published_at": {{ product.published_at | date: "%Y-%m-%dT%H:%M:%S%:z" | json }},
+                "description": {{ product.description | json }},
+                "featured_image": {{ product.featured_image.src | img_url: 'master' | json }},
+                "images": [
+                  {% for image in product.images %}
+                    {{ image | img_url: 'master' | json }}{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ],
+                "media": [
+                  {% for media in product.media %}
+                    {
+                      "alt": {{ media.alt | json }},
+                      "media_type": {{ media.media_type | json }},
+                      "preview_image": {{ media.preview_image.src | img_url: 'master' | json }},
+                      "sources": {{ media.sources | json }}
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ],
+                "variants": [
+                  {% for variant in product.variants %}
+                    {
+                      "id": {{ variant.id }},
+                      "title": {{ variant.title | json }},
+                      "available": {{ variant.available | json }},
+                      "price": {{ variant.price | default: 0 }},
+                      "compare_at_price": {{ variant.compare_at_price | default: 0 }},
+                      "inventory_quantity": {{ variant.inventory_quantity | default: 0 }},
+                      "sku": {{ variant.sku | json }},
+                      "barcode": {{ variant.barcode | json }},
+                      "options": {{ variant.options | json }},
+                      "featured_image": {
+                        "src": {{ variant.featured_image.src | img_url: 'master' | json }}
+                      }
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ]
+              }
+            </script>
+      <div class="beae-slot beae-featured-product" data-bnode="beae-nmynac" data-bnode-index="1"><script type="application/json" class="product-json-data">{"id":"gid://shopify/Product/8690209226909","handle":"example-product-title-8","title":"Example product title with variant","vendor":"Vendor","productType":"Product type","tags":["New"],"status":"ACTIVE","publishedAt":"2025-08-22T01:53:12Z","onlineStoreUrl":null,"priceRangeV2":{"minVariantPrice":{"amount":"9.0","currencyCode":"USD"},"maxVariantPrice":{"amount":"12.0","currencyCode":"USD"}},"compareAtPriceRange":{"minVariantCompareAtPrice":{"amount":"10.0","currencyCode":"USD"},"maxVariantCompareAtPrice":{"amount":"12.0","currencyCode":"USD"}},"descriptionHtml":"<p>The Example product title with variant is engineered for professionals who demand precision and versatility. Its carefully designed variants allow customization to suit specific expert applications, ensuring optimal performance and reliability. This product combines advanced features with practical adaptability, making it an essential choice for specialized tasks.</p>","featuredImage":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595","altText":"Gray"},"options":[{"name":"Color","values":["Black","Yellow","Red","Green","Grey","Navy","Brown","Crimson Shadow","Gold Tone","Orange"]},{"name":"Size","values":["S","M","L","XL"]}],"images":{"edges":[{"node":{"id":"gid://shopify/ProductImage/40315960459421","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595","altText":"Gray"}},{"node":{"id":"gid://shopify/ProductImage/40315960492189","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595","altText":"Yellow"}},{"node":{"id":"gid://shopify/ProductImage/40315960524957","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595","altText":"Red"}},{"node":{"id":"gid://shopify/ProductImage/40315960557725","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595","altText":"Green"}}]},"variants":{"edges":[{"node":{"id":"gid://shopify/ProductVariant/47100413968541","title":"Black / S","inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"sku":"BEAEBS","availableForSale":true,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414001309","title":"Black / M","availableForSale":true,"inventoryQuantity":10,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414034077","title":"Black / L","availableForSale":true,"inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414066845","title":"Black / XL","availableForSale":true,"inventoryQuantity":11,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414099613","title":"Yellow / S","availableForSale":true,"inventoryQuantity":18,"price":"12.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414132381","title":"Yellow / M","availableForSale":true,"inventoryQuantity":19,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414165149","title":"Yellow / L","availableForSale":true,"inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414197917","title":"Yellow / XL","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414230685","title":"Red / S","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414263453","title":"Red / M","availableForSale":true,"inventoryQuantity":1,"price":"0.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414296221","title":"Red / L","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414328989","title":"Red / XL","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414361757","title":"Green / S","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":"24.0","selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414394525","title":"Green / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414427293","title":"Green / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414460061","title":"Green / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486090909","title":"Grey / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486123677","title":"Grey / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486156445","title":"Grey / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486189213","title":"Grey / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486221981","title":"Navy / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486254749","title":"Navy / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486287517","title":"Navy / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486320285","title":"Navy / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486353053","title":"Brown / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486385821","title":"Brown / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486418589","title":"Brown / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486451357","title":"Brown / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486484125","title":"Crimson Shadow / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486516893","title":"Crimson Shadow / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486549661","title":"Crimson Shadow / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486582429","title":"Crimson Shadow / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486615197","title":"Gold Tone / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486647965","title":"Gold Tone / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486680733","title":"Gold Tone / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486713501","title":"Gold Tone / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486746269","title":"Orange / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486779037","title":"Orange / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486811805","title":"Orange / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486844573","title":"Orange / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"XL"}],"image":null}}]},"metafields":{"edges":[{"node":{"namespace":"shopify","key":"color-pattern","value":"[\"gid://shopify/Metaobject/102857605277\",\"gid://shopify/Metaobject/103613792413\",\"gid://shopify/Metaobject/103613759645\",\"gid://shopify/Metaobject/102692978845\",\"gid://shopify/Metaobject/103613726877\",\"gid://shopify/Metaobject/102857670813\",\"gid://shopify/Metaobject/102857638045\",\"gid://shopify/Metaobject/102857572509\",\"gid://shopify/Metaobject/102857506973\",\"gid://shopify/Metaobject/102693077149\"]","type":"list.metaobject_reference"}},{"node":{"namespace":"custom","key":"summary","value":"{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"children\":[{\"type\":\"text\",\"value\":\"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.\"}]}]}","type":"rich_text_field"}}]}}</script><div class="beae-slot beae-virtual-slot" data-bnode-index="1">{% if product.media.size > 0 %}
+  {% assign imageList = product.media %}
+
+{% elsif product.featured_image %}
+  {% assign imageList = '' | split: ',' %}
+  {% assign imageList = imageList | push: product.featured_image %}
+
+{% else %}
+  {% assign imageList = '[{"url": "https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}]' %}
+{% endif %}
+
+<div class="beae-media-wrapper" data-bnode="beae-vjgt3k" data-bnode-index="1" data-gap-control=":scope > .beae-media-product" data-product-id={{product.id}}>
+    <div class="beae-media-product beae-carousel"
+        data-position-thumbs="bottom"
+        data-position-thumbs-tablet="bottom"
+        data-position-thumbs-mobile="bottom"
+    >
+        <div class="beae-main-slider-wrap" style="position: relative;" data-gap-item="true">
+            <div class="beae-product-media-main beae-slider-wrapper beae-slider-container"
+                data-play="false"
+                data-transition="5"
+                data-effect="fade"
+                data-navigation="none"
+                data-pagination="none"
+                data-item="1"
+                data-item-tablet="1"
+                data-item-mobile="1"
+                data-desktop-layout="slider"
+                data-tablet-layout="slider"
+                data-mobile-layout="slider"
+            >
+                <div class="beae-slider-items">
+                    {% for img in imageList %}
+                        {% assign width = img.width | default: 1440 %}
+                        {% assign height = img.height | default: 1440 %}
+                      
+                        <div class="beae-slider-item">
+                          <picture class="beae-product-picture" style=" --beae-image-position: 50% 50%">
+                            <img
+                              class="beae-product-image"
+                              src="{{ img.src | image_url: width: 1440 }}"
+                              srcset="
+                                {%- if width >= 165 -%}{{ img.src | image_url: width: 165 }} 165w,{%- endif -%}
+                                {%- if width >= 320 -%}{{ img.src | image_url: width: 320 }} 320w,{%- endif -%}
+                                {%- if width >= 480 -%}{{ img.src | image_url: width: 480 }} 480w,{%- endif -%}
+                                {%- if width >= 768 -%}{{ img.src | image_url: width: 768 }} 768w,{%- endif -%}
+                                {%- if width >= 1024 -%}{{ img.src | image_url: width: 1024 }} 1024w,{%- endif -%}
+                                {%- if width >= 1440 -%}{{ img.src | image_url: width: 1440 }} 1440w,{%- endif -%}
+                                {%- if width >= 1920 -%}{{ img.src | image_url: width: 1920 }} 1920w,{%- endif -%}
+                                {%- if width >= 3200 -%}{{ img.src | image_url: width: 1920 }} 3200w,{%- endif -%}
+                                {{ img.src | image_url: width: width }} {{ width }}w
+                              " 
+                              sizes="(max-width: 1180px) 100vw, 50vw"
+                              alt="{{ img.alt | escape }}"
+                              width="{{ width }}"
+                              height="{{ height }}"
+                              loading="lazy"
+                              fetchpriority="auto"
+                              decoding="async"
+                            >
+                          </picture>
+                        </div>
+                      {% endfor %}
+                </div>
+            </div>
+            <div class="beae-slider-controls" show-desktop="true">
+                <div class="beae-slider-controls-wrp">
+                    <div class="beae-slider-nav-left">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        </svg>
+                    </div>
+
+                    <div class="beae-slider-nav-right" >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if imageList.size > 0 %}
+            <div class="beae-thumb-wrapper" data-gap-item="true">
+                <div class="beae-product-thumb-slide beae-slider-wrapper beae-slider-container"
+                    data-align="start"
+                    data-desktop-layout="slider"
+                    data-tablet-layout="slider"
+                    data-mobile-layout="slider"
+                    data-item="1"
+                    data-item-tablet="1"
+                    data-item-mobile="1"
+                >
+                    <div class="beae-slider-items">
+                      {% for img in imageList %}
+                         
+                         
+                        
+          
+                        
+          
+                        <div class="beae-slider-item">
+                          <div class="beae-thumb-image">
+                            <img
+                              class="beae-thumb-img"
+                              src="{{ img | image_url: width: 80 }}"
+                              srcset="
+                                {{ img | image_url: width: 36 }} 36w,
+                                {{ img | image_url: width: 64 }} 64w,
+                                {{ img | image_url: width: 96 }} 96w,
+                                {{ img | image_url: width: 128 }} 128w,
+                                {{ img | image_url: width: 160 }} 160w
+                              "
+                              sizes="(max-width:767px) 64px, (max-width:1180px) 64px, 80px"
+                              alt="{{ img.alt | escape }}"
+                              width="80"
+                              height="80"
+                              loading="lazy"
+                              decoding="async"
+                            >
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+</div><div class="beae-slot" data-bnode="beae-cqx08p" data-bnode-index="2">
+ 
+ 
+ <h2 class="beae-product-title beae-h2" data-bnode="beae-ugro99" data-bnode-index="1">
+ {{ product.title }}
+ </h2><div class="beae-app-block" data-bnode="beae-ia9zfr" data-bnode-index="2">{%- for block in section.blocks -%}{% if block.id contains 'beae-ia9zfr' %}{% render block %}{% endif %}{%- endfor -%}</div>
+    
+        <div class="beae-product-price-wrapper {% if product.compare_at_price > product.price %} beae-on-sale {% endif %} beae-h5" data-bnode="beae-btwdbh" data-bnode-index="3">
+          <span class="beae-product-price beae-price-sale">
+            {{ product.price | money_with_currency | strip_html | escape }}
+          </span>
+          <span class="beae-product-price-compare" {% unless product.compare_at_price > product.price %} style="display:none;"  {% endunless %}>
+            {{ product.compare_at_price | money_with_currency | strip_html | escape }}
+          </span>
+        </div>
+    
+ 
+ <div class="beae-description-wrapper beae-p" data-bnode="beae-7kp6bx" data-bnode-index="4">
+    <div class="beae-description"></div>
+ </div><div class="beae-slot-inventory" data-bnode="beae-5si1p9" data-bnode-index="5"><span class="beae-icon" data-bnode="beae-hp0qau" data-bnode-index="1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 17h2v2H2v-2h2v-7a8 8 0 1 1 16 0zM9 21h6v2H9z"></path></svg></span>
+{% assign variants = product.variants %}
+{% assign firstVariant = variants.first %}
+{% assign inventory_quantity = firstVariant.inventory_quantity | default: 0 %}
+{% assign available = variant.available %}
+{% assign has_multiple_variants = false %}
+
+{% if variants.size > 1 %}
+  {% assign has_multiple_variants = true %}
+{% endif %}
+
+{% assign veryLowThreshold = '40' | default: 0 | plus: 0 %}
+{% assign lowThreshold = '80' | default: 0 | plus: 0 %}
+
+{% assign is_very_low = false %}
+{% assign is_low = false %}
+{% assign is_in_stock = false %}
+{% assign is_out_of_stock = false %}
+
+{% if available and inventory_quantity > 0 and inventory_quantity <= veryLowThreshold %}
+  {% assign is_very_low = true %}
+{% endif %}
+
+{% if available and inventory_quantity > veryLowThreshold and inventory_quantity <= lowThreshold %}
+  {% assign is_low = true %}
+{% endif %}
+
+{% if available and inventory_quantity > lowThreshold %}
+  {% assign is_in_stock = true %}
+{% endif %}
+
+{% if available == false or inventory_quantity <= 0 %}
+  {% assign is_out_of_stock = true %}
+{% endif %}
+
+{% capture state_class %}
+    {% if is_out_of_stock %}
+        beae-inventory-out
+    {% elsif is_very_low %}
+        beae-inventory-critical
+    {% elsif is_low %}
+        beae-inventory-low
+    {% else %}
+        beae-inventory-in
+    {% endif %}
+{% endcapture %}
+{% assign state_class = state_class | strip %}
+
+{% capture in_stock_label %}
+    {{ 'sections.omnise-6a27e248b3d705b661574d88.beae_mu8ub' | t }}
+  {% endcapture %}
+{% assign in_stock_label = in_stock_label | strip | default: 'In stock' %}
+
+{% capture low_stock_label %}
+    {{ 'sections.omnise-6a27e248b3d705b661574d88.beae_ttp8yc' | t }}
+  {% endcapture %}
+{% assign low_stock_label = low_stock_label | strip | default: 'Low stock' %}
+
+{% capture very_low_label %}
+    {{ 'sections.omnise-6a27e248b3d705b661574d88.beae_sg2w6a' | t }}
+  {% endcapture %}
+{% assign very_low_label = very_low_label | strip | default: 'Very low stock' %}
+
+{% capture sold_out_label %}
+    {{ 'sections.omnise-6a27e248b3d705b661574d88.beae_sg2w6a' | t }}
+  {% endcapture %}
+{% assign sold_out_label = sold_out_label | strip | default: 'Sold out' %}
+
+{% if has_multiple_variants == false %}
+  {% assign in_stock_label = in_stock_label | replace: '{stock}', inventory_quantity %}
+  {% assign low_stock_label = low_stock_label | replace: '{stock}', inventory_quantity %}
+  {% assign very_low_label = very_low_label | replace: '{stock}', inventory_quantity %}
+  {% assign sold_out_label = sold_out_label | replace: '{stock}', inventory_quantity %}
+{% endif %}
+
+{% assign base = 100 %}
+{% assign percent = inventory_quantity | times: 100.0 | divided_by: base | round %}
+{% if percent > 100 %}
+  {% assign percent = 100 %}
+{% endif %}
+
+<div
+  class="beae-inventory beae-p {{ state_class }}"
+  data-bnode="beae-wkeoy6" data-bnode-index="2"
+  data-max="100"
+  data-low="80"
+  data-critical="40"
+>
+  <div
+    class="beae-inventory-text {% if is_in_stock and is_out_of_stock == false  -%} beae-show {%- endif %}"
+    data-beae-inventory="instock"
+    data-template="{{ in_stock_label }}"
+  >
+    {{ in_stock_label }}
+  </div>
+
+  <div
+    class="beae-inventory-text {% if is_low and is_out_of_stock == false  -%} beae-show {%- endif %}"
+    data-beae-inventory="lowstock"
+    data-template="{{ low_stock_label }}"
+  >
+    {{ low_stock_label }}
+  </div>
+
+  <div
+    class="beae-inventory-text {% if is_very_low or is_out_of_stock == false  -%} beae-show {%- endif %}"
+    data-beae-inventory="criticalstock"
+    data-template="{% if is_out_of_stock %} {{ sold_out_label }} {%  else %} {{ very_low_label }} {% endif %}"
+  >
+    {% if is_out_of_stock %} {{ sold_out_label }} {% else %} {{ very_low_label }} {% endif %}
+  </div>
+
+  
+    <div class="beae-inventory-progress">
+    <div class="beae-inventory-progress-bar"
+        style="width: {{ percent }}%"
+    >
+    </div>
+    </div>
+  
+</div>
+</div><div class="beae-slot-atc" data-bnode="beae-e4wbeg" data-bnode-index="6">
+    <div class="beae-qty" data-bnode="beae-h2u5u1" data-bnode-index="1">
+        
+        <div class="beae-qty-wrap">
+        <button type="button" class="beae-qty-btn beae-qty-btn-m" aria-label="Decrease quantity">
+            <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <input
+            class="beae-qty-input"
+            type="text"
+            name="quantity"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            value="1"
+            maxlength="3"
+        />
+        <button type="button" class="beae-qty-btn beae-qty-btn-p" aria-label="Increase quantity">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        </div>
+        <div class="beae-qty-warning beae-p" role="alert" style="display: none" data-template="{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_rpr4iy' | t }}">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_rpr4iy' | t }}</div>
+    </div>
+    <div class="beae-slot" data-bnode="beae-1kgmbn" data-bnode-index="2"><div class="beae-slot beae-virtual-slot" data-bnode-index="1"><a data-bnode="beae-9wlo4c" data-bnode-index="1" class="beae-btn-button beae-btn-pr" beae-btn-po="left" href="#">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_crx36j' | t }}</a></div></div></div><div class="beae-icon-text" data-bnode="beae-fy17tj" data-bnode-index="7"><div class="beae-slot-text-icon" data-bnode="beae-t6rp2n" data-bnode-index="1"><div class="beae-text-icon-detail" data-bnode="beae-3ldzvv" data-bnode-index="1"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-eo0gad" data-bnode-index="1" style="--beae-image-position: 0% 50%;"><img width="66" height="66" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_2.png?v=1778472840&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_2.png?v=1778472840&amp;width=100 100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_2.png?v=1778472840&amp;width=100 100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_2.png?v=1778472840&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_2.png?v=1778472840&amp;width=200"></div><p class="beae-paragraph beae-p" data-bnode="beae-w452hv" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_5hrant' | t }}</p></div><div class="beae-text-icon-detail" data-bnode="beae-mwypul" data-bnode-index="2"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-qxebom" data-bnode-index="1" style="--beae-image-position: 0% 50%;"><img width="66" height="66" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_3.png?v=1778472885&amp;width=200 200w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_3.png?v=1778472885&amp;width=100 100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_3.png?v=1778472885&amp;width=100 100w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_3.png?v=1778472885&amp;width=100 100w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Icon_3.png?v=1778472885&amp;width=200"></div><p class="beae-paragraph beae-p" data-bnode="beae-y1yfrm" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_drqf3d' | t }}</p></div></div></div><div class="beae-accordion-root" data-beae-accordion-root="true" data-bnode="beae-khw8ae" data-bnode-index="8" data-type="single" data-default="first" data-gap-control=":scope" style="--beae-icon-dir: row;"><details class="beae-accordion-item" open="" data-beae-index="0" data-beae-active="true" data-gap-item="true"><summary class="beae-accordion-summary beae-h5"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_ij1kkf' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-0i6qdi" data-bnode-index="1"><p class="beae-paragraph beae-p" data-bnode="beae-019py1" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_pq7a3p' | t }}</p></div></div></details><details class="beae-accordion-item" data-beae-index="1" data-beae-active="false" data-gap-item="true"><summary class="beae-accordion-summary beae-h5"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_ly59zi' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-488eht" data-bnode-index="2"><p class="beae-paragraph beae-p" data-bnode="beae-zsxr5w" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_xpagvg' | t }}</p></div></div></details><details class="beae-accordion-item" data-beae-index="2" data-beae-active="false" data-gap-item="true"><summary class="beae-accordion-summary beae-h5"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_77hsv2' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-9fea83" data-bnode-index="3"><p class="beae-paragraph beae-p" data-bnode="beae-ch350r" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_n8rsd5' | t }}</p></div></div></details></div><div class="beae-slot" data-bnode="beae-ptele0" data-bnode-index="9"><div class="beae-slot beae-virtual-slot" data-bnode-index="1"><p class="beae-paragraph beae-p" data-bnode="beae-gyir99" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_yjz3tv' | t }}</p></div><div class="beae-slot beae-virtual-slot" data-bnode-index="2"><div class="beae-media-wrapper beae-media-card" data-bnode="beae-hi9ua8" data-bnode-index="2" style="--beae-image-position: 0% 50%;"><img width="326" height="24" sizes="min(1900px, 100vw)" alt="Image" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Payment_icon_1.jpg?v=1774932594&amp;width=700 700w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Payment_icon_1.jpg?v=1774932594&amp;width=500 500w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Payment_icon_1.jpg?v=1774932594&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Payment_icon_1.jpg?v=1774932594&amp;width=200 200w" src="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Payment_icon_1.jpg?v=1774932594&amp;width=700"></div></div></div></div></div>
+          {% endform %}
+        {% else %}
+          <div class="beae-product-not-found">Product not found</div>
+        {% endif %}
+        {% assign product = originalProduct %}
+      </div></section></div></div><div data-beae-export-section-id="beae-li8nrj" data-beae-export-has-ab="false"><div data-beae-ab-variant="a"><section data-bnode="beae-li8nrj" data-bnode-index="9" class="beae-section beae-scheme-1"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-25v7l6" data-bnode-index="1"><div class="beae-slot" data-bnode="beae-b6jqo6" data-bnode-index="1"><h3 class="beae-heading beae-h2" data-bnode="beae-3edzgd" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_hra2cw' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-xm6yb0" data-bnode-index="2">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_l0p2gp' | t }}</p><a data-bnode="beae-dht4m5" data-bnode-index="3" class="beae-btn-button beae-btn-pr" beae-btn-po="left" href="#">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_ctzv4x' | t }}</a></div><div class="beae-slot" data-bnode="beae-mxau4k" data-bnode-index="2"><div class="beae-slot beae-virtual-slot" data-bnode-index="1"><div class="beae-accordion-root" data-beae-accordion-root="true" data-bnode="beae-ddp84y" data-bnode-index="1" data-type="single" data-default="first" data-gap-control=":scope" style="--beae-icon-dir: row;"><details class="beae-accordion-item" open="" data-beae-index="0" data-beae-active="true" data-gap-item="true"><summary class="beae-accordion-summary beae-h4"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_shykka' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-6vbodo" data-bnode-index="1"><p class="beae-paragraph beae-p" data-bnode="beae-xjd8o5" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_klq41w' | t }}</p></div></div></details><details class="beae-accordion-item" data-beae-index="1" data-beae-active="false" data-gap-item="true"><summary class="beae-accordion-summary beae-h4"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_s5lhp6' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-bvmx07" data-bnode-index="2"><p class="beae-paragraph beae-p" data-bnode="beae-uzj2qn" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_q79zbh' | t }}</p></div></div></details><details class="beae-accordion-item" data-beae-index="2" data-beae-active="false" data-gap-item="true"><summary class="beae-accordion-summary beae-h4"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_h8z8e4' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-h52imh" data-bnode-index="3"><p class="beae-paragraph beae-p" data-bnode="beae-jfjfm6" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_2im4rq' | t }}</p></div></div></details><details class="beae-accordion-item" data-beae-index="3" data-beae-active="false" data-gap-item="true"><summary class="beae-accordion-summary beae-h4"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_b258me' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-21mf8f" data-bnode-index="4"><p class="beae-paragraph beae-p" data-bnode="beae-uq4o7b" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_2im4rq' | t }}</p></div></div></details><details class="beae-accordion-item" data-beae-index="4" data-beae-active="false" data-gap-item="true"><summary class="beae-accordion-summary beae-h4"><span class="beae-accordion-title">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_e3mzjr' | t }}</span><span class="beae-accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" class="beae-svg-plus" viewBox="0 0 20 20" width="20px" height="20px" fill="currentColor"><path class="stroke-horizontal" d="M3.125 10H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path class="stroke-vertical" d="M10 3.125L10 16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary><div class="beae-accordion-content"><div class="beae-slot" data-bnode="beae-nvlu88" data-bnode-index="5"><p class="beae-paragraph beae-p" data-bnode="beae-j0xwm8" data-bnode-index="1">{{ 'sections.omnise-6a27e248b3d705b661574d88.beae_itff4o' | t }}</p></div></div></details></div></div></div></div></div></section></div></div>
+<script id="omnise-exported-page-js" src="{{'omnise-6a27e248b3d705b661574d88.js'  | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "OMNISE BUILDER APP",
+  "locales": {
+    "en": {
+      "omnise_fpen87": "Free Shipping on All Orders - Today Only",
+      "omnise_93y43d": "POST HOLIDAY RESET",
+      "omnise_ph3o1a": "Instant calm - right at your desk",
+      "omnise_a1ye4z": "Reset your mood",
+      "omnise_9r28pf": "BACK TO WORK REALITY",
+      "omnise_t2b4oo": "The holidays are over.",
+      "omnise_nx8ov6": "Your inbox is full",
+      "omnise_uwh4s3": "Your mind is even fuller",
+      "omnise_2zsnrh": "And the tension quietly starts to build again",
+      "omnise_rcin39": "Calm, in your pocket",
+      "omnise_iiedw9": "A soothing balm to ease tension and quiet your mind.",
+      "omnise_dbihyu": "Apply. Breathe. Reset.",
+      "omnise_kxfjl9": "A simple ritual to release stress and restore focus.",
+      "omnise_y5mxt9": "Everyday self-care",
+      "omnise_tqlf64": "One roll - Instant relief",
+      "omnise_vnj4of": "Starting your day happy",
+      "omnise_m8ilmg": "Begin your day with a calm mind and a lighter mood",
+      "omnise_s1t91l": "Good for you and the earth",
+      "omnise_9riw35": "Thoughtfully crafted for your well being and a healthier earth",
+      "omnise_2u5xql": "Lifting low spirits",
+      "omnise_i9oiwa": "Soothing scents that gently shift your state of mind",
+      "omnise_btrl3o": "ENDING SOON",
+      "omnise_o1w1n5": "Don’t Miss your Chance to Start the Year Calm",
+      "omnise_19i0n": "Days",
+      "omnise_15mju7": "Hours",
+      "omnise_pw07r5": "Minutes",
+      "omnise_ax2qw1": "Seconds",
+      "omnise_2mbnh9": "Shop before it’s gone",
+      "omnise_1419x5": "Real people, Real results",
+      "omnise_aaz6ln": "Usurna K.",
+      "omnise_6phcrx": "Vertified buyer",
+      "omnise_u82p9": "It's amazing!",
+      "omnise_43pgca": "“I keep this balm in my bag and use it whenever work gets overwhelming. The scent is gentle, but the effect is real it helps me slow down and breathe again.”",
+      "omnise_dabigz": "Andy I.",
+      "omnise_xzsx1p": "Small ritual, big difference",
+      "omnise_58fnuf": "“I didn’t expect something so simple to change how I handle stress, but it truly helps me feel calmer and more balanced throughout the day.”",
+      "omnise_2zpms": "Cameron W.",
+      "omnise_56hdwk": "My go to stress reset at the Office",
+      "omnise_g5eo8k": "“A quick roll on my wrists before meetings, and I instantly feel more grounded and focused. It’s become part of my daily routine.”",
+      "omnise_m8n1dj": "Esther H.",
+      "omnise_rclqlk": "Exactly what I need on busy days",
+      "omnise_i3vnk4": "“The scent is soothing without being overpowering. It gives me a quiet moment of calm, even when everything around me feels rushed.”",
+      "omnise_mu8ub": "In stock {stock}",
+      "omnise_ttp8yc": "Low stock {stock}",
+      "omnise_sg2w6a": " Only {stock} Left In Stock ",
+      "omnise_rpr4iy": "Only {stock} items available in stock.",
+      "omnise_crx36j": "Buy it now",
+      "omnise_5hrant": "Free shipping on all orders",
+      "omnise_drqf3d": "Delivery 2-5 days",
+      "omnise_ij1kkf": "Product info",
+      "omnise_pq7a3p": "De-stress, our remarkably soothing blend to help you juggle more throughout your day, keeping you calm and in control. It’s your companion to support you through life’s everyday journey.",
+      "omnise_ly59zi": "How to Use",
+      "omnise_xpagvg": "Apply a small amount to your wrists, temples, or neck. Take a slow, deep breath and let the calming aroma settle your senses. In just a few seconds, feel the tension soften and your mind return to a clearer, more relaxed state.",
+      "omnise_77hsv2": "Ingredients",
+      "omnise_n8rsd5": "A blend of soothing essential oils and gentle, skin-loving botanicals, carefully selected to help calm your senses and support everyday relaxation.",
+      "omnise_yjz3tv": "100% Secure Payment with",
+      "omnise_hra2cw": "Need to know more?",
+      "omnise_l0p2gp": "Find quick answers before you start your calming routine.",
+      "omnise_ctzv4x": "Visit help center",
+      "omnise_shykka": "1. When should I use it?",
+      "omnise_klq41w": "Anytime you feel stressed, overwhelmed, or need a mental reset during work, before meetings, or at the end of the day.",
+      "omnise_s5lhp6": "2. Is it safe for daily use?",
+      "omnise_q79zbh": "It uses cutting-edge magnetic levitation technology! It's completely safe and extremely stable once you set it up (takes just a few seconds).",
+      "omnise_h8z8e4": "3. Will the scent be too strong?",
+      "omnise_2im4rq": "Not at all! We provide a simple, step-by-step guide. You'll have your Warmora levitating within minutes.",
+      "omnise_b258me": "4. Is it travel-friendly?",
+      "omnise_e3mzjr": "5. Is it made with natural ingredients?",
+      "omnise_itff4o": "Absolutely! The lamp works beautifully as a standalone piece whether you're charging a device or not."
+    }
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "The section was generated by OMNISE BUILDER",
+      "info": "Omnise is a flexible page builder app on Shopify AppStore.\n              It provides 100+ Shopify Elements and pre-built templates library, \n              so you can build unlimited pages that you can imagine with it."
+    },
+    {
+      "type": "header",
+      "content": "[EDIT WITH OMNISE APP →](https://beae-anna.myshopify.com/admin/apps/3db283686bdf064c04e98e5cf61875ee/app/editor/v4/page/6a27e248b3d705b661574d88)",
+      "info": "(*You must install the app to start editing this section [Learn more](https://docs.beae.com/en/article/quick-start-guide-dkoesy/))"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

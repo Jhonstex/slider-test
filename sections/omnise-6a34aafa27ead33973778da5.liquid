@@ -1,0 +1,155 @@
+
+            {% assign omnise_root_url = routes.root_url %}
+            {% if omnise_root_url != '/'%}
+                {% assign omnise_root_url = routes.root_url | append: '/' %}
+            {% endif %}
+        <link rel="stylesheet" id="omnise-exported-page-css" media="all" href="{{'omnise-6a34aafa27ead33973778da5.css' | asset_url}}"><div data-beae-export-section-id="beae-hof1q5" data-beae-export-has-ab="true"><div data-beae-ab-variant="a"><section data-bnode="beae-hof1q5" data-bnode-index="1" class="beae-section beae-surface-light"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-urb1dj" data-bnode-index="1"></div><picture id="beae-bg-73an3kz" class="beae-bg-image" data-beae-attributes="true"><style>
+              #beae-bg-73an3kz .beae-image {
+                object-fit: cover;
+                object-position: 50% 50%;
+              }
+      
+              @media (max-width: 1180px) {
+                #beae-bg-73an3kz .beae-image {
+                  object-position: 50% 50%;
+                }
+              }
+      
+              @media (max-width: 767px) {
+                #beae-bg-73an3kz .beae-image {
+                  object-position: 50% 50%;
+                }
+              }
+
+              
+            </style><source media="(max-width: 767px)" srcset="https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Hero_banner_7_11zon.webp?v=1778752737&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Hero_banner_7_11zon.webp?v=1778752737&amp;width=600 600w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Hero_banner_7_11zon.webp?v=1778752737&amp;width=800 800w"><source media="(max-width: 1180px)" srcset="https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=1200 1200w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=1800 1800w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=2400 2400w"><img width="1920" height="800" sizes="min(1900px, 100vw)" alt="Hero banner" fetchpriority="high" loading="eager" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=3900 3900w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=2900 2900w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=2000 2000w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=1600 1600w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=1200 1200w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=800 800w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Hero_banner_7_11zon.webp?v=1778752737&amp;width=400 400w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Hero_banner_7_11zon.webp?v=1778752737&amp;width=600 600w,https://cdn.shopify.com/s/files/1/0730/1110/1853/files/Hero_banner_7_11zon.webp?v=1778752737&amp;width=800 800w" src="https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Hero_banner_04.webp?v=1778127812&amp;width=3900"></picture></div></section></div><div data-beae-ab-variant="b"><section data-bnode="beae-qvexlz" data-bnode-index="1" class="beae-section beae-surface-dark"><div class="beae-section-container">
+        {% assign originalProduct = product %}
+        {% assign product = all_products['1-carat-lab-grown-diamond-pendant-18k-white-gold-necklace'] %}
+        {% if product != blank and product.id != blank %}
+          {% assign variant = product.selected_or_first_available_variant %}
+          {% assign formId = 'beae-product-form-' | append: product.id %}
+          {% form 'product', product, id: formId, class: 'form', style: 'width:100%;', novalidate: 'novalidate', data-type: 'add-to-cart-form' %}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            
+            <script type="application/json" class="product-json-data">
+              {
+                "id": {{ product.id }},
+                "title": {{ product.title | json }},
+                "handle": {{ product.handle | json }},
+                "vendor": {{ product.vendor | json }},
+                "type": {{ product.type | json }},
+                "options": {{ product.options | json }},
+                "tags": {{ product.tags | json }},
+                "price": {{ product.price | default: 0 }},
+                "price_min": {{ product.price_min }},
+                "price_max": {{ product.price_max }},
+                "price_varies": {{ product.price_varies | json }},
+                "compare_at_price_varies": {{ product.compare_at_price_varies | json }},
+                "requires_selling_plan": {{ product.requires_selling_plan | json }},
+                "available": {{ product.available | json }},
+                "created_at": {{ product.created_at | date: "%Y-%m-%dT%H:%M:%S%:z" | json }},
+                "published_at": {{ product.published_at | date: "%Y-%m-%dT%H:%M:%S%:z" | json }},
+                "description": {{ product.description | json }},
+                "featured_image": {{ product.featured_image.src | img_url: 'master' | json }},
+                "images": [
+                  {% for image in product.images %}
+                    {{ image | img_url: 'master' | json }}{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ],
+                "media": [
+                  {% for media in product.media %}
+                    {
+                      "alt": {{ media.alt | json }},
+                      "media_type": {{ media.media_type | json }},
+                      "preview_image": {{ media.preview_image.src | img_url: 'master' | json }},
+                      "sources": {{ media.sources | json }}
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ],
+                "variants": [
+                  {% for variant in product.variants %}
+                    {
+                      "id": {{ variant.id }},
+                      "title": {{ variant.title | json }},
+                      "available": {{ variant.available | json }},
+                      "price": {{ variant.price | default: 0 }},
+                      "compare_at_price": {{ variant.compare_at_price | default: 0 }},
+                      "inventory_quantity": {{ variant.inventory_quantity | default: 0 }},
+                      "sku": {{ variant.sku | json }},
+                      "barcode": {{ variant.barcode | json }},
+                      "options": {{ variant.options | json }},
+                      "featured_image": {
+                        "src": {{ variant.featured_image.src | img_url: 'master' | json }}
+                      }
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ]
+              }
+            </script>
+      <div class="beae-slot beae-featured-product" data-bnode="beae-qotpuu" data-bnode-index="1"><script type="application/json" class="product-json-data">{"id":"gid://shopify/Product/8690209226909","handle":"example-product-title-8","title":"Example product title with variant","vendor":"Vendor","productType":"Product type","tags":["New"],"status":"ACTIVE","publishedAt":"2025-08-22T01:53:12Z","onlineStoreUrl":null,"priceRangeV2":{"minVariantPrice":{"amount":"9.0","currencyCode":"USD"},"maxVariantPrice":{"amount":"12.0","currencyCode":"USD"}},"compareAtPriceRange":{"minVariantCompareAtPrice":{"amount":"10.0","currencyCode":"USD"},"maxVariantCompareAtPrice":{"amount":"12.0","currencyCode":"USD"}},"descriptionHtml":"<p>The Example product title with variant is engineered for professionals who demand precision and versatility. Its carefully designed variants allow customization to suit specific expert applications, ensuring optimal performance and reliability. This product combines advanced features with practical adaptability, making it an essential choice for specialized tasks.</p>","featuredImage":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595","altText":"Gray"},"options":[{"name":"Color","values":["Black","Yellow","Red","Green","Grey","Navy","Brown","Crimson Shadow","Gold Tone","Orange"]},{"name":"Size","values":["S","M","L","XL"]}],"images":{"edges":[{"node":{"id":"gid://shopify/ProductImage/40315960459421","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595","altText":"Gray"}},{"node":{"id":"gid://shopify/ProductImage/40315960492189","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595","altText":"Yellow"}},{"node":{"id":"gid://shopify/ProductImage/40315960524957","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595","altText":"Red"}},{"node":{"id":"gid://shopify/ProductImage/40315960557725","url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595","altText":"Green"}}]},"variants":{"edges":[{"node":{"id":"gid://shopify/ProductVariant/47100413968541","title":"Black / S","inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"sku":"BEAEBS","availableForSale":true,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414001309","title":"Black / M","availableForSale":true,"inventoryQuantity":10,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414034077","title":"Black / L","availableForSale":true,"inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414066845","title":"Black / XL","availableForSale":true,"inventoryQuantity":11,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Black"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414099613","title":"Yellow / S","availableForSale":true,"inventoryQuantity":18,"price":"12.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414132381","title":"Yellow / M","availableForSale":true,"inventoryQuantity":19,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414165149","title":"Yellow / L","availableForSale":true,"inventoryQuantity":12,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414197917","title":"Yellow / XL","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Yellow"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-3_15e09850-be69-4530-b933-f2e791d05fab.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414230685","title":"Red / S","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414263453","title":"Red / M","availableForSale":true,"inventoryQuantity":1,"price":"0.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414296221","title":"Red / L","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414328989","title":"Red / XL","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":null,"selectedOptions":[{"name":"Color","value":"Red"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-2_7fa78ec2-4980-48dd-bef6-4d66f65cd848.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414361757","title":"Green / S","availableForSale":true,"inventoryQuantity":1,"price":"10.00","compareAtPrice":"24.0","selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414394525","title":"Green / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414427293","title":"Green / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100414460061","title":"Green / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Green"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-1_9fae1654-ea62-46dc-9ddc-44ba08364581.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486090909","title":"Grey / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"S"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486123677","title":"Grey / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"M"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486156445","title":"Grey / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"L"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486189213","title":"Grey / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Grey"},{"name":"Size","value":"XL"}],"image":{"url":"https://cdn.shopify.com/s/files/1/0730/1110/1853/files/image-product-4_e1a50d90-86fa-402d-99f5-ffd3046ea39a.svg?v=1755827595"}}},{"node":{"id":"gid://shopify/ProductVariant/47100486221981","title":"Navy / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486254749","title":"Navy / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486287517","title":"Navy / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486320285","title":"Navy / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Navy"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486353053","title":"Brown / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486385821","title":"Brown / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486418589","title":"Brown / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486451357","title":"Brown / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Brown"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486484125","title":"Crimson Shadow / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486516893","title":"Crimson Shadow / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486549661","title":"Crimson Shadow / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486582429","title":"Crimson Shadow / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Crimson Shadow"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486615197","title":"Gold Tone / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486647965","title":"Gold Tone / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486680733","title":"Gold Tone / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486713501","title":"Gold Tone / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Gold Tone"},{"name":"Size","value":"XL"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486746269","title":"Orange / S","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"S"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486779037","title":"Orange / M","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"M"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486811805","title":"Orange / L","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"L"}],"image":null}},{"node":{"id":"gid://shopify/ProductVariant/47100486844573","title":"Orange / XL","availableForSale":false,"selectedOptions":[{"name":"Color","value":"Orange"},{"name":"Size","value":"XL"}],"image":null}}]},"metafields":{"edges":[{"node":{"namespace":"shopify","key":"color-pattern","value":"[\"gid://shopify/Metaobject/102857605277\",\"gid://shopify/Metaobject/103613792413\",\"gid://shopify/Metaobject/103613759645\",\"gid://shopify/Metaobject/102692978845\",\"gid://shopify/Metaobject/103613726877\",\"gid://shopify/Metaobject/102857670813\",\"gid://shopify/Metaobject/102857638045\",\"gid://shopify/Metaobject/102857572509\",\"gid://shopify/Metaobject/102857506973\",\"gid://shopify/Metaobject/102693077149\"]","type":"list.metaobject_reference"}},{"node":{"namespace":"custom","key":"summary","value":"{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"children\":[{\"type\":\"text\",\"value\":\"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.\"}]}]}","type":"rich_text_field"}}]}}</script></div>
+          {% endform %}
+        {% else %}
+          <div class="beae-product-not-found">Product not found</div>
+        {% endif %}
+        {% assign product = originalProduct %}
+      </div></section></div></div><div data-beae-export-section-id="beae-kwv1fq" data-beae-export-has-ab="false"><section data-bnode="beae-kwv1fq" data-bnode-index="2" class="beae-section beae-surface-light"><div class="beae-section-container"><div class="beae-slot" data-bnode="beae-iwz2l3" data-bnode-index="1"><div class="beae-slot" data-bnode="beae-m60yon" data-bnode-index="1"><div class="beae-slot beae-virtual-slot" data-bnode-index="1"><p class="beae-paragraph beae-p" data-bnode="beae-r6kgr2" data-bnode-index="1">{{ 'sections.omnise-6a34aafa27ead33973778da5.beae_39rgpt' | t }}</p></div></div><h3 class="beae-heading beae-h2" data-bnode="beae-28ns2x" data-bnode-index="2">{{ 'sections.omnise-6a34aafa27ead33973778da5.beae_bdkv43' | t }}</h3><p class="beae-paragraph beae-p" data-bnode="beae-mdmezg" data-bnode-index="3">{{ 'sections.omnise-6a34aafa27ead33973778da5.beae_d5stx6' | t }}</p><a data-bnode="beae-jmtc38" data-bnode-index="4" class="beae-btn-button beae-btn-se" beae-btn-po="left" href="#">{{ 'sections.omnise-6a34aafa27ead33973778da5.beae_bdmx5i' | t }}</a></div><div id="beae-bg-reecep3" class="beae-bg-image" data-beae-attributes="true"><style>
+              #beae-bg-reecep3 .beae-image {
+                object-fit: cover;
+                object-position: 50% 50%;
+              }
+      
+              @media (max-width: 1180px) {
+                #beae-bg-reecep3 .beae-image {
+                  object-position: 50% 50%;
+                }
+              }
+      
+              @media (max-width: 767px) {
+                #beae-bg-reecep3 .beae-image {
+                  object-position: 50% 50%;
+                }
+              }
+
+              
+            </style><img width="1920" height="480" sizes="min(1900px, 100vw)" alt="Image banner" loading="lazy" class="beae-image" srcset="https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=3900 3900w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=2900 2900w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=2000 2000w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=1600 1600w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=1200 1200w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=800 800w,https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=400 400w" src="https://cdn.shopify.com/s/files/1/0660/6166/4350/files/Banner_6.webp?v=1778128222&amp;width=3900"></div></div></section></div><div data-beae-export-section-id="beae-hpg3ke" data-beae-export-has-ab="false"><!-- Start of Judge.me code -->
+  <div class='jdgm-widget jdgm-all-reviews-text'>
+    <a href='javascript:void(0)'>
+      <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>
+      <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>
+Customers rate us {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }}/5 based on {{ shop.metafields.judgeme.all_reviews_count }} reviews.
+      </span>
+    </a>
+  </div>
+<!-- End of Judge.me code --></div>
+<script id="omnise-exported-page-js" src="{{'omnise-6a34aafa27ead33973778da5.js'  | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "OMNISE BUILDER APP",
+  "locales": {
+    "en": {
+      "omnise_39rgpt": "Take your time",
+      "omnise_bdkv43": "Your Winter Sleep Can Feel Better",
+      "omnise_d5stx6": "There’s no rush. Just a quieter, more comfortable night — whenever you’re ready.",
+      "omnise_bdmx5i": "Begin a Cozier Night"
+    }
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "The section was generated by OMNISE BUILDER",
+      "info": "Omnise is a flexible page builder app on Shopify AppStore.\n              It provides 100+ Shopify Elements and pre-built templates library, \n              so you can build unlimited pages that you can imagine with it."
+    },
+    {
+      "type": "header",
+      "content": "[EDIT WITH OMNISE APP →](https://beae-anna.myshopify.com/admin/apps/3db283686bdf064c04e98e5cf61875ee/app/editor/v4/page/6a34aafa27ead33973778da5)",
+      "info": "(*You must install the app to start editing this section [Learn more](https://docs.beae.com/en/article/quick-start-guide-dkoesy/))"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

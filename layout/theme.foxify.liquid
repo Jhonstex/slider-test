@@ -32,11 +32,11 @@
       }
     </style>
   {%- render 'foxify-head' -%}</head>
-  <body class="template-{{ template.name }} theme-style-{{ settings.theme_style_preset | default: settings.theme_style }} button-style-{{ settings.button_style }}{% unless settings.enable_animations %} animations-disabled{% endunless %}">{% sections 'foxify-header-group' %}
+  <body class="template-{{ template.name }} theme-style-{{ settings.theme_style_preset | default: settings.theme_style }} button-style-{{ settings.button_style }}{% unless settings.enable_animations %} animations-disabled{% endunless %}"> {% sections 'foxify-header-group' %} 
     <a class="skip-link" href="#MainContent">{{ 'general.skip_to_content' | t }}</a>
-    {% sections 'header-group' %}
-    <main id="MainContent">{{ content_for_layout }}</main>
-    {% sections 'footer-group' %}
-  {%- render 'foxify-footer' -%}{% sections 'foxify-footer-group' %}</body>
+    
+    <main id="MainContent"><div class="foxify-container">{{ content_for_layout }}</div></main>
+    
+  {%- render 'foxify-footer' -%} {% sections 'foxify-footer-group' %} </body>
 </html>
 

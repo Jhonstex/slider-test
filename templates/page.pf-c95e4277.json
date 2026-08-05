@@ -1,0 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "pf-c95e4277": {
+      "type": "pf-c95e4277",
+      "settings": {
+        "pf_6520d762_value": "Find the true match to your own lifestyle",
+        "pf_ab65056f_value": "Create the one-of-a-kind cases",
+        "pf_34dc1106_value": "In collaboration with artists",
+        "pf_3ff7f412_value": "Exclusive designs by Flycase",
+        "pf_656e2201_value": "Waterproof: 100%Weight: 160g",
+        "pf_65740fc5_value": "The greenest cases ever seen",
+        "pf_cb19656e_value": "Uses Per USB Charge: 125",
+        "pf_d691cb19_value": "Number Of Intensity: 16",
+        "pf_329b6520_value": "Select a Category",
+        "pf_df863ff7_value": "Original Prints",
+        "pf_a059ab65_value": "Customizable",
+        "pf_62d363e8_value": "Description",
+        "pf_6f276574_value": "Recycled",
+        "pf_dbc45205_value": "Features",
+        "pf_63e8dbc4_value": "Details",
+        "pf_c5b734dc_value": "Fly-lab"
+      }
+    }
+  },
+  "order": [
+    "pf-c95e4277"
+  ]
+}
