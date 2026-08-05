@@ -31,12 +31,30 @@
         {% if settings.font_heading != blank %}--kito-heading-font: {{ settings.font_heading.family | escape }}, Georgia, serif;{% endif %}
       }
     </style>
-  {%- render 'foxify-head' -%}</head>
+  {%- render 'foxify-head' -%}<!-- BEAE-HEADER -->
+{%- render 'beae_header' -%}
+<!-- END BEAE-HEADER -->
+<!-- BEAE-GLOBAL-FONT -->
+{% capture the_snippet_global_font %}{% include 'beae-global-font' %}{% endcapture %}
+{% unless the_snippet_global_font contains 'Liquid error' %}
+{{ the_snippet_global_font }}
+{% endunless %}
+<!-- END BEAE-GLOBAL-FONT -->
+<!-- BEAE-GLOBAL-THEME-SETTING -->
+{% capture the_snippet_beae_global_theme_setting %}{% include 'beae-global-theme-setting' %}{% endcapture %}
+{% unless the_snippet_beae_global_theme_setting contains 'Liquid error' %}
+{{ the_snippet_beae_global_theme_setting }}
+{% endunless %}
+<!-- END BEAE-GLOBAL-THEME-SETTING -->
+</head>
   <body class="template-{{ template.name }} theme-style-{{ settings.theme_style_preset | default: settings.theme_style }} button-style-{{ settings.button_style }}{% unless settings.enable_animations %} animations-disabled{% endunless %}">{% sections 'foxify-header-group' %}
     <a class="skip-link" href="#MainContent">{{ 'general.skip_to_content' | t }}</a>
     {% sections 'header-group' %}
     <main id="MainContent">{{ content_for_layout }}</main>
     {% sections 'footer-group' %}
-  {%- render 'foxify-footer' -%}{% sections 'foxify-footer-group' %}</body>
+  {%- render 'foxify-footer' -%}{% sections 'foxify-footer-group' %}<!-- BEAE-FOOTER -->
+{%- render 'beae_footer' -%}
+<!-- END BEAE-FOOTER -->
+</body>
 </html>
 
