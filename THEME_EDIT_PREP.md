@@ -794,3 +794,9 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Menu chính không còn chiếm toàn bộ vùng trống bằng `flex: 1`; các row giữ đúng chiều cao và border, còn khoảng trống được đẩy xuống trước footer như demo.
 - Footer được tách thành các row giống mẫu: Login pill `44px` nền `#24272a`, border dưới full-width; row VND/English có padding và border; social icons hiển thị ở hàng cuối với nút tròn `38px`, gap `10px`.
 - Login có fallback text `Login` khi translation rỗng; localization triggers giữ font Figtree `14px/22.4px` và căn giữa giống demo.
+
+## 38. Giảm độ đậm item trong Pages submenu mobile (2026-08-09)
+
+- Đối chiếu trực tiếp demo và preview: trigger `Pages` ngoài cùng vẫn đúng weight `500`; lỗi nằm ở các item `About us`, `Contact`, `Faqs`, `Store locations`, `Recently viewed`, `Our journal` bên trong submenu.
+- Demo dùng Figtree `16px/25.6px`, weight `400`, màu `#323232`; theme trước đó dùng nhầm style featured của Women/Men với Archivo weight `700`.
+- Thêm modifier riêng `helix-header__mobile-submenu-group--pages` để hạ đúng typography của Pages mà không ảnh hưởng các item featured trong Women/Men.

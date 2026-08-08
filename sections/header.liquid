@@ -757,7 +757,7 @@
               </button>
             </div>
             <div class="helix-header__mobile-submenu-inner">
-              <div class="helix-header__mobile-submenu-group helix-header__mobile-submenu-group--featured">
+              <div class="helix-header__mobile-submenu-group helix-header__mobile-submenu-group--featured helix-header__mobile-submenu-group--pages">
                 <a href="{{ section.settings.pages_about_url | default: '/pages/about-us' }}">About us</a>
                 <a href="{{ section.settings.pages_contact_url | default: '/pages/contact' }}">Contact</a>
                 <a href="{{ section.settings.pages_faq_url | default: '/pages/faqs' }}">Faqs</a>
@@ -3290,6 +3290,13 @@
       font-size: 16px;
       font-weight: 700;
       line-height: 25.6px;
+    }
+
+    .helix-header__mobile-submenu-group--pages a {
+      color: #323232;
+      font-family: 'Figtree', var(--helix-font, sans-serif);
+      font-weight: 400;
+      letter-spacing: normal;
     }
 
     .helix-header__mobile-submenu-details > summary {
