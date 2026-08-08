@@ -785,10 +785,10 @@
 
   <div class="helix-header__localization-sheet" id="{{ helix_header_id }}-country-sheet" data-helix-localization-sheet="country" aria-hidden="true">
     <button class="helix-header__localization-sheet-overlay" type="button" data-helix-close-localization aria-label="{{ 'general.close' | t }}"></button>
-    <div class="helix-header__localization-sheet-container" role="dialog" aria-modal="true" aria-label="{{ 'header.country_region' | t }}" tabindex="-1">
+    <div class="helix-header__localization-sheet-container" role="dialog" aria-modal="true" aria-label="{{ 'header.country' | t }}" tabindex="-1">
       <span class="helix-header__localization-sheet-handle" aria-hidden="true"></span>
       <div class="helix-header__localization-sheet-header helix-header__localization-sheet-header--country">
-        <h2>{{ 'header.country_region' | t }}</h2>
+        <h2>{{ 'header.country' | t }}</h2>
         <button class="helix-header__localization-close-button" type="button" data-helix-close-localization aria-label="{{ 'general.close' | t }}">{% render 'helix-icon-close' %}</button>
       </div>
       <div class="helix-header__localization-sheet-inner">
@@ -2633,9 +2633,10 @@
   .helix-header__localization-sheet-header h2 {
     margin: 0;
     color: #131313;
+    font-family: 'Archivo', var(--helix-font, sans-serif);
     font-size: 18px;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 25.2px;
   }
 
   .helix-header__localization-close-button {
@@ -2718,10 +2719,10 @@
     border: 0;
     border-radius: 9.6px;
     background: rgba(50, 50, 50, .06);
-    color: #1a1312;
+    color: #323232;
     font: inherit;
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
     text-align: left;
   }
 
