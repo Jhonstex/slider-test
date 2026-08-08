@@ -761,3 +761,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Product title trong mega menu không còn bị ép một dòng; cho phép wrap tối đa 2 dòng trong đúng chiều rộng card.
 - Thêm `overflow-wrap: anywhere` và line clamp để cả tên rất dài hoặc chuỗi dài không khoảng trắng không chồng sang product kế bên; giá vẫn nằm dưới title.
 - Tạo backup branch `backup/pre-product-title-wrap-20260808` trước khi sửa.
+
+## 34. Khóa chiều rộng và căn hàng title product card (2026-08-08)
+
+- Khóa `width: 100%` và `min-width: 0` cho details/info/title để tên dài thực sự wrap trong phạm vi từng card, không lấy chiều rộng theo nội dung.
+- Đặt vùng title cao cố định tương đương 2 dòng (`44.8px`), nên các card có title một dòng vẫn giữ khoảng trống tương ứng và hàng giá luôn thẳng với card có title hai dòng.
+- Bổ sung line clamp chuẩn và vẫn giữ `overflow-wrap: anywhere` cho chuỗi rất dài.
+- Tạo backup branch `backup/pre-product-title-rows-20260808` trước khi sửa.
