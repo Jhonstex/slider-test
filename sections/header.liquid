@@ -396,15 +396,23 @@
               <span class="helix-header__chevron" aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
             </summary>
             <div class="helix-header__currency-panel">
-              <p class="helix-header__panel-label">{{ 'header.country_region' | t }}</p>
-              <form action="{{ routes.localization_url }}" method="post" data-helix-localization-form>
+              <p class="visually-hidden">{{ 'header.country_region' | t }}</p>
+              <form action="{{ routes.localization_url }}" method="post" data-helix-localization-form data-helix-localization-type="country">
                 <input type="hidden" name="return_to" value="{{ request.path }}">
-                <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}" data-helix-country-value>
-                <div class="helix-header__country-list">
+                <input type="hidden" name="country_code" value="{{ localization.country.iso_code | default: 'VN' }}" data-helix-country-value>
+                <div class="helix-header__country-filter">
+                  <label class="visually-hidden" for="{{ helix_header_id }}-country-filter">{{ 'header.search_country' | t }}</label>
+                  <input id="{{ helix_header_id }}-country-filter" class="helix-header__country-filter-input" type="search" placeholder="{{ 'header.search_country' | t }}" autocomplete="off" data-helix-country-filter>
+                  <span class="helix-header__country-filter-icon" aria-hidden="true">{% render 'helix-icon-search' %}</span>
+                </div>
+                <div class="helix-header__country-list" role="list">
                   {% for country in localization.available_countries %}
-                    <button type="button" value="{{ country.iso_code }}" data-helix-country-option>
-                      <span>{{ country.name }}</span>
-                      <span>{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
+                    <button type="button" value="{{ country.iso_code }}" data-helix-country-option role="listitem">
+                      <span class="helix-header__country-option-name">
+                        <span class="helix-header__country-option-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ country.iso_code | downcase }}.svg?width=20);"></span>
+                        <span>{{ country.name }}</span>
+                      </span>
+                      <span class="helix-header__country-option-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
                     </button>
                   {% endfor %}
                 </div>
@@ -746,19 +754,17 @@
       </nav>
       <div class="helix-header__mobile-menu-footer">
         <a class="helix-header__mobile-login" href="{{ routes.account_login_url }}">{{ 'header.login' | t }}</a>
-        <details class="helix-header__mobile-localization">
-          <summary>
+        <div class="helix-header__mobile-localization-row">
+          <button class="helix-header__mobile-localization-trigger" type="button" data-helix-open-localization="country" aria-expanded="false" aria-controls="{{ helix_header_id }}-country-sheet">
             <span class="helix-header__country-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ localization.country.iso_code | default: 'VN' | downcase }}.svg?width=20);"></span>
             <span>{{ helix_currency_code }} {{ helix_currency_symbol }}</span>
             <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
-          </summary>
-          <div class="helix-header__mobile-localization-panel">
-            <p class="helix-header__panel-label">{{ 'header.country_region' | t }}</p>
-            {% for country in localization.available_countries %}
-              <button type="button" value="{{ country.iso_code }}" data-helix-country-option>{{ country.name }} <span>{{ country.currency.iso_code }} {{ country.currency.symbol }}</span></button>
-            {% endfor %}
-          </div>
-        </details>
+          </button>
+          <button class="helix-header__mobile-localization-trigger" type="button" data-helix-open-localization="language" aria-expanded="false" aria-controls="{{ helix_header_id }}-language-sheet">
+            <span>{{ localization.language.endonym_name | default: localization.language.name | default: 'English' }}</span>
+            <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+          </button>
+        </div>
         <div class="helix-header__mobile-socials" aria-label="Social links">
           <a href="{{ routes.root_url }}" aria-label="Facebook">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z" fill="currentColor"></path></svg>
@@ -773,6 +779,63 @@
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 4c.4 2.3 1.7 3.7 4 4v3.1a8.4 8.4 0 0 1-4-1.2v6.4a5.2 5.2 0 1 1-4.6-5.2v3.2a2.1 2.1 0 1 0 1.5 2V4h3.1Z" fill="currentColor"></path></svg>
           </a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="helix-header__localization-sheet" id="{{ helix_header_id }}-country-sheet" data-helix-localization-sheet="country" aria-hidden="true">
+    <button class="helix-header__localization-sheet-overlay" type="button" data-helix-close-localization aria-label="{{ 'general.close' | t }}"></button>
+    <div class="helix-header__localization-sheet-container" role="dialog" aria-modal="true" aria-label="{{ 'header.country_region' | t }}" tabindex="-1">
+      <span class="helix-header__localization-sheet-handle" aria-hidden="true"></span>
+      <div class="helix-header__localization-sheet-header helix-header__localization-sheet-header--country">
+        <h2>{{ 'header.country_region' | t }}</h2>
+        <button class="helix-header__localization-close-button" type="button" data-helix-close-localization aria-label="{{ 'general.close' | t }}">{% render 'helix-icon-close' %}</button>
+      </div>
+      <div class="helix-header__localization-sheet-inner">
+        <form action="{{ routes.localization_url }}" method="post" data-helix-localization-form data-helix-localization-type="country">
+          <input type="hidden" name="return_to" value="{{ request.path }}">
+          <input type="hidden" name="country_code" value="{{ localization.country.iso_code | default: 'VN' }}" data-helix-country-value>
+          <div class="helix-header__country-filter">
+            <label class="visually-hidden" for="{{ helix_header_id }}-mobile-country-filter">{{ 'header.search_country' | t }}</label>
+            <input id="{{ helix_header_id }}-mobile-country-filter" class="helix-header__country-filter-input" type="search" placeholder="{{ 'header.search_country' | t }}" autocomplete="off" data-helix-country-filter>
+            <span class="helix-header__country-filter-icon" aria-hidden="true">{% render 'helix-icon-search' %}</span>
+          </div>
+          <div class="helix-header__country-list" role="list">
+            {% for country in localization.available_countries %}
+              <button type="button" value="{{ country.iso_code }}" data-helix-country-option role="listitem">
+                <span class="helix-header__country-option-name">
+                  <span class="helix-header__country-option-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ country.iso_code | downcase }}.svg?width=20);"></span>
+                  <span>{{ country.name }}</span>
+                </span>
+                <span class="helix-header__country-option-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
+              </button>
+            {% endfor %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="helix-header__localization-sheet helix-header__localization-sheet--language" id="{{ helix_header_id }}-language-sheet" data-helix-localization-sheet="language" aria-hidden="true">
+    <button class="helix-header__localization-sheet-overlay" type="button" data-helix-close-localization aria-label="{{ 'general.close' | t }}"></button>
+    <div class="helix-header__localization-sheet-container" role="dialog" aria-modal="true" aria-label="{{ 'header.language' | t }}" tabindex="-1">
+      <span class="helix-header__localization-sheet-handle" aria-hidden="true"></span>
+      <div class="helix-header__localization-sheet-header">
+        <h2>{{ 'header.language' | t }}</h2>
+        <button class="helix-header__localization-close-button" type="button" data-helix-close-localization aria-label="{{ 'general.close' | t }}">{% render 'helix-icon-close' %}</button>
+      </div>
+      <div class="helix-header__localization-sheet-inner helix-header__localization-sheet-inner--language">
+        <form action="{{ routes.localization_url }}" method="post" data-helix-localization-form data-helix-localization-type="language">
+          <input type="hidden" name="return_to" value="{{ request.path }}">
+          <input type="hidden" name="language_code" value="{{ localization.language.iso_code | default: 'en' }}" data-helix-language-value>
+          <div class="helix-header__language-list" role="list">
+            {% for language in localization.available_languages %}
+              <button type="button" value="{{ language.iso_code }}" data-helix-language-option role="listitem">
+                <span>{{ language.endonym_name | default: language.name }}</span>
+              </button>
+            {% endfor %}
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -1909,6 +1972,119 @@
     color: rgba(26, 19, 18, .55);
   }
 
+  .helix-header__currency-panel {
+    top: calc(100% + 32px);
+    width: 330px;
+    min-width: 330px;
+    max-height: min(443px, calc(100vh - 130px));
+    padding: 0;
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+    overflow: hidden;
+  }
+
+  .helix-header__currency-panel form,
+  .helix-header__localization-sheet-inner form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .helix-header__country-filter {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 16px 10px;
+  }
+
+  .helix-header__country-filter-input {
+    display: block;
+    width: 100%;
+    height: 48px;
+    min-height: 48px;
+    padding: 0 52px 0 16px;
+    border: 0;
+    border-radius: 9990px;
+    outline: 0;
+    background: rgba(50, 50, 50, .06);
+    color: #1a1312;
+    font: inherit;
+    font-size: 14px;
+    line-height: 48px;
+  }
+
+  .helix-header__country-filter-input::placeholder {
+    color: rgba(26, 19, 18, .62);
+    opacity: 1;
+  }
+
+  .helix-header__country-filter-icon {
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  .helix-header__country-filter-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .helix-header__currency-panel .helix-header__country-list {
+    flex: 1 1 auto;
+    max-height: none;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .helix-header__country-list button {
+    min-height: 42px;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 16px;
+    border-radius: 9.6px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .helix-header__country-option-name {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .helix-header__country-option-flag {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    border-radius: 50%;
+    background: var(--helix-country-flag) center / contain no-repeat;
+  }
+
+  .helix-header__country-option-currency {
+    flex: 0 0 auto;
+    color: rgba(26, 19, 18, .55);
+    white-space: nowrap;
+  }
+
+  .helix-header__country-list button[hidden] {
+    display: none;
+  }
+
+  .helix-header__country-list:empty::after {
+    padding: 12px 16px;
+    color: rgba(26, 19, 18, .55);
+    content: 'No results found';
+    font-size: 13px;
+  }
+
   .helix-header__scrim,
   .helix-header__mobile-menu,
   .helix-header__drawer {
@@ -2336,6 +2512,221 @@
   .helix-header__mobile-submenu a:focus-visible,
   .helix-header__mobile-localization-panel button:hover,
   .helix-header__mobile-localization-panel button:focus-visible {
+    color: rgba(26, 19, 18, .55);
+  }
+
+  .helix-header__mobile-localization-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .helix-header__mobile-localization-trigger {
+    display: inline-flex;
+    min-height: 30px;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .helix-header__mobile-localization-trigger > span:last-child {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    transition: transform .3s cubic-bezier(.6, .14, 0, 1);
+  }
+
+  .helix-header__mobile-localization-trigger[aria-expanded='true'] > span:last-child {
+    transform: rotate(180deg);
+  }
+
+  .helix-header__localization-sheet {
+    position: fixed;
+    z-index: 60;
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .1s ease-in-out, visibility 0s linear .1s;
+  }
+
+  .helix-header__localization-sheet.is-open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .helix-header__localization-sheet-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(50, 50, 50, .3);
+    backdrop-filter: blur(20px);
+  }
+
+  .helix-header__localization-sheet-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    max-height: min(570px, calc(100% - 24px));
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    color: #1a1312;
+    transform: translateY(100%);
+    transition: transform .4s cubic-bezier(.6, 0, .4, 1);
+  }
+
+  .helix-header__localization-sheet.is-open .helix-header__localization-sheet-container {
+    transform: translateY(0);
+  }
+
+  .helix-header__localization-sheet--language .helix-header__localization-sheet-container {
+    max-height: 154px;
+  }
+
+  .helix-header__localization-sheet-handle {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    left: 50%;
+    width: 35px;
+    height: 4px;
+    border-radius: 99px;
+    background: #d1d1d1;
+    transform: translateX(-50%);
+  }
+
+  .helix-header__localization-sheet-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 77px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 16px 16px;
+    border-bottom: 1px solid rgba(26, 19, 18, .14);
+    background: #fff;
+  }
+
+  .helix-header__localization-sheet-header--country {
+    min-height: 60px;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .helix-header__localization-sheet-header h2 {
+    margin: 0;
+    color: #131313;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .helix-header__localization-close-button {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 99px;
+    background: #fff;
+    color: #131313;
+    transition: background .3s ease-in-out, color .3s ease-in-out;
+  }
+
+  .helix-header__localization-close-button:hover,
+  .helix-header__localization-close-button:focus-visible {
+    background: #f4f0ed;
+  }
+
+  .helix-header__localization-close-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .helix-header__localization-sheet-inner {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .helix-header__localization-sheet-inner--language {
+    overflow: visible;
+  }
+
+  .helix-header__localization-sheet .helix-header__country-filter {
+    padding: 20px 10px 16px;
+  }
+
+  .helix-header__localization-sheet .helix-header__country-filter-input {
+    height: 44px;
+    min-height: 44px;
+    padding-inline: 15px 52px;
+    line-height: 44px;
+  }
+
+  .helix-header__localization-sheet .helix-header__country-filter-icon {
+    top: 18px;
+  }
+
+  .helix-header__localization-sheet .helix-header__country-list {
+    max-height: none;
+    padding: 20px 10px;
+    overflow-y: auto;
+  }
+
+  .helix-header__localization-sheet .helix-header__country-list button {
+    min-height: 37px;
+    padding: 10px 16px;
+    border-radius: 9.6px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .helix-header__language-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 20px 10px;
+    overflow-y: auto;
+  }
+
+  .helix-header__language-list button {
+    display: flex;
+    width: 100%;
+    min-height: 37px;
+    align-items: center;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 9.6px;
+    background: rgba(50, 50, 50, .06);
+    color: #1a1312;
+    font: inherit;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: left;
+  }
+
+  .helix-header__language-list button:hover,
+  .helix-header__language-list button:focus-visible {
     color: rgba(26, 19, 18, .55);
   }
 
@@ -3050,6 +3441,9 @@
     const mobileSections = selectAll('[data-helix-mobile-section]');
     const mobileDetails = selectAll('.helix-header__mobile-nav details');
     const mobileSubmenuSections = selectAll('.helix-header__mobile-submenu-details');
+    const localizationSheets = selectAll('[data-helix-localization-sheet]');
+    const localizationTriggers = selectAll('[data-helix-open-localization]');
+    const countryFilters = selectAll('[data-helix-country-filter]');
     const searchPanel = select('.helix-header__drawer--search .helix-header__drawer-panel');
     const cartPanel = select('.helix-header__drawer--cart .helix-header__drawer-panel');
     let announcementIndex = 0;
@@ -3138,8 +3532,37 @@
     menProductsPrev?.addEventListener('click', () => stepMenProducts(-1));
     menProductsNext?.addEventListener('click', () => stepMenProducts(1));
 
+    const closeLocalizationSheets = () => {
+      localizationSheets.forEach((sheet) => {
+        sheet.classList.remove('is-open');
+        sheet.setAttribute('aria-hidden', 'true');
+      });
+      localizationTriggers.forEach((trigger) => trigger.setAttribute('aria-expanded', 'false'));
+    };
+
+    const openLocalizationSheet = (type) => {
+      const target = localizationSheets.find((sheet) => sheet.dataset.helixLocalizationSheet === type);
+      if (!target) return;
+      closeLocalizationSheets();
+      target.classList.add('is-open');
+      target.setAttribute('aria-hidden', 'false');
+      localizationTriggers.filter((trigger) => trigger.dataset.helixOpenLocalization === type).forEach((trigger) => trigger.setAttribute('aria-expanded', 'true'));
+      select('.helix-header__localization-sheet-container', target)?.focus({ preventScroll: true });
+      setBodyLock();
+    };
+
+    const filterCountryOptions = (input) => {
+      const query = input.value.trim().toLowerCase();
+      const form = input.closest('form') || root;
+      selectAll('[data-helix-country-option]', form).forEach((option) => {
+        option.hidden = Boolean(query && !option.textContent.toLowerCase().includes(query));
+      });
+    };
+
+    countryFilters.forEach((input) => input.addEventListener('input', () => filterCountryOptions(input)));
+
     const setBodyLock = () => {
-      const locked = dropdowns.some((dropdown) => dropdown.open) || root.classList.contains('is-mobile-menu-open') || root.classList.contains('is-search-open') || root.classList.contains('is-cart-open');
+      const locked = dropdowns.some((dropdown) => dropdown.open) || localizationSheets.some((sheet) => sheet.classList.contains('is-open')) || root.classList.contains('is-mobile-menu-open') || root.classList.contains('is-search-open') || root.classList.contains('is-cart-open');
       document.documentElement.classList.toggle('helix-header-lock', locked);
     };
 
@@ -3169,6 +3592,7 @@
     const closeLayers = () => {
       root.classList.remove('is-mobile-menu-open', 'is-search-open', 'is-cart-open');
       [mobileMenu, searchDrawer, cartDrawer].forEach((layer) => layer?.setAttribute('aria-hidden', 'true'));
+      closeLocalizationSheets();
       mobileDetails.forEach((section) => {
         resetMobileSubmenuTransition(section);
         section.open = false;
@@ -3287,7 +3711,10 @@
       const mobileBack = event.target.closest('[data-helix-mobile-back]');
       const megaCloseTrigger = event.target.closest('[data-helix-close-mega]');
       const closeTrigger = event.target.closest('[data-helix-close-layer], [data-helix-close-mobile]');
+      const localizationTrigger = event.target.closest('[data-helix-open-localization]');
+      const localizationClose = event.target.closest('[data-helix-close-localization]');
       const countryOption = event.target.closest('[data-helix-country-option]');
+      const languageOption = event.target.closest('[data-helix-language-option]');
 
       if (megaCloseTrigger) {
         event.preventDefault();
@@ -3298,6 +3725,19 @@
       if (mobileBack) {
         event.preventDefault();
         closeMobileSubmenu(mobileBack.closest('details'));
+        return;
+      }
+
+      if (localizationClose) {
+        event.preventDefault();
+        closeLocalizationSheets();
+        setBodyLock();
+        return;
+      }
+
+      if (localizationTrigger) {
+        event.preventDefault();
+        openLocalizationSheet(localizationTrigger.dataset.helixOpenLocalization);
         return;
       }
 
@@ -3325,10 +3765,20 @@
 
       if (countryOption) {
         const value = countryOption.value;
-        const countryValue = select('[data-helix-country-value]');
-        const localizationForm = select('[data-helix-localization-form]');
+        const localizationForm = countryOption.closest('form[data-helix-localization-form]') || select('[data-helix-localization-form]');
+        const countryValue = select('[data-helix-country-value]', localizationForm || root);
         if (countryValue && localizationForm && value) {
           countryValue.value = value;
+          localizationForm.submit();
+        }
+      }
+
+      if (languageOption) {
+        const value = languageOption.value;
+        const localizationForm = languageOption.closest('form[data-helix-localization-form]') || select('[data-helix-localization-form]');
+        const languageValue = select('[data-helix-language-value]', localizationForm || root);
+        if (languageValue && localizationForm && value) {
+          languageValue.value = value;
           localizationForm.submit();
         }
       }

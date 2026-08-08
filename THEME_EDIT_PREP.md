@@ -738,3 +738,12 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Search dùng input pill cao `48px` trên desktop/`44px` trên mobile, placeholder `Search`, tự focus khi mở và hiển thị ba popular search pill: `Running shoes`, `Trail running shoes`, `Hiking shoes`.
 - Cart rỗng hiển thị heading, thông điệp `Start exploring these great collections` và ba nút pill full width: `Trending`, `Best sellers`, `On sale`.
 - Cập nhật drawer panel, typography Archivo/Figtree, spacing, border radius, màu overlay, animation trượt từ phải sang và responsive desktop/mobile theo số đo trực tiếp từ demo.
+
+## 31. Đồng bộ country/language selector trên header với demo Helix (2026-08-08)
+
+- Desktop giữ selector `VND ₫` ở actions của header nhưng đổi panel theo demo: rộng `330px`, bo góc `16px`, shadow nhẹ, vị trí mở ngay dưới header, ô tìm kiếm pill cao `48px`, cờ quốc gia và danh sách country/currency có scroll nội bộ.
+- Mobile footer của drawer thêm hai lựa chọn `VND ₫` và `English` nằm cùng một hàng; mỗi lựa chọn mở bottom sheet riêng như demo.
+- Bottom sheet mobile có overlay đen `rgba(50, 50, 50, .3)` + `backdrop-filter: blur(20px)`, container trắng bo hai góc trên `16px`, handle kéo, header/title, nút đóng và animation trượt từ dưới lên.
+- Country sheet mobile có ô tìm kiếm cao `44px`, cờ, tên quốc gia, currency và danh sách lọc theo text; Language sheet hiển thị danh sách ngôn ngữ từ `localization.available_languages`.
+- Bổ sung JS mở/đóng sheet, cập nhật `aria-expanded`/`aria-hidden`, khóa scroll, lọc country option và submit đúng form localization tương ứng của desktop/mobile; click overlay hoặc nút close chỉ đóng sheet đang mở.
+- Đã tạo backup branch `backup/pre-language-selector-20260808` trước khi sửa.
