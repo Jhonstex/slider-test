@@ -529,7 +529,7 @@
       <nav class="helix-header__mobile-nav" aria-label="{{ 'header.primary_navigation' | t }}">
         <details data-helix-mobile-section>
           <summary><span>{{ section.settings.women_label | default: 'Women' }}</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
-          <div class="helix-header__mobile-submenu">
+          <div class="helix-header__mobile-submenu helix-header__mobile-submenu--mega">
             <div class="helix-header__mobile-submenu-header">
               <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
                 <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
@@ -547,6 +547,7 @@
                 <a href="{{ helix_womens_new_arrivals_url }}">New arrivals</a>
                 <a href="{{ helix_womens_sale_url }}">On sale</a>
               </div>
+              <div class="helix-header__mobile-submenu-list">
               <details class="helix-header__mobile-submenu-details">
                 <summary><span>By activity</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
                 <div class="helix-header__mobile-submenu helix-header__mobile-submenu--child">
@@ -594,6 +595,7 @@
                   </div>
                 </div>
               </details>
+              </div>
               <div class="helix-header__mobile-promos">
                 <a class="helix-header__mobile-promo" href="{{ helix_collections_url }}/womens-on-sale">
                   <span class="helix-header__mobile-promo-media">
@@ -601,8 +603,12 @@
                     <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/banner_mega_menu_1.webp?v=1777884363&amp;width=450" width="450" height="302" loading="lazy" alt="">
                     {% # theme-check-enable RemoteAsset %}
                   </span>
-                  <strong>Women's sale</strong>
-                  <span>Shop now <span aria-hidden="true">↗</span></span>
+                  <div class="helix-header__mobile-promo-details">
+                    <div class="helix-header__mobile-promo-details-inner">
+                      <strong>Women's sale</strong>
+                      <span>Shop now <span aria-hidden="true">↗</span></span>
+                    </div>
+                  </div>
                 </a>
                 <a class="helix-header__mobile-promo" href="{{ helix_women_url }}?sort_by=best-selling">
                   <span class="helix-header__mobile-promo-media">
@@ -610,8 +616,12 @@
                     <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/banner_mega_menu_2.webp?v=1777884363&amp;width=450" width="450" height="302" loading="lazy" alt="">
                     {% # theme-check-enable RemoteAsset %}
                   </span>
-                  <strong>Women’s favorites</strong>
-                  <span>Shop now <span aria-hidden="true">↗</span></span>
+                  <div class="helix-header__mobile-promo-details">
+                    <div class="helix-header__mobile-promo-details-inner">
+                      <strong>Women’s favorites</strong>
+                      <span>Shop now <span aria-hidden="true">↗</span></span>
+                    </div>
+                  </div>
                 </a>
               </div>
             </div>
@@ -619,7 +629,7 @@
         </details>
         <details data-helix-mobile-section>
           <summary><span>{{ section.settings.men_label | default: 'Men' }}</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
-          <div class="helix-header__mobile-submenu">
+          <div class="helix-header__mobile-submenu helix-header__mobile-submenu--mega">
             <div class="helix-header__mobile-submenu-header">
               <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
                 <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
@@ -637,6 +647,7 @@
                 <a href="{{ helix_mens_new_arrivals_url }}">New arrivals</a>
                 <a href="{{ helix_mens_sale_url }}">On sale</a>
               </div>
+              <div class="helix-header__mobile-submenu-list">
               <details class="helix-header__mobile-submenu-details">
                 <summary><span>By activity</span><span aria-hidden="true">{% render 'helix-icon-chevron' %}</span></summary>
                 <div class="helix-header__mobile-submenu helix-header__mobile-submenu--child">
@@ -684,6 +695,7 @@
                   </div>
                 </div>
               </details>
+              </div>
               <div class="helix-header__mobile-products">
                 <p class="helix-header__mobile-products-title">Best deals <span aria-hidden="true">🔥</span></p>
                 <div class="helix-header__mobile-products-grid">
@@ -3259,11 +3271,11 @@
       height: 18px;
       min-height: 18px;
       gap: 8px;
-      font-family: 'Archivo', var(--helix-font, sans-serif);
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: .34px;
-      line-height: 17px;
+      font-family: 'Figtree', var(--helix-font, sans-serif);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 22.4px;
     }
 
     .helix-header__mobile-submenu-header .helix-header__mobile-back > span:first-child {
@@ -3281,6 +3293,14 @@
       stroke-width: 1.4px;
     }
 
+    .helix-header__mobile-submenu-header .helix-header__mobile-back > span:last-child {
+      font-family: 'Archivo', var(--helix-font, sans-serif);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: .34px;
+      line-height: 17px;
+    }
+
     .helix-header__mobile-menu .helix-header__close-button svg {
       width: 20px;
       height: 20px;
@@ -3296,6 +3316,19 @@
       -ms-overflow-style: none;
     }
 
+    .helix-header__mobile-submenu--mega > .helix-header__mobile-submenu-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px 16px;
+    }
+
+    .helix-header__mobile-submenu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
     .helix-header__mobile-submenu-inner::-webkit-scrollbar {
       width: 0;
       height: 0;
@@ -3304,7 +3337,7 @@
 
     .helix-header__mobile-submenu-group--featured {
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
 
     .helix-header__mobile-submenu-group--featured a {
@@ -3332,26 +3365,48 @@
     .helix-header__mobile-submenu-details > summary {
       min-height: 57.6px;
       font-weight: 500;
+      gap: normal;
+      letter-spacing: .32px;
+      color: #131313;
+    }
+
+    .helix-header__mobile-submenu-details > summary > span:last-child {
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .helix-header__mobile-submenu-details > summary > span:last-child svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .helix-header__mobile-submenu-details > summary > span:last-child svg path {
+      stroke-width: 1.4px;
     }
 
     .helix-header__mobile-promos {
       display: flex;
       flex-direction: column;
-      gap: 28px;
-      margin-top: 36px;
+      gap: 20px;
+      margin-top: 0;
+      padding-top: 20px;
     }
 
     .helix-header__mobile-promo {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      display: grid;
+      gap: 0;
       color: #323232;
     }
 
     .helix-header__mobile-promo-media {
       display: block;
       overflow: hidden;
-      aspect-ratio: 1.5;
+      height: auto;
+      aspect-ratio: auto;
       border-radius: 16px;
       background: #f1f3f4;
     }
@@ -3359,33 +3414,65 @@
     .helix-header__mobile-promo-media img {
       display: block;
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: cover;
     }
 
-    .helix-header__mobile-promo strong {
-      font-size: 16px;
-      line-height: 22.4px;
+    .helix-header__mobile-promo-details {
+      box-sizing: border-box;
+      position: relative;
+      z-index: 2;
+      height: 117px;
+      min-height: 117px;
+      margin-top: -40px;
+      padding: 40px 0 0;
+      background: #fff;
     }
 
-    .helix-header__mobile-promo > span:last-child {
+    .helix-header__mobile-promo-details-inner {
+      box-sizing: border-box;
+      display: flex;
+      height: 77px;
+      flex-direction: column;
+      padding: 16px 0 0;
+    }
+
+    .helix-header__mobile-promo strong {
+      color: #131313;
+      font-family: 'Archivo', var(--helix-font, sans-serif);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .32px;
+      line-height: 24px;
+    }
+
+    .helix-header__mobile-promo-details-inner > span {
       display: inline-flex;
       width: fit-content;
       gap: 8px;
+      height: 29px;
+      box-sizing: border-box;
+      margin-top: 8px;
+      padding: 3px 0;
+      color: #1e1e1e;
+      font-family: 'Figtree', var(--helix-font, sans-serif);
       font-size: 14px;
-      line-height: 22.4px;
+      font-weight: 500;
+      letter-spacing: .28px;
+      line-height: 23px;
     }
 
     .helix-header__mobile-products {
-      margin-top: 36px;
+      margin-top: 10px;
     }
 
     .helix-header__mobile-products-title {
       margin: 0 0 24px;
       color: #323232;
-      font-size: 18px;
+      font-family: 'Archivo', var(--helix-font, sans-serif);
+      font-size: 17px;
       font-weight: 700;
-      line-height: 25.2px;
+      line-height: 23.8px;
     }
 
     .helix-header__mobile-products-grid {
@@ -3406,13 +3493,7 @@
     }
 
     .helix-header__mobile-products .helix-header__mega-product-quick-view {
-      top: auto;
-      right: 8px;
-      bottom: 8px;
-      width: 32px;
-      height: 32px;
-      opacity: 1;
-      transform: none;
+      display: none;
     }
 
     .helix-header__mobile-products .helix-header__mega-product-quick-view svg {
@@ -3426,13 +3507,37 @@
 
     .helix-header__mobile-products .helix-header__mega-product-details {
       min-height: 0;
-      gap: 8px;
+      gap: 6px;
       padding-top: 12px;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-swatches {
+      width: 68px;
+      min-width: 68px;
+      height: 35px;
+      gap: 8px;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-swatches li {
+      width: 30px;
+      height: 35px;
+      padding-bottom: 5px;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-swatches li a,
+    .helix-header__mobile-products .helix-header__mega-product-swatches li span {
+      width: 30px;
+      height: 30px;
     }
 
     .helix-header__mobile-products .helix-header__mega-product-info {
       font-size: 14px;
       line-height: 22.4px;
+    }
+
+    .helix-header__mobile-products .helix-header__mega-product-info > a {
+      min-height: 0;
+      font-weight: 400;
     }
 
     .helix-header__mobile-menu-footer {
