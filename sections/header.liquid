@@ -3474,6 +3474,7 @@
     }
 
     .helix-header__mobile-promo strong {
+      width: fit-content;
       color: #131313;
       font-family: 'Archivo', var(--helix-font, sans-serif);
       font-size: 16px;
@@ -3529,6 +3530,7 @@
       font-family: 'Archivo', var(--helix-font, sans-serif);
       font-size: 17px;
       font-weight: 700;
+      letter-spacing: .34px;
       line-height: 23.8px;
     }
 
@@ -3588,13 +3590,21 @@
     }
 
     .helix-header__mobile-products .helix-header__mega-product-info {
+      width: auto;
+      max-width: 100%;
+      align-self: flex-start;
       font-size: 14px;
       line-height: 22.4px;
     }
 
     .helix-header__mobile-products .helix-header__mega-product-info > a {
+      display: block;
+      max-height: 44.8px;
       min-height: 0;
+      overflow: hidden;
       font-weight: 400;
+      overflow-wrap: anywhere;
+      white-space: normal;
     }
 
     .helix-header__mobile-menu-footer {
