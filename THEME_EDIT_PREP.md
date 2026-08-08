@@ -723,3 +723,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Ẩn scrollbar trình duyệt của vùng submenu nhưng vẫn giữ khả năng cuộn; nội dung và promo card trở lại đúng chiều rộng demo.
 - Căn header submenu về `69px`, padding trái `12px`, nút Close drawer ngoài `36×36px`, tiêu đề `Archivo 700 17px/17px`.
 - Căn nhóm link featured về `25.6px` mỗi dòng, gap `8px`, thêm khoảng cách `16px` trước các row By activity/By feature và dùng weight `500` cho row điều hướng.
+
+## 29. Thêm black backdrop cho desktop mega menu (2026-08-08)
+
+- Demo Helix dùng `.header-overlay` với màu `rgba(50, 50, 50, .5)`, bắt đầu ngay dưới header ở khoảng `y=119px`, rồi fade opacity khi Women/Men mega menu mở.
+- Preview trước đó chỉ có scrim cho mobile, search và cart; khi hover mega menu opacity vẫn bằng `0` nên nền phía sau không tối đi.
+- Thêm `.helix-header__mega-scrim` riêng cho desktop: fade `opacity .3s`, phủ từ dưới header đến cuối viewport, đặt dưới mega panel để menu vẫn click/hover được.
+- Backdrop tự đóng khi click vùng nền; khi scroll sticky hoặc tắt announcement bar, top tự đổi về `80px`; mobile không dùng lớp này.

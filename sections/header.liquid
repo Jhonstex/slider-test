@@ -433,6 +433,8 @@
     </div>
   </div>
 
+  <button class="helix-header__mega-scrim" type="button" data-helix-mega-scrim data-helix-close-mega aria-hidden="true" aria-label="{{ 'general.close' | t }}"></button>
+
   <div class="helix-header__mobile-bar" data-helix-mobile-bar>
     <div class="helix-header__mobile-inner">
       <div class="helix-header__mobile-side helix-header__mobile-side--left">
@@ -1001,6 +1003,37 @@
     background: transparent;
     pointer-events: none;
     transition: height .3s cubic-bezier(.6, .14, 0, 1);
+  }
+
+  .helix-header__mega-scrim {
+    position: fixed;
+    z-index: 0;
+    top: 118.4px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(50, 50, 50, .5);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility 0s linear .3s;
+  }
+
+  .helix-header.is-menu-open .helix-header__mega-scrim {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .helix-header--no-announcement .helix-header__mega-scrim,
+  .helix-header.is-scrolled .helix-header__mega-scrim {
+    top: 80px;
   }
 
   .helix-header__desktop-surface::before {
@@ -2506,6 +2539,10 @@
       display: none;
     }
 
+    .helix-header__mega-scrim {
+      display: none;
+    }
+
     .helix-header__mobile-menu {
       inset: 8px;
       overflow: hidden;
@@ -2831,6 +2868,7 @@
     const mobileMenu = select('[data-helix-mobile-menu]');
     const searchDrawer = select('[data-helix-search-drawer]');
     const cartDrawer = select('[data-helix-cart-drawer]');
+    const megaScrim = select('[data-helix-mega-scrim]');
     const mobileMenuPanel = select('.helix-header__mobile-menu-panel');
     const mobileSections = selectAll('[data-helix-mobile-section]');
     const mobileDetails = selectAll('.helix-header__mobile-nav details');
@@ -2978,6 +3016,7 @@
     const syncDropdownState = () => {
       const open = dropdowns.some((dropdown) => dropdown.open);
       root.classList.toggle('is-menu-open', open);
+      megaScrim?.setAttribute('aria-hidden', String(!open));
       let menuHeight = 0;
       dropdowns.forEach((dropdown) => {
         const panelHeight = syncMegaPanelHeight(dropdown);
@@ -3066,8 +3105,15 @@
       const cartTrigger = event.target.closest('[data-helix-open-cart]');
       const mobileTrigger = event.target.closest('[data-helix-mobile-open]');
       const mobileBack = event.target.closest('[data-helix-mobile-back]');
+      const megaCloseTrigger = event.target.closest('[data-helix-close-mega]');
       const closeTrigger = event.target.closest('[data-helix-close-layer], [data-helix-close-mobile]');
       const countryOption = event.target.closest('[data-helix-country-option]');
+
+      if (megaCloseTrigger) {
+        event.preventDefault();
+        closeDropdowns();
+        return;
+      }
 
       if (mobileBack) {
         event.preventDefault();
