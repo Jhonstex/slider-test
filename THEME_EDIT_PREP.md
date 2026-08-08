@@ -755,3 +755,9 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Product card Men giữ media vuông bo góc `16px`, nền `#f1f3f4`, sale badge đỏ, quick-view/quick-add hover, title weight `500`, giá sale đỏ và giá cũ mờ giống demo.
 - Thumbnails dưới ảnh chính lấy đúng 2 ảnh phụ đầu tiên từ product gallery (`images[1]` và `images[2]`) trên cả desktop và mobile, thay cho việc render toàn bộ option values/variant swatches.
 - Tạo backup branch `backup/pre-header-icons-and-men-cards-20260808` trước khi sửa.
+
+## 33. Cho phép tên product trong Men card xuống dòng (2026-08-08)
+
+- Product title trong mega menu không còn bị ép một dòng; cho phép wrap tối đa 2 dòng trong đúng chiều rộng card.
+- Thêm `overflow-wrap: anywhere` và line clamp để cả tên rất dài hoặc chuỗi dài không khoảng trắng không chồng sang product kế bên; giá vẫn nằm dưới title.
+- Tạo backup branch `backup/pre-product-title-wrap-20260808` trước khi sửa.
