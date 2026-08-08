@@ -606,7 +606,12 @@
                   <div class="helix-header__mobile-promo-details">
                     <div class="helix-header__mobile-promo-details-inner">
                       <strong>Women's sale</strong>
-                      <span>Shop now <span aria-hidden="true">↗</span></span>
+                      <span>
+                        <span class="helix-header__mobile-promo-cta-text">Shop now</span>
+                        <span class="helix-header__mobile-promo-cta-icon" aria-hidden="true">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 7H17M17 7V17M17 7L7 17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </a>
@@ -619,7 +624,12 @@
                   <div class="helix-header__mobile-promo-details">
                     <div class="helix-header__mobile-promo-details-inner">
                       <strong>Women’s favorites</strong>
-                      <span>Shop now <span aria-hidden="true">↗</span></span>
+                      <span>
+                        <span class="helix-header__mobile-promo-cta-text">Shop now</span>
+                        <span class="helix-header__mobile-promo-cta-icon" aria-hidden="true">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 7H17M17 7V17M17 7L7 17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </a>
@@ -3388,6 +3398,32 @@
       stroke-width: 1.4px;
     }
 
+    .helix-header__mobile-nav > details > summary > span:last-child,
+    .helix-header__mobile-submenu-details > summary > span:last-child {
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .helix-header__mobile-nav > details > summary > span:last-child svg,
+    .helix-header__mobile-submenu-details > summary > span:last-child svg {
+      width: 18px;
+      height: 18px;
+      transform: rotate(-90deg);
+    }
+
+    .helix-header__mobile-nav > details > summary > span:last-child svg path,
+    .helix-header__mobile-submenu-details > summary > span:last-child svg path {
+      stroke-width: 1.4px;
+    }
+
+    .helix-header__mobile-submenu-header .helix-header__mobile-back > span:first-child svg {
+      transform: rotate(90deg);
+    }
+
     .helix-header__mobile-promos {
       display: flex;
       flex-direction: column;
@@ -3460,6 +3496,27 @@
       font-weight: 500;
       letter-spacing: .28px;
       line-height: 23px;
+      align-items: center;
+    }
+
+    .helix-header__mobile-promo-cta-text {
+      display: flex;
+      height: 23px;
+      padding: 3px 0;
+    }
+
+    .helix-header__mobile-promo-cta-icon {
+      display: inline-flex;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .helix-header__mobile-promo-cta-icon svg {
+      width: 16px;
+      height: 16px;
     }
 
     .helix-header__mobile-products {
