@@ -3452,8 +3452,9 @@
     .helix-header__mobile-promo-media {
       display: block;
       overflow: hidden;
-      height: auto;
-      aspect-ratio: auto;
+      height: auto !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
       border-radius: 16px;
       background: #f1f3f4;
     }
@@ -3461,7 +3462,9 @@
     .helix-header__mobile-promo-media img {
       display: block;
       width: 100%;
-      height: auto;
+      min-height: 0;
+      height: auto !important;
+      max-height: none !important;
       object-fit: cover;
     }
 

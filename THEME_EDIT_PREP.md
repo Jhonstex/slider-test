@@ -823,3 +823,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Preview theme trước đó kế thừa rule chung `border-bottom: 1px solid rgba(26, 19, 18, .12)`, padding `10px 0` và `min-height: 48px`, nên xuất hiện các đường kẻ ngang như ảnh người dùng cung cấp.
 - Thêm selector chỉ áp dụng cho `.helix-header__mobile-submenu--mega .helix-header__mobile-submenu--child` của Men/Women: bỏ border, reset chiều cao/padding theo demo và đặt gap `16px`. Menu Pages và các row cấp ngoài không bị thay đổi.
 - Tạo backup branch `backup/pre-mobile-submenu-no-borders-20260809` trước khi sửa.
+
+## 42. Giữ đủ chiều cao ảnh banner Women trên mobile (2026-08-09)
+
+- Đối chiếu demo và preview ở `424×850`: banner Women đầu tiên phải giữ tỷ lệ ảnh tự nhiên `376×252.33px`, không bị ép về chiều cao cố định làm mất phần dưới.
+- Preview hiện đã trả về đúng kích thước như demo; bổ sung thêm `height: auto`, `max-height: none` và `aspect-ratio: auto` với độ ưu tiên cao cho media và ảnh mobile để các rule global/cache khác không thể cắt banner.
+- Cả hai banner Women đều giữ chiều cao theo tỷ lệ thật của ảnh; phần details chồng `-40px` và spacing còn lại không thay đổi.
+- Tạo backup branch `backup/pre-women-mobile-image-20260809` trước khi sửa.
