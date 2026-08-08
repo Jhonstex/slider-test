@@ -830,3 +830,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Preview hiện đã trả về đúng kích thước như demo; bổ sung thêm `height: auto`, `max-height: none` và `aspect-ratio: auto` với độ ưu tiên cao cho media và ảnh mobile để các rule global/cache khác không thể cắt banner.
 - Cả hai banner Women đều giữ chiều cao theo tỷ lệ thật của ảnh; phần details chồng `-40px` và spacing còn lại không thay đổi.
 - Tạo backup branch `backup/pre-women-mobile-image-20260809` trước khi sửa.
+
+## 43. Đưa media banner Women lên trên phần details (2026-08-09)
+
+- Đối chiếu DOM demo và preview cho thấy demo dùng `position: relative; z-index: 3` ở media, còn theme để `position: static; z-index: auto`.
+- Vì details vẫn có `margin-top: -40px; z-index: 2`, theme bị nền trắng che 40px cuối ảnh dù kích thước ảnh đã đúng; demo không bị che.
+- Thêm `position: relative` và `z-index: 3` cho `.helix-header__mobile-promo-media`, giữ details ở lớp `z-index: 2` đúng thứ tự của demo.
+- Tạo backup branch `backup/pre-women-banner-layer-20260809` trước khi sửa.
