@@ -806,3 +806,13 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Khoảng cách giữa các item Pages được đổi từ `33.6px` lên `41.6px`, tương ứng list gap `16px` của demo.
 - Nút back dùng icon `18px`, stroke `1.4px`, giữ tiêu đề Pages Archivo `17px/17px`, weight `700` và letter-spacing `0.34px` như demo.
 - Nút close trên drawer mobile dùng icon `20px`, stroke `1px`; kích thước và vị trí vùng click `36px` vẫn được giữ nguyên.
+
+## 40. Đồng bộ submenu Women/Men mobile và product card Men với demo Helix (2026-08-09)
+
+- Đối chiếu trực tiếp demo Helix và preview theme trên Chrome ở viewport `424×850`; panel submenu dùng khung `408×834px`, header `69px`, content bắt đầu tại `y=77px`, padding `20px 16px`.
+- Women và Men dùng cùng cấu trúc nhóm như demo: 5 featured links cao `25.6px`, gap `8px`; nhóm `By activity/By feature` cao `57.59px mỗi dòng`, font Figtree `16px/25.6px`, weight `500`, letter-spacing `.32px`, icon phải `18px`, stroke `1.4px`. Back row dùng Figtree `14px/22.4px` cho vùng điều khiển, còn label Women/Men dùng Archivo `17px/17px`, weight `700`, letter-spacing `.34px`; icon back quay trái, icon mở submenu quay phải.
+- Women promo card được dựng lại theo layout `menu-banner` của demo: ảnh tự giữ tỷ lệ natural, card gap `20px`, details chồng lên ảnh `-40px`, details cao `117px` với padding top `40px`, heading Archivo `16px/24px` và CTA Figtree `14px`, weight `500`, letter-spacing `.28px`, icon arrow `16px`.
+- Men Best deals dùng heading Archivo `17px/23.8px`, letter-spacing `.34px`; product grid 2 cột `184px`, column gap `8px`, row gap `28px`. Media card vuông `184px`, details padding top `12px`, gap `6px`; gallery thumbnails lấy 2 ảnh phụ, mỗi thumbnail `30×30px`, wrapper `68×35px`, gap `8px`, sale badge giữ kiểu pill đỏ.
+- Product title Men được phép wrap tối đa 2 dòng trong chiều rộng card, không tràn sang card kế bên; các card trong cùng grid row vẫn thẳng hàng theo card có title dài hơn. Quick-view dạng nút tròn không hiển thị trên mobile như trạng thái mặc định của demo.
+- Tạo wrapper chung cho submenu list để giữ đúng khoảng cách giữa featured list, nhóm submenu và phần banner/product; không thay đổi dữ liệu sản phẩm hiện có.
+- Tạo backup branch `backup/pre-mobile-women-men-menu-20260809` trước khi sửa. Đã push các commit `e02863f`, `177f883` và `b2f98be` lên `main`.
