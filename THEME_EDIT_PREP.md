@@ -747,3 +747,11 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Country sheet mobile có ô tìm kiếm cao `44px`, cờ, tên quốc gia, currency và danh sách lọc theo text; Language sheet hiển thị danh sách ngôn ngữ từ `localization.available_languages`.
 - Bổ sung JS mở/đóng sheet, cập nhật `aria-expanded`/`aria-hidden`, khóa scroll, lọc country option và submit đúng form localization tương ứng của desktop/mobile; click overlay hoặc nút close chỉ đóng sheet đang mở.
 - Đã tạo backup branch `backup/pre-language-selector-20260808` trước khi sửa.
+
+## 32. Căn icon header và đồng bộ product card Men (2026-08-08)
+
+- Đối chiếu trực tiếp demo Helix và preview cùng viewport desktop; cụm phải của demo gồm selector VND, divider và ba icon Search/Account/Cart, với khoảng cách `20px`.
+- Header dùng chiều rộng khả dụng (`100%`) thay cho `100vw` để không bị lệch `15px` khi scrollbar xuất hiện; vùng click của ba icon là `44×44px`, icon SVG vẫn `24×24px` và được căn giữa bằng padding `10px`.
+- Product card Men giữ media vuông bo góc `16px`, nền `#f1f3f4`, sale badge đỏ, quick-view/quick-add hover, title weight `500`, giá sale đỏ và giá cũ mờ giống demo.
+- Thumbnails dưới ảnh chính lấy đúng 2 ảnh phụ đầu tiên từ product gallery (`images[1]` và `images[2]`) trên cả desktop và mobile, thay cho việc render toàn bộ option values/variant swatches.
+- Tạo backup branch `backup/pre-header-icons-and-men-cards-20260808` trước khi sửa.

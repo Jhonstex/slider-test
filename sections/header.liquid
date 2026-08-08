@@ -275,7 +275,7 @@
               {% assign helix_men_discount = helix_men_discount_difference | times: 100 | divided_by: helix_men_compare_at_price | round %}
             {% endif %}
             {% assign helix_men_secondary_image = helix_men_product.images[1] %}
-            {% assign helix_men_product_option = helix_men_product.options_with_values | first %}
+            {% assign helix_men_gallery_variant_image = helix_men_product.images[2] %}
             <article class="helix-header__mega-product">
               <div class="helix-header__mega-product-media">
                 <a href="{{ helix_men_product.url }}" aria-label="{{ helix_men_product.title | escape }}">
@@ -298,29 +298,22 @@
                 <a class="helix-header__mega-product-quick-add" href="{{ helix_men_product.url }}">Quick add</a>
               </div>
               <div class="helix-header__mega-product-details">
-                {% if helix_men_product_option != blank and helix_men_product_option.values != blank %}
-                  <ul class="helix-header__mega-product-swatches" role="list" aria-label="{{ helix_men_product_option.name | escape }}">
-                    {% for helix_men_option_value in helix_men_product_option.values limit: 4 %}
-                      {% assign helix_men_option_variant = blank %}
-                      {% for helix_men_variant in helix_men_product.variants %}
-                        {% if helix_men_variant.option1 == helix_men_option_value or helix_men_variant.option2 == helix_men_option_value or helix_men_variant.option3 == helix_men_option_value %}
-                          {% assign helix_men_option_variant = helix_men_variant %}
-                          {% break %}
-                        {% endif %}
-                      {% endfor %}
-                      {% assign helix_men_option_image = helix_men_option_variant.featured_image %}
-                      {% if helix_men_option_image == blank %}
-                        {% assign helix_men_option_image = helix_men_product.images[forloop.index0] %}
-                      {% endif %}
-                      {% if helix_men_option_image == blank %}
-                        {% assign helix_men_option_image = helix_men_product.featured_image %}
-                      {% endif %}
+                {% if helix_men_secondary_image != blank or helix_men_gallery_variant_image != blank %}
+                  <ul class="helix-header__mega-product-swatches" role="list" aria-label="Product gallery">
+                    {% if helix_men_secondary_image != blank %}
                       <li>
-                        <a href="{{ helix_men_product.url }}{% if helix_men_option_variant != blank %}?variant={{ helix_men_option_variant.id }}{% endif %}" aria-label="{{ helix_men_option_value | escape }}">
-                          <span title="{{ helix_men_option_value | escape }}" style="--helix-swatch-image: url('{{ helix_men_option_image | image_url: width: 80 }}');"></span>
+                        <a href="{{ helix_men_product.url }}" aria-label="View {{ helix_men_product.title | escape }} image 2">
+                          <span title="Gallery image 2" style="--helix-swatch-image: url('{{ helix_men_secondary_image | image_url: width: 80 }}');"></span>
                         </a>
                       </li>
-                    {% endfor %}
+                    {% endif %}
+                    {% if helix_men_gallery_variant_image != blank %}
+                      <li>
+                        <a href="{{ helix_men_product.url }}" aria-label="View {{ helix_men_product.title | escape }} image 3">
+                          <span title="Gallery image 3" style="--helix-swatch-image: url('{{ helix_men_gallery_variant_image | image_url: width: 80 }}');"></span>
+                        </a>
+                      </li>
+                    {% endif %}
                   </ul>
                 {% endif %}
                 <div class="helix-header__mega-product-info">
@@ -676,7 +669,7 @@
                         {% assign helix_men_mobile_discount = helix_men_mobile_difference | times: 100 | divided_by: helix_men_mobile_compare_at | round %}
                       {% endif %}
                       {% assign helix_men_mobile_secondary = helix_men_mobile_product.images[1] %}
-                      {% assign helix_men_mobile_option = helix_men_mobile_product.options_with_values | first %}
+                      {% assign helix_men_mobile_gallery_variant_image = helix_men_mobile_product.images[2] %}
                       <article class="helix-header__mega-product helix-header__mobile-product">
                         <div class="helix-header__mega-product-media">
                           <a href="{{ helix_men_mobile_product.url }}" aria-label="{{ helix_men_mobile_product.title | escape }}">
@@ -693,21 +686,14 @@
                           </a>
                         </div>
                         <div class="helix-header__mega-product-details">
-                          {% if helix_men_mobile_option != blank and helix_men_mobile_option.values != blank %}
-                            <ul class="helix-header__mega-product-swatches" role="list" aria-label="{{ helix_men_mobile_option.name | escape }}">
-                              {% for helix_men_mobile_option_value in helix_men_mobile_option.values limit: 4 %}
-                                {% assign helix_men_mobile_option_variant = blank %}
-                                {% for helix_men_mobile_variant_item in helix_men_mobile_product.variants %}
-                                  {% if helix_men_mobile_variant_item.option1 == helix_men_mobile_option_value or helix_men_mobile_variant_item.option2 == helix_men_mobile_option_value or helix_men_mobile_variant_item.option3 == helix_men_mobile_option_value %}
-                                    {% assign helix_men_mobile_option_variant = helix_men_mobile_variant_item %}
-                                    {% break %}
-                                  {% endif %}
-                                {% endfor %}
-                                {% assign helix_men_mobile_option_image = helix_men_mobile_option_variant.featured_image %}
-                                {% if helix_men_mobile_option_image == blank %}{% assign helix_men_mobile_option_image = helix_men_mobile_product.images[forloop.index0] %}{% endif %}
-                                {% if helix_men_mobile_option_image == blank %}{% assign helix_men_mobile_option_image = helix_men_mobile_product.featured_image %}{% endif %}
-                                <li><a href="{{ helix_men_mobile_product.url }}{% if helix_men_mobile_option_variant != blank %}?variant={{ helix_men_mobile_option_variant.id }}{% endif %}" aria-label="{{ helix_men_mobile_option_value | escape }}"><span title="{{ helix_men_mobile_option_value | escape }}" style="--helix-swatch-image: url('{{ helix_men_mobile_option_image | image_url: width: 80 }}');"></span></a></li>
-                              {% endfor %}
+                          {% if helix_men_mobile_secondary != blank or helix_men_mobile_gallery_variant_image != blank %}
+                            <ul class="helix-header__mega-product-swatches" role="list" aria-label="Product gallery">
+                              {% if helix_men_mobile_secondary != blank %}
+                                <li><a href="{{ helix_men_mobile_product.url }}" aria-label="View {{ helix_men_mobile_product.title | escape }} image 2"><span title="Gallery image 2" style="--helix-swatch-image: url('{{ helix_men_mobile_secondary | image_url: width: 80 }}');"></span></a></li>
+                              {% endif %}
+                              {% if helix_men_mobile_gallery_variant_image != blank %}
+                                <li><a href="{{ helix_men_mobile_product.url }}" aria-label="View {{ helix_men_mobile_product.title | escape }} image 3"><span title="Gallery image 3" style="--helix-swatch-image: url('{{ helix_men_mobile_gallery_variant_image | image_url: width: 80 }}');"></span></a></li>
+                              {% endif %}
                             </ul>
                           {% endif %}
                           <div class="helix-header__mega-product-info">
@@ -911,7 +897,7 @@
   .helix-header {
     position: relative;
     z-index: 30;
-    width: 100vw;
+    width: 100%;
     color: var(--helix-solid-text);
     font-family: var(--helix-font, 'Figtree', 'Open Sans', Arial, sans-serif);
     font-size: 14px;
@@ -1124,7 +1110,7 @@
     position: relative;
     z-index: 1;
     display: grid;
-    width: min(1820px, calc(100vw - 100px));
+    width: min(1820px, calc(100% - 100px));
     min-height: 80px;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
@@ -1149,7 +1135,7 @@
 
   .helix-header__actions {
     justify-content: flex-end;
-    gap: 0;
+    gap: 20px;
   }
 
   .helix-header__brand {
@@ -1318,20 +1304,22 @@
     width: 1px;
     height: 16px;
     flex: 0 0 1px;
-    margin-right: 20px;
+    margin-right: 0;
     border-right: 1px solid #e5e5e5;
   }
 
   .helix-header__dropdown--currency {
-    margin-right: 20px;
+    margin-right: 0;
   }
 
   .helix-header__icon-button {
     display: inline-flex;
-    width: 24px;
-    height: 24px;
+    width: 44px;
+    height: 44px;
     align-items: center;
     justify-content: center;
+    margin: -10px;
+    padding: 10px;
     border: 0;
     background: transparent;
     transition: transform .25s ease, opacity .25s ease;
@@ -1341,10 +1329,6 @@
   .helix-header__icon-button:focus-visible {
     opacity: .62;
     transform: translateY(-1px);
-  }
-
-  .helix-header__icon-button + .helix-header__icon-button {
-    margin-left: 20px;
   }
 
   .helix-header__icon-button svg {
@@ -1559,7 +1543,7 @@
     overflow: hidden;
     aspect-ratio: 1;
     border-radius: 16px;
-    background: transparent;
+    background: #f1f3f4;
   }
 
   .helix-header__mega-product-media > a:not(.helix-header__mega-product-quick-view):not(.helix-header__mega-product-quick-add) {
@@ -1723,6 +1707,7 @@
     overflow: hidden;
     color: #323232;
     font-size: 14px;
+    font-weight: 500;
     line-height: 22.4px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1742,6 +1727,7 @@
     color: #131313;
     font-size: 85%;
     line-height: 1.6;
+    opacity: .7;
   }
 
   .helix-header__mega-column,
