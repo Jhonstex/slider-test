@@ -852,3 +852,9 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Demo hiện header chính ngay khi bấm Back, trong khi theme chờ animation `helix-mobile-slide-out` kết thúc khoảng `300ms` mới bỏ class `is-mobile-submenu-open`, làm logo xuất hiện trễ.
 - `syncMobileSubmenuState` hiện bỏ qua root section đang có cờ `data-helix-mobile-closing`; khi bắt đầu Back, header/logo hiện ngay trong lúc panel vẫn trượt ra. Submenu con vẫn giữ animation riêng.
 - Tạo backup branch `backup/pre-mobile-chevron-open-logo-20260809` trước khi sửa.
+
+## 46. Giữ logo trong transition từ menu chính vào Women/Men (2026-08-09)
+
+- Demo giữ header/logo chính trong lúc panel Women hoặc Men trượt vào; panel submenu absolute sau đó phủ lên header ở trạng thái hoàn tất.
+- Theme trước đó ẩn `.helix-header__mobile-menu-top` ngay khi root `details` mở, tạo khoảng trống trước khi submenu bắt đầu hiển thị.
+- Bỏ rule `display: none` theo class `is-mobile-submenu-open`; logo vẫn nằm sẵn bên dưới transition, còn submenu giữ `z-index` cao để phủ lên đúng như demo.
