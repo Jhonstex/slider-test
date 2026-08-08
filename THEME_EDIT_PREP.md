@@ -731,3 +731,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Thêm `.helix-header__mega-scrim` riêng cho desktop: fade `opacity .3s`, blur nền phía sau ở mức `20px`, phủ từ dưới header đến cuối viewport, đặt dưới mega panel để menu vẫn click/hover được.
 - Chỉ dropdown `.helix-header__dropdown--mega` của Women/Men bật lớp đen + blur. Pages vẫn giữ panel trắng nhưng không có black opacity, không chặn vùng nội dung phía sau.
 - Backdrop tự đóng khi click vùng nền; khi scroll sticky hoặc tắt announcement bar, top tự đổi về `80px`; mobile không dùng lớp này.
+
+## 30. Đồng bộ drawer Search và Cart với demo Helix (2026-08-08)
+
+- Demo dùng overlay `rgba(50, 50, 50, .5)` và drawer trắng bên phải bo góc `16px`; desktop inset `16px`, rộng `550px`, mobile inset `8px` với header cao `69px`.
+- Search dùng input pill cao `48px` trên desktop/`44px` trên mobile, placeholder `Search`, tự focus khi mở và hiển thị ba popular search pill: `Running shoes`, `Trail running shoes`, `Hiking shoes`.
+- Cart rỗng hiển thị heading, thông điệp `Start exploring these great collections` và ba nút pill full width: `Trending`, `Best sellers`, `On sale`.
+- Cập nhật drawer panel, typography Archivo/Figtree, spacing, border radius, màu overlay, animation trượt từ phải sang và responsive desktop/mobile theo số đo trực tiếp từ demo.

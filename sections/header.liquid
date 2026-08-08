@@ -783,16 +783,20 @@
         <strong>{{ 'header.search' | t }}</strong>
         <button class="helix-header__close-button" type="button" data-helix-close-layer aria-label="{{ 'general.close' | t }}">{% render 'helix-icon-close' %}</button>
       </div>
-      <form action="{{ routes.search_url }}" method="get" class="helix-header__search-form">
-        <label class="visually-hidden" for="{{ helix_header_id }}-search">{{ 'header.search' | t }}</label>
-        <input id="{{ helix_header_id }}-search" type="search" name="q" placeholder="What are you looking for?" autocomplete="off">
-        <button type="submit" aria-label="{{ 'header.search' | t }}">{% render 'helix-icon-search' %}</button>
-      </form>
-      <p class="helix-header__drawer-note">{{ 'header.popular_searches' | t }}</p>
-      <div class="helix-header__search-links">
-        <a href="{{ helix_trending_collection_url }}">{{ 'header.trending' | t }}</a>
-        <a href="{{ helix_best_sellers_collection_url }}">{{ 'header.best_sellers' | t }}</a>
-        <a href="{{ helix_sale_collection_url }}">{{ 'header.on_sale' | t }}</a>
+      <div class="helix-header__drawer-inner helix-header__drawer-inner--search">
+        <form action="{{ routes.search_url }}" method="get" class="helix-header__search-form">
+          <label class="visually-hidden" for="{{ helix_header_id }}-search">{{ 'header.search' | t }}</label>
+          <input id="{{ helix_header_id }}-search" type="search" name="q" placeholder="{{ 'header.search' | t }}" autocomplete="off">
+          <button type="submit" aria-label="{{ 'header.search' | t }}">{% render 'helix-icon-search' %}</button>
+        </form>
+        <div class="helix-header__search-popular">
+          <h3>{{ 'header.popular_searches' | t }}</h3>
+          <div class="helix-header__search-links">
+            <a href="{{ routes.search_url }}?q=Running+shoes">Running shoes</a>
+            <a href="{{ routes.search_url }}?q=Trail+running+shoes">Trail running shoes</a>
+            <a href="{{ routes.search_url }}?q=Hiking+shoes">Hiking shoes</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -803,15 +807,26 @@
         <strong>{{ 'header.cart' | t }}</strong>
         <button class="helix-header__close-button" type="button" data-helix-close-layer aria-label="{{ 'general.close' | t }}">{% render 'helix-icon-close' %}</button>
       </div>
-      {% if cart.item_count > 0 %}
-        <p class="helix-header__cart-message">{{ cart.item_count }} {{ 'header.items_in_cart' | t }}</p>
-        <div class="helix-header__cart-total">{{ cart.total_price | money }}</div>
-        <a class="helix-header__drawer-button helix-header__drawer-button--dark" href="{{ routes.cart_url }}">{{ 'header.view_cart' | t }}</a>
-        {% if additional_checkout_buttons %}{{ content_for_additional_checkout_buttons }}{% endif %}
-      {% else %}
-        <p class="helix-header__cart-message">{{ 'header.empty_cart' | t }}</p>
-        <a class="helix-header__drawer-button" href="{{ routes.all_products_collection_url }}">{{ 'header.shop' | t }}</a>
-      {% endif %}
+      <div class="helix-header__drawer-inner helix-header__drawer-inner--cart">
+        {% if cart.item_count > 0 %}
+          <div class="helix-header__cart-summary">
+            <p class="helix-header__cart-message">{{ cart.item_count }} {{ 'header.items_in_cart' | t }}</p>
+            <div class="helix-header__cart-total">{{ cart.total_price | money }}</div>
+            <a class="helix-header__drawer-button helix-header__drawer-button--dark" href="{{ routes.cart_url }}">{{ 'header.view_cart' | t }}</a>
+            {% if additional_checkout_buttons %}{{ content_for_additional_checkout_buttons }}{% endif %}
+          </div>
+        {% else %}
+          <div class="helix-header__cart-empty">
+            <h3>{{ 'header.empty_cart' | t }}</h3>
+            <p>{{ 'header.explore_collections' | t }}</p>
+          </div>
+          <div class="helix-header__cart-collections">
+            <a class="helix-header__drawer-button" href="{{ helix_trending_collection_url }}">{{ 'header.trending' | t }}</a>
+            <a class="helix-header__drawer-button" href="{{ helix_best_sellers_collection_url }}">{{ 'header.best_sellers' | t }}</a>
+            <a class="helix-header__drawer-button" href="{{ helix_sale_collection_url }}">{{ 'header.on_sale' | t }}</a>
+          </div>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
@@ -1910,18 +1925,23 @@
     width: 100%;
     padding: 0;
     border: 0;
-    background: rgba(20, 16, 15, .38);
+    background: rgba(50, 50, 50, .5);
   }
 
   .helix-header.is-mobile-menu-open .helix-header__scrim,
   .helix-header.is-search-open .helix-header__scrim,
   .helix-header.is-cart-open .helix-header__scrim,
-  .helix-header.is-mobile-menu-open .helix-header__mobile-menu,
+  .helix-header.is-mobile-menu-open .helix-header__mobile-menu {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
   .helix-header.is-search-open .helix-header__drawer--search,
   .helix-header.is-cart-open .helix-header__drawer--cart {
     visibility: visible;
     opacity: 1;
-    pointer-events: auto;
     transition-delay: 0s;
   }
 
@@ -1929,6 +1949,12 @@
   .helix-header__drawer {
     display: flex;
     justify-content: flex-start;
+  }
+
+  .helix-header__drawer {
+    justify-content: flex-end;
+    padding: 16px;
+    overflow: hidden;
   }
 
   .helix-header__mobile-menu-panel,
@@ -1948,13 +1974,23 @@
   }
 
   .helix-header__drawer-panel {
-    overflow-y: auto;
+    width: min(550px, 100%);
+    padding: 0;
+    border-radius: 16px;
+    box-shadow: none;
+    overflow: hidden;
+    transform: translateX(100%);
   }
 
   .helix-header.is-mobile-menu-open .helix-header__mobile-menu-panel,
   .helix-header.is-search-open .helix-header__drawer--search .helix-header__drawer-panel,
   .helix-header.is-cart-open .helix-header__drawer--cart .helix-header__drawer-panel {
     transform: translateX(0);
+  }
+
+  .helix-header.is-search-open .helix-header__drawer--search .helix-header__drawer-panel,
+  .helix-header.is-cart-open .helix-header__drawer--cart .helix-header__drawer-panel {
+    pointer-events: auto;
   }
 
   .helix-header__mobile-menu-top,
@@ -2331,33 +2367,64 @@
     opacity: 1;
   }
 
-  .helix-header__drawer {
-    justify-content: flex-end;
+  .helix-header__drawer-top {
+    flex: 0 0 73px;
+    min-height: 73px;
+    margin: 0;
+    padding: 16px 30px;
   }
 
-  .helix-header__drawer-panel {
-    width: min(480px, 100%);
-    padding-inline: clamp(22px, 4vw, 44px);
-    transform: translateX(100%);
+  .helix-header__drawer-top strong {
+    color: #131313;
+    font-family: 'Archivo', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 18px;
+  }
+
+  .helix-header__drawer .helix-header__close-button {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: #fff;
+  }
+
+  .helix-header__drawer-inner {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .helix-header__drawer-inner--search {
+    padding: 30px;
+  }
+
+  .helix-header__drawer-inner--cart {
+    padding: 40px 30px;
   }
 
   .helix-header__search-form {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid rgba(26, 19, 18, .35);
+    position: relative;
+    display: block;
   }
 
   .helix-header__search-form input {
     width: 100%;
-    min-height: 56px;
-    padding: 0;
-    border: 0;
+    height: 48px;
+    min-height: 48px;
+    padding: 0 60px 0 16px;
+    border: 1px solid #131313;
+    border-radius: 9999px;
     outline: 0;
-    background: transparent;
-    font-size: 20px;
+    background: rgba(50, 50, 50, .06);
+    font-size: 14px;
+    line-height: 48px;
   }
 
   .helix-header__search-form button {
+    position: absolute;
+    top: 2px;
+    right: 0;
     display: grid;
     width: 44px;
     height: 44px;
@@ -2367,44 +2434,95 @@
     background: transparent;
   }
 
-  .helix-header__drawer-note {
-    margin: 30px 0 10px;
-    color: rgba(26, 19, 18, .55);
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+  .helix-header__search-popular {
+    margin-top: 30px;
+  }
+
+  .helix-header__search-popular h3 {
+    margin: 0 0 20px;
+    color: #131313;
+    font-family: 'Archivo', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 18px;
   }
 
   .helix-header__search-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
   }
 
-  .helix-header__search-links a,
-  .helix-header__drawer-button {
+  .helix-header__search-links a {
     display: inline-flex;
-    min-height: 42px;
+    min-height: 34px;
     align-items: center;
     justify-content: center;
-    padding: 8px 18px;
-    border: 1px solid rgba(26, 19, 18, .24);
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    transition: background .25s ease, color .25s ease, transform .25s ease;
+    padding: 6px 12px;
+    border: 0;
+    border-radius: 9999px;
+    background: rgba(50, 50, 50, .06);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    transition: background .25s ease, color .25s ease;
   }
 
   .helix-header__search-links a:hover,
-  .helix-header__search-links a:focus-visible,
+  .helix-header__search-links a:focus-visible {
+    background: rgba(50, 50, 50, .12);
+  }
+
+  .helix-header__cart-summary,
+  .helix-header__cart-empty {
+    text-align: center;
+  }
+
+  .helix-header__cart-empty h3 {
+    margin: 0;
+    color: #131313;
+    font-family: 'Archivo', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.2px;
+  }
+
+  .helix-header__cart-empty p {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 22.4px;
+  }
+
+  .helix-header__cart-collections {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .helix-header__drawer-button {
+    display: inline-flex;
+    width: 100%;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 22px;
+    border: 0;
+    border-radius: 9999px;
+    background: #ececec;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    transition: background .25s ease, color .25s ease;
+  }
+
   .helix-header__drawer-button:hover,
   .helix-header__drawer-button:focus-visible {
-    background: #f4f0ed;
-    transform: translateY(-2px);
+    background: #dedede;
   }
 
   .helix-header__cart-message {
-    margin: 22px 0 10px;
+    margin: 0 0 10px;
     font-size: 16px;
   }
 
@@ -2415,7 +2533,6 @@
   }
 
   .helix-header__drawer-button--dark {
-    width: 100%;
     border-color: #1a1312;
     background: #1a1312;
     color: #fff;
@@ -2543,6 +2660,64 @@
 
     .helix-header__mega-scrim {
       display: none;
+    }
+
+    .helix-header__drawer {
+      padding: 8px;
+    }
+
+    .helix-header__drawer-panel {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    .helix-header__drawer-top {
+      flex-basis: 69px;
+      min-height: 69px;
+      padding: 16px;
+    }
+
+    .helix-header__drawer-top strong {
+      font-size: 17px;
+      line-height: 23.8px;
+    }
+
+    .helix-header__drawer .helix-header__close-button {
+      width: 36px;
+      height: 36px;
+    }
+
+    .helix-header__drawer-inner--search {
+      padding: 30px 16px;
+    }
+
+    .helix-header__drawer-inner--cart {
+      padding: 40px 16px;
+    }
+
+    .helix-header__search-form input {
+      height: 44px;
+      min-height: 44px;
+      line-height: 44px;
+    }
+
+    .helix-header__search-form button {
+      top: 0;
+      height: 44px;
+    }
+
+    .helix-header__search-popular h3 {
+      font-size: 17px;
+      line-height: 23.8px;
+    }
+
+    .helix-header__cart-empty h3 {
+      font-size: 22px;
+      line-height: 28.6px;
+    }
+
+    .helix-header__drawer-button {
+      min-height: 44px;
     }
 
     .helix-header__mobile-menu {
