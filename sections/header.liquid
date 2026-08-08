@@ -53,7 +53,13 @@
   if helix_mens_sale_url == blank
     assign helix_mens_sale_url = helix_collections_url | append: '/mens-on-sale'
   endif
-  assign helix_men_featured_handles = 'prime-form-men|base-line-men|form-core-men|frame-one-men|drift-prime-men' | split: '|'
+  assign helix_men_featured_handles = blank
+  if section.settings.men_featured_collection != blank
+    assign helix_men_featured_handles = section.settings.men_featured_collection.products | map: 'handle'
+  endif
+  if helix_men_featured_handles == blank
+    assign helix_men_featured_handles = 'prime-form-men|base-line-men|form-core-men|frame-one-men|drift-prime-men' | split: '|'
+  endif
   assign helix_trending_collection_url = section.settings.trending_url
   if helix_trending_collection_url == blank
     assign helix_trending_collection_url = helix_collections_url | append: '/trending'
@@ -81,16 +87,20 @@
 
 <div
   id="{{ helix_header_id }}"
-  class="helix-header{% if section.settings.overlay_header %} helix-header--overlay{% endif %}{% if section.settings.sticky_header %} helix-header--sticky{% endif %}{% unless section.settings.show_announcement %} helix-header--no-announcement{% endunless %}"
+  class="helix-header{% if section.settings.overlay_header %} helix-header--overlay{% endif %}{% if section.settings.sticky_header %} helix-header--sticky{% endif %}{% if section.settings.show_header_border %} helix-header--border{% endif %}{% unless section.settings.show_announcement %} helix-header--no-announcement{% endunless %}"
   data-helix-header
   data-announcement-interval="{{ section.settings.announcement_interval | default: 5 | times: 1000 }}"
   style="
     --helix-overlay-text: {{ section.settings.overlay_text_color | default: '#ffffff' }};
     --helix-solid-text: {{ section.settings.solid_text_color | default: '#1e1e1e' }};
+    --helix-header-bg: {{ section.settings.header_background | default: '#ffffff' }};
+    --helix-header-border: {{ section.settings.header_border_color | default: '#e5e5e5' }};
     --helix-announcement-bg: {{ section.settings.announcement_background | default: '#d3f285' }};
     --helix-announcement-text: {{ section.settings.announcement_text_color | default: '#1a1312' }};
     --helix-logo-width: {{ helix_logo_width }}px;
     --helix-mobile-logo-width: {{ helix_mobile_logo_width }}px;
+    --helix-desktop-side-padding: {{ section.settings.desktop_side_padding | default: 50 }}px;
+    --helix-mega-max-height: {{ section.settings.mega_menu_max_height | default: 540 }}px;
   "
 >
   {% if section.settings.show_announcement %}
@@ -382,53 +392,63 @@
         </a>
 
         <div class="helix-header__actions">
-          <details class="helix-header__dropdown helix-header__dropdown--currency" data-helix-dropdown data-helix-hover-dropdown>
-            <summary class="helix-header__currency-trigger">
-              <span class="helix-header__country-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ localization.country.iso_code | default: 'VN' | downcase }}.svg?width=20);"></span>
-              <span>{{ helix_currency_code }} {{ helix_currency_symbol }}</span>
-              <span class="helix-header__chevron" aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
-            </summary>
-            <div class="helix-header__currency-panel">
-              <p class="visually-hidden">{{ 'header.country_region' | t }}</p>
-              <form action="{{ routes.localization_url }}" method="post" data-helix-localization-form data-helix-localization-type="country">
-                <input type="hidden" name="return_to" value="{{ request.path }}">
-                <input type="hidden" name="country_code" value="{{ localization.country.iso_code | default: 'VN' }}" data-helix-country-value>
-                <div class="helix-header__country-filter">
-                  <label class="visually-hidden" for="{{ helix_header_id }}-country-filter">{{ 'header.search_country' | t }}</label>
-                  <input id="{{ helix_header_id }}-country-filter" class="helix-header__country-filter-input" type="search" placeholder="{{ 'header.search_country' | t }}" autocomplete="off" data-helix-country-filter>
-                  <span class="helix-header__country-filter-icon" aria-hidden="true">{% render 'helix-icon-search' %}</span>
-                </div>
-                <div class="helix-header__country-list" role="list">
-                  {% for country in localization.available_countries %}
-                    <button type="button" value="{{ country.iso_code }}" data-helix-country-option role="listitem">
-                      <span class="helix-header__country-option-name">
-                        <span class="helix-header__country-option-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ country.iso_code | downcase }}.svg?width=20);"></span>
-                        <span>{{ country.name }}</span>
-                      </span>
-                      <span class="helix-header__country-option-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
-                    </button>
-                  {% endfor %}
-                </div>
-              </form>
-            </div>
-          </details>
-          <span class="helix-header__actions-divider" aria-hidden="true"></span>
+          {% if section.settings.show_currency != false %}
+            <details class="helix-header__dropdown helix-header__dropdown--currency" data-helix-dropdown data-helix-hover-dropdown>
+              <summary class="helix-header__currency-trigger">
+                <span class="helix-header__country-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ localization.country.iso_code | default: 'VN' | downcase }}.svg?width=20);"></span>
+                <span>{{ helix_currency_code }} {{ helix_currency_symbol }}</span>
+                <span class="helix-header__chevron" aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+              </summary>
+              <div class="helix-header__currency-panel">
+                <p class="visually-hidden">{{ 'header.country_region' | t }}</p>
+                <form action="{{ routes.localization_url }}" method="post" data-helix-localization-form data-helix-localization-type="country">
+                  <input type="hidden" name="return_to" value="{{ request.path }}">
+                  <input type="hidden" name="country_code" value="{{ localization.country.iso_code | default: 'VN' }}" data-helix-country-value>
+                  <div class="helix-header__country-filter">
+                    <label class="visually-hidden" for="{{ helix_header_id }}-country-filter">{{ 'header.search_country' | t }}</label>
+                    <input id="{{ helix_header_id }}-country-filter" class="helix-header__country-filter-input" type="search" placeholder="{{ 'header.search_country' | t }}" autocomplete="off" data-helix-country-filter>
+                    <span class="helix-header__country-filter-icon" aria-hidden="true">{% render 'helix-icon-search' %}</span>
+                  </div>
+                  <div class="helix-header__country-list" role="list">
+                    {% for country in localization.available_countries %}
+                      <button type="button" value="{{ country.iso_code }}" data-helix-country-option role="listitem">
+                        <span class="helix-header__country-option-name">
+                          <span class="helix-header__country-option-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ country.iso_code | downcase }}.svg?width=20);"></span>
+                          <span>{{ country.name }}</span>
+                        </span>
+                        <span class="helix-header__country-option-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
+                      </button>
+                    {% endfor %}
+                  </div>
+                </form>
+              </div>
+            </details>
+          {% endif %}
+          {% if section.settings.show_currency != false and section.settings.show_search != false or section.settings.show_account != false or section.settings.show_cart != false %}
+            <span class="helix-header__actions-divider" aria-hidden="true"></span>
+          {% endif %}
 
-          <a class="helix-header__icon-button" href="{{ routes.search_url }}" data-helix-open-search aria-label="{{ 'header.search' | t }}">
-            {% render 'helix-icon-search' %}
-            <span class="visually-hidden">{{ 'header.search' | t }}</span>
-          </a>
-          <a class="helix-header__icon-button helix-header__account-link" href="{{ routes.account_login_url }}" aria-label="{{ 'header.account' | t }}">
-            {% render 'helix-icon-account' %}
-            <span class="visually-hidden">{{ 'header.account' | t }}</span>
-          </a>
-          <a class="helix-header__icon-button helix-header__cart-link" href="{{ routes.cart_url }}" data-helix-open-cart aria-label="{{ 'header.cart' | t }}">
-            <span class="helix-header__cart-icon">
-              {% render 'helix-icon-cart' %}
-              {% if cart.item_count > 0 %}<span class="helix-header__cart-count">{{ cart.item_count }}</span>{% endif %}
-            </span>
-            <span class="visually-hidden">{{ 'header.cart' | t }}</span>
-          </a>
+          {% if section.settings.show_search != false %}
+            <a class="helix-header__icon-button" href="{{ routes.search_url }}" data-helix-open-search aria-label="{{ 'header.search' | t }}">
+              {% render 'helix-icon-search' %}
+              <span class="visually-hidden">{{ 'header.search' | t }}</span>
+            </a>
+          {% endif %}
+          {% if section.settings.show_account != false %}
+            <a class="helix-header__icon-button helix-header__account-link" href="{{ routes.account_login_url }}" aria-label="{{ 'header.account' | t }}">
+              {% render 'helix-icon-account' %}
+              <span class="visually-hidden">{{ 'header.account' | t }}</span>
+            </a>
+          {% endif %}
+          {% if section.settings.show_cart != false %}
+            <a class="helix-header__icon-button helix-header__cart-link" href="{{ routes.cart_url }}" data-helix-open-cart aria-label="{{ 'header.cart' | t }}">
+              <span class="helix-header__cart-icon">
+                {% render 'helix-icon-cart' %}
+                {% if cart.item_count > 0 %}<span class="helix-header__cart-count">{{ cart.item_count }}</span>{% endif %}
+              </span>
+              <span class="visually-hidden">{{ 'header.cart' | t }}</span>
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -471,15 +491,19 @@
       </a>
 
       <div class="helix-header__mobile-side helix-header__mobile-side--right">
-        <a class="helix-header__mobile-icon" href="{{ routes.search_url }}" data-helix-open-search aria-label="{{ 'header.search' | t }}">
-          {% render 'helix-icon-search' %}
-        </a>
-        <a class="helix-header__mobile-icon helix-header__cart-link" href="{{ routes.cart_url }}" data-helix-open-cart aria-label="{{ 'header.cart' | t }}">
-          <span class="helix-header__cart-icon">
-            {% render 'helix-icon-cart' %}
-            {% if cart.item_count > 0 %}<span class="helix-header__cart-count">{{ cart.item_count }}</span>{% endif %}
-          </span>
-        </a>
+        {% if section.settings.show_search != false %}
+          <a class="helix-header__mobile-icon" href="{{ routes.search_url }}" data-helix-open-search aria-label="{{ 'header.search' | t }}">
+            {% render 'helix-icon-search' %}
+          </a>
+        {% endif %}
+        {% if section.settings.show_cart != false %}
+          <a class="helix-header__mobile-icon helix-header__cart-link" href="{{ routes.cart_url }}" data-helix-open-cart aria-label="{{ 'header.cart' | t }}">
+            <span class="helix-header__cart-icon">
+              {% render 'helix-icon-cart' %}
+              {% if cart.item_count > 0 %}<span class="helix-header__cart-count">{{ cart.item_count }}</span>{% endif %}
+            </span>
+          </a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -739,13 +763,15 @@
         <a href="{{ helix_find_shoes_url }}">{{ section.settings.find_shoes_label | default: 'Find your shoes' }}</a>
       </nav>
       <div class="helix-header__mobile-menu-footer">
-        <a class="helix-header__mobile-login" href="{{ routes.account_login_url }}">{{ 'header.login' | t }}</a>
+        {% if section.settings.show_account != false %}<a class="helix-header__mobile-login" href="{{ routes.account_login_url }}">{{ 'header.login' | t }}</a>{% endif %}
         <div class="helix-header__mobile-localization-row">
-          <button class="helix-header__mobile-localization-trigger" type="button" data-helix-open-localization="country" aria-expanded="false" aria-controls="{{ helix_header_id }}-country-sheet">
-            <span class="helix-header__country-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ localization.country.iso_code | default: 'VN' | downcase }}.svg?width=20);"></span>
-            <span>{{ helix_currency_code }} {{ helix_currency_symbol }}</span>
-            <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
-          </button>
+          {% if section.settings.show_currency != false %}
+            <button class="helix-header__mobile-localization-trigger" type="button" data-helix-open-localization="country" aria-expanded="false" aria-controls="{{ helix_header_id }}-country-sheet">
+              <span class="helix-header__country-flag" aria-hidden="true" style="--helix-country-flag: url(//cdn.shopify.com/static/images/flags/{{ localization.country.iso_code | default: 'VN' | downcase }}.svg?width=20);"></span>
+              <span>{{ helix_currency_code }} {{ helix_currency_symbol }}</span>
+              <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
+            </button>
+          {% endif %}
           <button class="helix-header__mobile-localization-trigger" type="button" data-helix-open-localization="language" aria-expanded="false" aria-controls="{{ helix_header_id }}-language-sheet">
             <span>{{ localization.language.endonym_name | default: localization.language.name | default: 'English' }}</span>
             <span aria-hidden="true">{% render 'helix-icon-chevron' %}</span>
@@ -1048,7 +1074,17 @@
   .helix-header__desktop-surface,
   .helix-header__mobile-inner {
     background: transparent;
-    transition: background-color .2s cubic-bezier(.6, 0, .4, 1), box-shadow .2s cubic-bezier(.6, 0, .4, 1), color .2s cubic-bezier(.6, 0, .4, 1);
+    transition: background-color .2s cubic-bezier(.6, 0, .4, 1), box-shadow .2s cubic-bezier(.6, 0, .4, 1), border-color .2s cubic-bezier(.6, 0, .4, 1), color .2s cubic-bezier(.6, 0, .4, 1);
+  }
+
+  .helix-header--border .helix-header__desktop-surface,
+  .helix-header--border .helix-header__mobile-inner {
+    border-bottom: 1px solid var(--helix-header-border);
+  }
+
+  .helix-header:not(.helix-header--overlay) .helix-header__desktop-surface,
+  .helix-header:not(.helix-header--overlay) .helix-header__mobile-inner {
+    background: var(--helix-header-bg);
   }
 
   .helix-header__desktop-surface {
@@ -1110,11 +1146,11 @@
     position: relative;
     z-index: 1;
     display: grid;
-    width: min(1820px, calc(100% - 100px));
+    width: min(1820px, calc(100% - (var(--helix-desktop-side-padding) * 2)));
     min-height: 80px;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    margin-left: 50px;
+    margin-left: var(--helix-desktop-side-padding);
     margin-right: 0;
     gap: 10px;
     padding: 24px 0;
@@ -1372,7 +1408,7 @@
     right: -50px;
     left: -50px;
     height: var(--helix-mega-height, 0px);
-    max-height: min(540px, calc(100vh - 80px));
+    max-height: min(var(--helix-mega-max-height), calc(100vh - 80px));
     overflow: hidden;
     background: #fff;
     color: #1a1312;
@@ -2962,14 +2998,14 @@
   }
 
   .helix-header.is-menu-open .helix-header__desktop-surface {
-    background: transparent;
+    background: var(--helix-header-bg);
     box-shadow: 0 1px 0 rgba(26, 19, 18, .12);
     color: var(--helix-solid-text);
   }
 
   .helix-header.is-menu-open .helix-header__menu-background {
     height: calc(80px + var(--helix-menu-height, 0px));
-    background: #fff;
+    background: var(--helix-header-bg);
   }
 
   .helix-header.is-replaying-menu-reveal .helix-header__mega-panel {
@@ -2998,7 +3034,7 @@
 
   .helix-header:not(.helix-header--overlay).is-scrolled .helix-header__desktop-surface,
   .helix-header:not(.helix-header--overlay).is-scrolled .helix-header__mobile-inner {
-    background: rgba(255, 255, 255, .96);
+    background: var(--helix-header-bg);
     box-shadow: 0 1px 0 rgba(26, 19, 18, .12);
     color: var(--helix-solid-text);
     backdrop-filter: blur(12px);
@@ -3615,7 +3651,8 @@
         panel.style.setProperty('--helix-mega-height', '0px');
         return 0;
       }
-      const maxHeight = Math.min(540, Math.max(0, window.innerHeight - 80));
+      const configuredMaxHeight = Number.parseFloat(getComputedStyle(root).getPropertyValue('--helix-mega-max-height')) || 540;
+      const maxHeight = Math.min(configuredMaxHeight, Math.max(0, window.innerHeight - 80));
       const panelHeight = Math.min(Math.max(0, panel.scrollHeight - 2), maxHeight);
       panel.style.setProperty('--helix-mega-height', `${panelHeight}px`);
       return panelHeight;
@@ -3931,6 +3968,73 @@
       "id": "solid_text_color",
       "label": "Solid header text color",
       "default": "#1e1e1e"
+    },
+    {
+      "type": "color",
+      "id": "header_background",
+      "label": "Solid header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_border_color",
+      "label": "Header border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header_border",
+      "label": "Show header bottom border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_side_padding",
+      "label": "Desktop side padding",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency",
+      "label": "Show country and currency selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon and login link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "mega_menu_max_height",
+      "label": "Mega menu maximum height",
+      "min": 360,
+      "max": 640,
+      "step": 10,
+      "unit": "px",
+      "default": 540
+    },
+    {
+      "type": "collection",
+      "id": "men_featured_collection",
+      "label": "Men mega menu product collection"
     },
     {
       "type": "checkbox",

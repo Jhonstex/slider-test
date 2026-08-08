@@ -777,3 +777,12 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Header desktop ở tablet được căn theo demo: từ `991px` đến `1199px` dùng lề trái/phải `30px`; từ `1200px` trở lên giữ lề `50px`.
 - Giữ nguyên section Categories overlap `34px` đã làm trước đó để hiệu ứng cuộn/đè lên slider không bị mất; sau khi slider full-screen, section này chỉ nhô nhẹ ở cuối viewport giống bố cục demo.
 - Tạo backup branch `backup/pre-helix-responsive-20260808` trước khi sửa.
+
+## 36. Bổ sung bộ setting header trong Theme Editor (2026-08-08)
+
+- Rà soát toàn bộ `sections/header.liquid`: schema cũ có 40 setting nhưng màu nền, border, visibility của action và nguồn product Men vẫn còn hard-code.
+- Bổ sung 10 option để header hoạt động như một section theme hoàn chỉnh: solid background, border color, bật/tắt border, desktop side padding, country/currency, search, account, cart, mega menu max height và collection sản phẩm Best deals của Men.
+- Các option visibility áp dụng đồng thời cho desktop header, mobile header và mobile drawer footer; khi tắt icon thì trigger tương ứng không còn được render.
+- Mega menu Men lấy tối đa 5 sản phẩm từ collection được chọn; nếu chưa chọn collection, theme giữ fallback handles hiện tại nên giao diện cũ không bị thay đổi.
+- Các giá trị layout/màu mới đi qua CSS custom properties; JavaScript cũng đọc `mega_menu_max_height` khi tính chiều cao panel.
+- Default của toàn bộ setting mới giữ nguyên số đo và hành vi Helix hiện tại; schema sau bổ sung có 50 setting, id không trùng, Liquid tag/CSS brace balance hợp lệ và `git diff --check` sạch.
