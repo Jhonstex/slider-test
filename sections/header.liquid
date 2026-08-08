@@ -3417,14 +3417,14 @@
       flex: 0 0 18px;
       align-items: center;
       justify-content: center;
-      transform: none;
+      transform: none !important;
     }
 
     .helix-header__mobile-nav > details > summary > span:last-child svg,
     .helix-header__mobile-submenu-details > summary > span:last-child svg {
       width: 18px;
       height: 18px;
-      transform: none;
+      transform: none !important;
     }
 
     .helix-header__mobile-nav > details > summary > span:last-child svg path,
@@ -3437,7 +3437,7 @@
     }
 
     .helix-header__mobile-submenu-header .helix-header__mobile-back > span:first-child svg {
-      transform: rotate(180deg);
+      transform: rotate(180deg) !important;
     }
 
     .helix-header__mobile-promos {
@@ -3805,7 +3805,8 @@
     let menProductsOffset = 0;
 
     const syncMobileSubmenuState = () => {
-      mobileMenuPanel?.classList.toggle('is-mobile-submenu-open', mobileSections.some((section) => section.open));
+      const hasOpenSubmenu = mobileSections.some((section) => section.open && section.dataset.helixMobileClosing !== 'true');
+      mobileMenuPanel?.classList.toggle('is-mobile-submenu-open', hasOpenSubmenu);
     };
 
     const getMobileSubmenuPanel = (section) => section?.querySelector(':scope > .helix-header__mobile-submenu');
@@ -3829,6 +3830,7 @@
 
       section.dataset.helixMobileClosing = 'true';
       panel.classList.add('is-mobile-submenu-closing');
+      syncMobileSubmenuState();
 
       let fallbackTimer;
       let finished = false;

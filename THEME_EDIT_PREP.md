@@ -845,3 +845,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Tạo snippet `helix-icon-mobile-chevron` riêng cho menu mobile; icon cấp menu luôn hướng phải, icon trong nút back xoay `180deg` để hướng trái. Icon desktop và selector ngôn ngữ không bị thay đổi.
 - Ghi đè transform của span/SVG trong media query mobile để trạng thái mở/đóng không làm icon quay thành lên/xuống.
 - Tạo backup branch `backup/pre-mobile-chevron-direction-20260809` trước khi sửa.
+
+## 45. Khóa hướng chevron khi submenu mở và hiện logo ngay khi Back (2026-08-09)
+
+- Rule `details[open]` có specificity cao hơn rule chevron mobile nên vẫn xoay icon submenu thành lên/xuống sau khi Women/Men mở; thêm `!important` cho transform ngang của menu và transform `180deg` của nút Back.
+- Demo hiện header chính ngay khi bấm Back, trong khi theme chờ animation `helix-mobile-slide-out` kết thúc khoảng `300ms` mới bỏ class `is-mobile-submenu-open`, làm logo xuất hiện trễ.
+- `syncMobileSubmenuState` hiện bỏ qua root section đang có cờ `data-helix-mobile-closing`; khi bắt đầu Back, header/logo hiện ngay trong lúc panel vẫn trượt ra. Submenu con vẫn giữ animation riêng.
+- Tạo backup branch `backup/pre-mobile-chevron-open-logo-20260809` trước khi sửa.
