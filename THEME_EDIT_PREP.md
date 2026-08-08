@@ -837,3 +837,11 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Vì details vẫn có `margin-top: -40px; z-index: 2`, theme bị nền trắng che 40px cuối ảnh dù kích thước ảnh đã đúng; demo không bị che.
 - Thêm `position: relative` và `z-index: 3` cho `.helix-header__mobile-promo-media`, giữ details ở lớp `z-index: 2` đúng thứ tự của demo.
 - Tạo backup branch `backup/pre-women-banner-layer-20260809` trước khi sửa.
+
+## 44. Đồng bộ hướng chevron menu mobile với demo (2026-08-09)
+
+- Demo dùng icon mũi tên ngang path `M9 18L15 12L9 6`, kích thước hiển thị `18×18px`, cho các mục Women, Men, Pages, By activity và By feature.
+- Theme trước đó dùng icon chữ V `M5 7.5L10 12.5L15 7.5` rồi xoay bằng CSS; khi trạng thái details thay đổi, icon bị hiển thị thành lên/xuống thay vì trái/phải.
+- Tạo snippet `helix-icon-mobile-chevron` riêng cho menu mobile; icon cấp menu luôn hướng phải, icon trong nút back xoay `180deg` để hướng trái. Icon desktop và selector ngôn ngữ không bị thay đổi.
+- Ghi đè transform của span/SVG trong media query mobile để trạng thái mở/đóng không làm icon quay thành lên/xuống.
+- Tạo backup branch `backup/pre-mobile-chevron-direction-20260809` trước khi sửa.
