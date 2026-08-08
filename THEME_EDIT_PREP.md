@@ -768,3 +768,12 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Đặt vùng title cao cố định tương đương 2 dòng (`44.8px`), nên các card có title một dòng vẫn giữ khoảng trống tương ứng và hàng giá luôn thẳng với card có title hai dòng.
 - Bổ sung line clamp chuẩn và vẫn giữ `overflow-wrap: anywhere` cho chuỗi rất dài.
 - Tạo backup branch `backup/pre-product-title-rows-20260808` trước khi sửa.
+
+## 35. Đồng bộ responsive slider và header với demo Helix (2026-08-08)
+
+- Đối chiếu trực tiếp demo Helix và preview ở `1024×900`, `1280×900` và `390×844`.
+- Demo dùng slider full-screen phía dưới announcement bar: chiều cao bằng viewport trừ `38.4px`; preview trước đó bị giới hạn bởi `52.083333cqw`, khiến slider tablet chỉ còn khoảng `525px` và mobile chỉ `560px`, làm section kế tiếp xuất hiện quá sớm.
+- Slider hiện dùng `calc(100dvh - 38.4px)` khi có announcement, giữ `min-height` desktop đã cấu hình và bỏ giới hạn theo chiều rộng; mobile không còn bị đẩy xuống bởi `top: 60px`, nên bắt đầu đúng ngay dưới announcement như demo.
+- Header desktop ở tablet được căn theo demo: từ `991px` đến `1199px` dùng lề trái/phải `30px`; từ `1200px` trở lên giữ lề `50px`.
+- Giữ nguyên section Categories overlap `34px` đã làm trước đó để hiệu ứng cuộn/đè lên slider không bị mất; sau khi slider full-screen, section này chỉ nhô nhẹ ở cuối viewport giống bố cục demo.
+- Tạo backup branch `backup/pre-helix-responsive-20260808` trước khi sửa.

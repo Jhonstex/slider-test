@@ -103,6 +103,7 @@ body.template-index #MainContent {
 .pebble-swiper {
   --pebble-page-padding: 16px;
   --pebble-content-top-offset: 110px;
+  --pebble-viewport-offset: 0px;
   container-type: inline-size;
   width: 100%;
   max-width: none;
@@ -115,7 +116,11 @@ body.template-index #MainContent {
 .pebble-swiper .swiper-wrapper {
   width: 100%;
   max-width: none;
-  height: min(var(--pebble-height), 52.083333cqw, 100dvh);
+  height: min(var(--pebble-height), calc(100dvh - var(--pebble-viewport-offset)));
+}
+
+body:has(.helix-header__announcement) .pebble-swiper {
+  --pebble-viewport-offset: 38.4px;
 }
 
 .pebble-swiper__container {
@@ -451,10 +456,10 @@ body.template-index #MainContent {
 }
 
 @media (max-width: 767px) {
-  .section-pebble-swiper { top: 60px; }
+  .section-pebble-swiper { top: 0; }
   .pebble-swiper { --pebble-content-top-offset: 90px; }
   .pebble-swiper__container,
-  .pebble-swiper .swiper-wrapper { height: min(var(--pebble-mobile-height), 154.666667cqw, 100dvh); }
+  .pebble-swiper .swiper-wrapper { height: calc(100dvh - var(--pebble-viewport-offset)); }
   .pebble-swiper__content-wrap {
     align-items: flex-end;
     height: calc(100% - 84px - var(--pebble-content-top-offset));
