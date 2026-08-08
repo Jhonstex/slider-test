@@ -800,3 +800,9 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Đối chiếu trực tiếp demo và preview: trigger `Pages` ngoài cùng vẫn đúng weight `500`; lỗi nằm ở các item `About us`, `Contact`, `Faqs`, `Store locations`, `Recently viewed`, `Our journal` bên trong submenu.
 - Demo dùng Figtree `16px/25.6px`, weight `400`, màu `#323232`; theme trước đó dùng nhầm style featured của Women/Men với Archivo weight `700`.
 - Thêm modifier riêng `helix-header__mobile-submenu-group--pages` để hạ đúng typography của Pages mà không ảnh hưởng các item featured trong Women/Men.
+
+## 39. Căn lại spacing và icon của Pages mobile submenu (2026-08-09)
+
+- Khoảng cách giữa các item Pages được đổi từ `33.6px` lên `41.6px`, tương ứng list gap `16px` của demo.
+- Nút back dùng icon `18px`, stroke `1.4px`, giữ tiêu đề Pages Archivo `17px/17px`, weight `700` và letter-spacing `0.34px` như demo.
+- Nút close trên drawer mobile dùng icon `20px`, stroke `1px`; kích thước và vị trí vùng click `36px` vẫn được giữ nguyên.
