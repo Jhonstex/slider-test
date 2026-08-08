@@ -816,3 +816,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Product title Men được phép wrap tối đa 2 dòng trong chiều rộng card, không tràn sang card kế bên; các card trong cùng grid row vẫn thẳng hàng theo card có title dài hơn. Quick-view dạng nút tròn không hiển thị trên mobile như trạng thái mặc định của demo.
 - Tạo wrapper chung cho submenu list để giữ đúng khoảng cách giữa featured list, nhóm submenu và phần banner/product; không thay đổi dữ liệu sản phẩm hiện có.
 - Tạo backup branch `backup/pre-mobile-women-men-menu-20260809` trước khi sửa. Đã push các commit `e02863f`, `177f883` và `b2f98be` lên `main`.
+
+## 41. Bỏ gạch thừa trong submenu con mobile Men/Women (2026-08-09)
+
+- Đối chiếu trực tiếp demo Helix và preview theme ở viewport `424×850`: link con `Hiking`, `Running`, `Training`, `Tennis`, `Lifestyle`, `Shop all` và nhóm feature của demo đều có `border-bottom: 0`, cao `25.6px`, khoảng cách giữa item `16px`.
+- Preview theme trước đó kế thừa rule chung `border-bottom: 1px solid rgba(26, 19, 18, .12)`, padding `10px 0` và `min-height: 48px`, nên xuất hiện các đường kẻ ngang như ảnh người dùng cung cấp.
+- Thêm selector chỉ áp dụng cho `.helix-header__mobile-submenu--mega .helix-header__mobile-submenu--child` của Men/Women: bỏ border, reset chiều cao/padding theo demo và đặt gap `16px`. Menu Pages và các row cấp ngoài không bị thay đổi.
+- Tạo backup branch `backup/pre-mobile-submenu-no-borders-20260809` trước khi sửa.
