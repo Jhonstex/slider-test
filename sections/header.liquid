@@ -1018,13 +1018,15 @@
     padding: 0;
     border: 0;
     background: rgba(50, 50, 50, .5);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
     transition: opacity .3s ease, visibility 0s linear .3s;
   }
 
-  .helix-header.is-menu-open .helix-header__mega-scrim {
+  .helix-header.is-mega-backdrop-open .helix-header__mega-scrim {
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
@@ -2971,6 +2973,7 @@
         dropdown.open = false;
       });
       root.classList.remove('is-menu-open');
+      root.classList.remove('is-mega-backdrop-open');
       window.setTimeout(syncDropdownState, 0);
     };
 
@@ -3015,8 +3018,10 @@
 
     const syncDropdownState = () => {
       const open = dropdowns.some((dropdown) => dropdown.open);
+      const megaBackdropOpen = Boolean(select('.helix-header__dropdown--mega[open]'));
       root.classList.toggle('is-menu-open', open);
-      megaScrim?.setAttribute('aria-hidden', String(!open));
+      root.classList.toggle('is-mega-backdrop-open', megaBackdropOpen);
+      megaScrim?.setAttribute('aria-hidden', String(!megaBackdropOpen));
       let menuHeight = 0;
       dropdowns.forEach((dropdown) => {
         const panelHeight = syncMegaPanelHeight(dropdown);

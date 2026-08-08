@@ -726,7 +726,8 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 ## 29. Thêm black backdrop cho desktop mega menu (2026-08-08)
 
-- Demo Helix dùng `.header-overlay` với màu `rgba(50, 50, 50, .5)`, bắt đầu ngay dưới header ở khoảng `y=119px`, rồi fade opacity khi Women/Men mega menu mở.
+- Demo Helix dùng `.header-overlay` với màu `rgba(50, 50, 50, .5)` và `backdrop-filter: blur(20px)`, bắt đầu ngay dưới header ở khoảng `y=119px`, rồi fade opacity khi Women/Men mega menu mở.
 - Preview trước đó chỉ có scrim cho mobile, search và cart; khi hover mega menu opacity vẫn bằng `0` nên nền phía sau không tối đi.
-- Thêm `.helix-header__mega-scrim` riêng cho desktop: fade `opacity .3s`, phủ từ dưới header đến cuối viewport, đặt dưới mega panel để menu vẫn click/hover được.
+- Thêm `.helix-header__mega-scrim` riêng cho desktop: fade `opacity .3s`, blur nền phía sau ở mức `20px`, phủ từ dưới header đến cuối viewport, đặt dưới mega panel để menu vẫn click/hover được.
+- Chỉ dropdown `.helix-header__dropdown--mega` của Women/Men bật lớp đen + blur. Pages vẫn giữ panel trắng nhưng không có black opacity, không chặn vùng nội dung phía sau.
 - Backdrop tự đóng khi click vùng nền; khi scroll sticky hoặc tắt announcement bar, top tự đổi về `80px`; mobile không dùng lớp này.
