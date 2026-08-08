@@ -513,7 +513,15 @@
   <div class="helix-header__mobile-menu" id="{{ helix_header_id }}-mobile-menu" data-helix-mobile-menu aria-hidden="true">
     <div class="helix-header__mobile-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'header.menu' | t }}" tabindex="-1">
       <div class="helix-header__mobile-menu-top">
-        <a class="helix-header__mobile-menu-logo" href="{{ routes.root_url }}" aria-label="{{ helix_logo_text }}">{{ helix_logo_text }}</a>
+        <a class="helix-header__mobile-menu-logo" href="{{ routes.root_url }}" aria-label="{{ helix_logo_text }}">
+          {% if helix_mobile_logo != blank %}
+            {{ helix_mobile_logo | image_url: width: 240 | image_tag: loading: 'eager', widths: '90,180,240', sizes: '90px', alt: helix_logo_text }}
+          {% else %}
+            {% # theme-check-disable RemoteAsset %}
+            <img src="https://helix-shoes-theme.myshopify.com/cdn/shop/files/logo.svg?v=1776243138&amp;width=180" width="90" height="16" loading="eager" alt="{{ helix_logo_text }}">
+            {% # theme-check-enable RemoteAsset %}
+          {% endif %}
+        </a>
         <button class="helix-header__close-button" type="button" data-helix-close-mobile aria-label="{{ 'general.close' | t }}">
           {% render 'helix-icon-close' %}
         </button>
@@ -763,7 +771,11 @@
         <a href="{{ helix_find_shoes_url }}">{{ section.settings.find_shoes_label | default: 'Find your shoes' }}</a>
       </nav>
       <div class="helix-header__mobile-menu-footer">
-        {% if section.settings.show_account != false %}<a class="helix-header__mobile-login" href="{{ routes.account_login_url }}">{{ 'header.login' | t }}</a>{% endif %}
+        {% if section.settings.show_account != false %}
+          <div class="helix-header__mobile-account-row">
+            <a class="helix-header__mobile-login" href="{{ routes.account_login_url }}">{{ 'header.login' | t | default: 'Login' }}</a>
+          </div>
+        {% endif %}
         <div class="helix-header__mobile-localization-row">
           {% if section.settings.show_currency != false %}
             <button class="helix-header__mobile-localization-trigger" type="button" data-helix-open-localization="country" aria-expanded="false" aria-controls="{{ helix_header_id }}-country-sheet">
@@ -2226,12 +2238,19 @@
   }
 
   .helix-header__mobile-menu-logo {
+    display: inline-flex;
+    width: 90px;
+    height: 16px;
+    align-items: center;
     color: inherit;
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: .04em;
-    line-height: 1;
-    text-transform: uppercase;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .helix-header__mobile-menu-logo img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .helix-header__close-button {
@@ -3196,14 +3215,28 @@
 
     .helix-header__mobile-nav {
       position: static;
+      flex: 0 0 auto;
       overflow: visible;
       padding: 20px 16px 0;
     }
 
-    .helix-header__mobile-nav > a,
+    .helix-header__mobile-nav > details {
+      border-bottom: 1px solid rgba(26, 19, 18, .14);
+    }
+
+    .helix-header__mobile-nav > a {
+      box-sizing: border-box;
+      min-height: 58.6px;
+      padding: 16px 0;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(26, 19, 18, .14);
+    }
+
     .helix-header__mobile-nav > details > summary {
-      min-height: 56px;
-      padding: 0;
+      box-sizing: border-box;
+      min-height: 57.6px;
+      padding: 16px 0;
+      border-bottom: 0;
       font-size: 16px;
     }
 
@@ -3365,11 +3398,49 @@
 
     .helix-header__mobile-menu-footer {
       gap: 14px;
-      padding: 14px 16px 16px;
+      margin-top: auto;
+      padding: 14px 0;
+      border-top: 0;
+    }
+
+    .helix-header__mobile-account-row {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 16px 14px;
+      border-bottom: 1px solid rgba(26, 19, 18, .14);
     }
 
     .helix-header__mobile-login {
+      width: 100%;
       min-height: 44px;
+      padding: 6px 22px;
+      background: #24272a;
+      font-weight: 500;
+      line-height: 22.4px;
+    }
+
+    .helix-header__mobile-localization-row {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 38.4px;
+      align-items: center;
+      gap: 20px;
+      padding: 0 16px 14px;
+      border-bottom: 1px solid rgba(26, 19, 18, .14);
+    }
+
+    .helix-header__mobile-localization-trigger {
+      box-sizing: border-box;
+      min-height: 22.4px;
+      height: 22.4px;
+      line-height: 22.4px;
+    }
+
+    .helix-header__mobile-socials {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 38px;
+      padding: 0 16px;
     }
 
     .helix-header__mobile-bar {
