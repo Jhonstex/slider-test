@@ -16,7 +16,7 @@
         "overlay_header": true,
         "sticky_header": true,
         "overlay_text_color": "#ffffff",
-        "solid_text_color": "#111111",
+        "solid_text_color": "#323232",
         "show_announcement": true,
         "announcement_message_1": "Free shipping for all orders over 5.000.000₫",
         "announcement_emphasis_1": "5.000.000₫",

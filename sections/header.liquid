@@ -92,7 +92,7 @@
   data-announcement-interval="{{ section.settings.announcement_interval | default: 5 | times: 1000 }}"
   style="
     --helix-overlay-text: {{ section.settings.overlay_text_color | default: '#ffffff' }};
-    --helix-solid-text: {{ section.settings.solid_text_color | default: '#1e1e1e' }};
+    --helix-solid-text: {{ section.settings.solid_text_color | default: '#323232' }};
     --helix-header-bg: {{ section.settings.header_background | default: '#ffffff' }};
     --helix-header-border: {{ section.settings.header_border_color | default: '#e5e5e5' }};
     --helix-announcement-bg: {{ section.settings.announcement_background | default: '#d3f285' }};
@@ -982,8 +982,8 @@
     overflow: hidden;
   }
 
-  html.helix-header-lock {
-    scrollbar-gutter: stable;
+  html.helix-header-lock body {
+    padding-right: var(--helix-scrollbar-compensation, 0px);
   }
 
   .helix-header button,
@@ -3155,6 +3155,10 @@
       border-radius: 0 0 16px 16px;
     }
 
+    .helix-header--overlay.is-scrolled .helix-header__mega-columns {
+      padding-inline: 30px;
+    }
+
     .helix-header--overlay.is-scrolled .helix-header__logo--normal,
     .helix-header--overlay.is-scrolled .helix-header__logo-text--normal {
       display: block;
@@ -3362,7 +3366,7 @@
       letter-spacing: .32px;
     }
 
-    .helix-header__mobile-nav-summary--split {
+    .helix-header__mobile-nav-summary {
       gap: 0 !important;
       justify-content: flex-start !important;
     }
@@ -3370,18 +3374,6 @@
     .helix-header__mobile-title-link {
       display: block;
       width: 50%;
-      margin: -10px 0;
-      padding: 10px 0;
-    }
-
-    .helix-header__mobile-nav-summary--split > .helix-header__mobile-toggle,
-    .helix-header__mobile-nav-summary:not(.helix-header__mobile-nav-summary--split) > .helix-header__mobile-toggle {
-      display: flex;
-      width: auto;
-      height: auto;
-      flex: 1 1 0;
-      align-items: center;
-      justify-content: flex-end;
       margin: -10px 0;
       padding: 10px 0;
     }
@@ -3572,7 +3564,7 @@
     .helix-header__mobile-nav > details > .helix-header__mobile-nav-summary:not(.helix-header__mobile-nav-summary--split) > .helix-header__mobile-toggle {
       display: flex;
       width: auto;
-      height: auto;
+      height: 45.6px;
       flex: 1 1 0;
       align-items: center;
       justify-content: flex-end;
@@ -4092,7 +4084,12 @@
 
     const setBodyLock = () => {
       const locked = dropdowns.some((dropdown) => dropdown.open) || localizationSheets.some((sheet) => sheet.classList.contains('is-open')) || root.classList.contains('is-mobile-menu-open') || root.classList.contains('is-search-open') || root.classList.contains('is-cart-open');
+      if (locked && !document.documentElement.classList.contains('helix-header-lock')) {
+        const scrollbarCompensation = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+        document.documentElement.style.setProperty('--helix-scrollbar-compensation', `${scrollbarCompensation}px`);
+      }
       document.documentElement.classList.toggle('helix-header-lock', locked);
+      if (!locked) document.documentElement.style.removeProperty('--helix-scrollbar-compensation');
     };
 
     const closeDropdowns = () => {
@@ -4454,7 +4451,7 @@
       "type": "color",
       "id": "solid_text_color",
       "label": "Solid header text color",
-      "default": "#1e1e1e"
+      "default": "#323232"
     },
     {
       "type": "color",
