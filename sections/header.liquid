@@ -4147,7 +4147,7 @@
       }
       const configuredMaxHeight = Number.parseFloat(getComputedStyle(root).getPropertyValue('--helix-mega-max-height')) || 540;
       const maxHeight = Math.min(configuredMaxHeight, Math.max(0, window.innerHeight - 80));
-      const panelHeight = Math.min(Math.max(0, panel.scrollHeight - 2), maxHeight);
+      const panelHeight = Math.min(Math.max(0, panel.scrollHeight), maxHeight);
       panel.style.setProperty('--helix-mega-height', `${panelHeight}px`);
       return panelHeight;
     };
