@@ -528,7 +528,10 @@
       </div>
       <nav class="helix-header__mobile-nav" aria-label="{{ 'header.primary_navigation' | t }}">
         <details data-helix-mobile-section>
-          <summary><span>{{ section.settings.women_label | default: 'Women' }}</span><span aria-hidden="true">{% render 'helix-icon-mobile-chevron' %}</span></summary>
+          <summary class="helix-header__mobile-nav-summary helix-header__mobile-nav-summary--split">
+            <a class="helix-header__mobile-title-link" href="{{ helix_women_url }}">{{ section.settings.women_label | default: 'Women' }}</a>
+            <span class="helix-header__mobile-toggle" aria-hidden="true">{% render 'helix-icon-mobile-chevron' %}</span>
+          </summary>
           <div class="helix-header__mobile-submenu helix-header__mobile-submenu--mega">
             <div class="helix-header__mobile-submenu-header">
               <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
@@ -638,7 +641,10 @@
           </div>
         </details>
         <details data-helix-mobile-section>
-          <summary><span>{{ section.settings.men_label | default: 'Men' }}</span><span aria-hidden="true">{% render 'helix-icon-mobile-chevron' %}</span></summary>
+          <summary class="helix-header__mobile-nav-summary helix-header__mobile-nav-summary--split">
+            <a class="helix-header__mobile-title-link" href="{{ helix_men_url }}">{{ section.settings.men_label | default: 'Men' }}</a>
+            <span class="helix-header__mobile-toggle" aria-hidden="true">{% render 'helix-icon-mobile-chevron' %}</span>
+          </summary>
           <div class="helix-header__mobile-submenu helix-header__mobile-submenu--mega">
             <div class="helix-header__mobile-submenu-header">
               <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
@@ -767,7 +773,10 @@
           </div>
         </details>
         <details data-helix-mobile-section>
-          <summary><span>{{ section.settings.pages_label | default: 'Pages' }}</span><span aria-hidden="true">{% render 'helix-icon-mobile-chevron' %}</span></summary>
+          <summary class="helix-header__mobile-nav-summary">
+            <span class="helix-header__mobile-summary-label">{{ section.settings.pages_label | default: 'Pages' }}</span>
+            <span class="helix-header__mobile-toggle" aria-hidden="true">{% render 'helix-icon-mobile-chevron' %}</span>
+          </summary>
           <div class="helix-header__mobile-submenu">
             <div class="helix-header__mobile-submenu-header">
               <button class="helix-header__mobile-back" type="button" data-helix-mobile-back aria-label="{{ 'general.back' | t }}">
@@ -973,6 +982,10 @@
     overflow: hidden;
   }
 
+  html.helix-header-lock {
+    scrollbar-gutter: stable;
+  }
+
   .helix-header button,
   .helix-header input {
     color: inherit;
@@ -1142,7 +1155,7 @@
   .helix-header__mega-scrim {
     position: fixed;
     z-index: 0;
-    top: 118.4px;
+    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
@@ -1169,7 +1182,7 @@
 
   .helix-header--no-announcement .helix-header__mega-scrim,
   .helix-header.is-scrolled .helix-header__mega-scrim {
-    top: 80px;
+    top: 0;
   }
 
   .helix-header__desktop-surface::before {
@@ -1502,7 +1515,7 @@
   .helix-header__mega-banners {
     display: grid;
     min-width: 0;
-    flex: 0 1 907px;
+    flex: 0 1 50%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
@@ -1825,6 +1838,10 @@
     transform: translate3d(0, 15px, 0);
   }
 
+  .helix-header__mega-column {
+    padding: 15px;
+  }
+
   .helix-header__dropdown[open] .helix-header__mega-column,
   .helix-header__dropdown[open] .helix-header__mega-promo {
     animation: helix-menu-reveal .4s ease forwards;
@@ -1890,6 +1907,7 @@
   }
 
   .helix-header__mega-column:first-child .helix-header__mega-links a {
+    font-family: 'Archivo', var(--helix-font, sans-serif);
     font-size: 16px;
     font-weight: 700;
     line-height: 25.6px;
@@ -2177,6 +2195,8 @@
     padding: 0;
     border: 0;
     background: rgba(50, 50, 50, .5);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   }
 
   .helix-header.is-mobile-menu-open .helix-header__scrim,
@@ -2338,11 +2358,11 @@
     overflow: hidden;
     padding: 0;
     background: #fff;
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
     transform: translateX(100%);
     visibility: hidden;
-    transition: transform .45s cubic-bezier(.6, 0, .4, 1), opacity .25s ease, visibility 0s linear .45s;
+    transition: transform .3s ease-in-out, visibility 0s linear .3s;
   }
 
   .helix-header__mobile-nav details[open] > .helix-header__mobile-submenu {
@@ -2700,7 +2720,7 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 8px;
     padding: 24px 16px 16px;
     border-bottom: 1px solid rgba(26, 19, 18, .14);
     background: #fff;
@@ -2714,11 +2734,13 @@
 
   .helix-header__localization-sheet-header h2 {
     margin: 0;
+    flex: 1 1 auto;
     color: #131313;
     font-family: 'Archivo', var(--helix-font, sans-serif);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
-    line-height: 25.2px;
+    letter-spacing: .34px;
+    line-height: 23.8px;
   }
 
   .helix-header__localization-close-button {
@@ -2853,7 +2875,12 @@
     font-family: 'Archivo', sans-serif;
     font-size: 18px;
     font-weight: 700;
+    letter-spacing: .36px;
     line-height: 18px;
+  }
+
+  .helix-header__drawer--search .helix-header__drawer-top strong {
+    line-height: 25.2px;
   }
 
   .helix-header__drawer .helix-header__close-button {
@@ -2918,7 +2945,8 @@
     font-family: 'Archivo', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    line-height: 18px;
+    letter-spacing: .36px;
+    line-height: 25.2px;
   }
 
   .helix-header__search-links {
@@ -2958,6 +2986,7 @@
     font-family: 'Archivo', sans-serif;
     font-size: 24px;
     font-weight: 700;
+    letter-spacing: .48px;
     line-height: 31.2px;
   }
 
@@ -2986,6 +3015,7 @@
     background: #ececec;
     font-size: 14px;
     font-weight: 500;
+    letter-spacing: .28px;
     line-height: 14px;
     transition: background .25s ease, color .25s ease;
   }
@@ -3091,6 +3121,71 @@
     display: none;
   }
 
+  @media (min-width: 991px) {
+    .helix-header--overlay.is-scrolled .helix-header__desktop-bar {
+      color: var(--helix-solid-text);
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__desktop-surface {
+      width: calc(100% - (var(--helix-desktop-side-padding) * 2));
+      margin-inline: var(--helix-desktop-side-padding);
+      border-radius: 16px;
+      background: var(--helix-header-bg);
+      box-shadow: none;
+      color: var(--helix-solid-text);
+      transform: translateY(16px);
+      transition: background-color .15s cubic-bezier(.6, 0, .4, 1), border-radius .15s cubic-bezier(.6, .14, 0, 1), color .15s cubic-bezier(.6, 0, .4, 1), transform .5s cubic-bezier(.625, .05, 0, 1);
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__desktop-inner {
+      width: calc(100% - 60px);
+      margin-inline: 30px;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__menu-background {
+      top: 16px;
+      right: var(--helix-desktop-side-padding);
+      left: var(--helix-desktop-side-padding);
+      border-radius: 16px;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__mega-panel {
+      right: -30px;
+      left: -30px;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__logo--normal,
+    .helix-header--overlay.is-scrolled .helix-header__logo-text--normal {
+      display: block;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__logo--overlay,
+    .helix-header--overlay.is-scrolled .helix-header__logo-text--overlay {
+      display: none;
+    }
+
+    .helix-header__search-form input {
+      border-color: transparent;
+    }
+
+    .helix-header__drawer-button {
+      padding-inline: 24px;
+    }
+  }
+
+  @media (min-width: 991px) and (max-width: 1199px) {
+    .helix-header--overlay.is-scrolled .helix-header__desktop-surface {
+      width: calc(100% - 60px);
+      margin-inline: 30px;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__menu-background {
+      right: 30px;
+      left: 30px;
+    }
+  }
+
   .helix-header__logo-text {
     text-transform: uppercase;
   }
@@ -3153,7 +3248,12 @@
 
     .helix-header__drawer-top strong {
       font-size: 17px;
+      letter-spacing: .34px;
       line-height: 23.8px;
+    }
+
+    .helix-header__drawer--cart .helix-header__drawer-top strong {
+      line-height: 17px;
     }
 
     .helix-header__drawer .helix-header__close-button {
@@ -3182,11 +3282,13 @@
 
     .helix-header__search-popular h3 {
       font-size: 17px;
+      letter-spacing: .34px;
       line-height: 23.8px;
     }
 
     .helix-header__cart-empty h3 {
       font-size: 22px;
+      letter-spacing: .44px;
       line-height: 28.6px;
     }
 
@@ -3258,6 +3360,34 @@
       border-bottom: 0;
       font-size: 16px;
       letter-spacing: .32px;
+    }
+
+    .helix-header__mobile-nav-summary--split {
+      gap: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    .helix-header__mobile-title-link {
+      display: block;
+      width: 50%;
+      margin: -10px 0;
+      padding: 10px 0;
+    }
+
+    .helix-header__mobile-nav-summary--split > .helix-header__mobile-toggle,
+    .helix-header__mobile-nav-summary:not(.helix-header__mobile-nav-summary--split) > .helix-header__mobile-toggle {
+      display: flex;
+      width: auto;
+      height: auto;
+      flex: 1 1 0;
+      align-items: center;
+      justify-content: flex-end;
+      margin: -10px 0;
+      padding: 10px 0;
+    }
+
+    .helix-header__mobile-summary-label {
+      pointer-events: none;
     }
 
     .helix-header__mobile-submenu {
@@ -3351,6 +3481,7 @@
       min-height: 0;
       padding: 0;
       border-bottom: 0;
+      color: #131313;
       font-family: 'Archivo', var(--helix-font, sans-serif);
       font-size: 16px;
       font-weight: 700;
@@ -3366,6 +3497,7 @@
       min-height: 0;
       padding: 0;
       border-bottom: 0;
+      color: #323232;
     }
 
     .helix-header__mobile-submenu-group--pages a {
@@ -3434,6 +3566,18 @@
 
     .helix-header__mobile-submenu-header .helix-header__mobile-back > span:first-child svg {
       transform: rotate(180deg) !important;
+    }
+
+    .helix-header__mobile-nav > details > .helix-header__mobile-nav-summary--split > .helix-header__mobile-toggle,
+    .helix-header__mobile-nav > details > .helix-header__mobile-nav-summary:not(.helix-header__mobile-nav-summary--split) > .helix-header__mobile-toggle {
+      display: flex;
+      width: auto;
+      height: auto;
+      flex: 1 1 0;
+      align-items: center;
+      justify-content: flex-end;
+      margin: -10px 0;
+      padding: 10px 0;
     }
 
     .helix-header__mobile-promos {
@@ -3617,7 +3761,7 @@
     .helix-header__mobile-products .helix-header__mega-product-info > a {
       display: block;
       max-height: 44.8px;
-      min-height: 0;
+      min-height: 44.8px;
       overflow: hidden;
       font-weight: 400;
       overflow-wrap: anywhere;
@@ -3676,6 +3820,7 @@
     .helix-header__mobile-bar {
       display: block;
       min-height: 56px;
+      transition: transform .5s cubic-bezier(.6, 0, .4, 1) .2s;
     }
 
     .helix-header__mobile-inner {
@@ -3715,7 +3860,46 @@
     }
 
     .helix-header.is-scroll-hidden .helix-header__mobile-bar {
-      transform: translateY(-100%);
+      transform: translateY(-110%);
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__mobile-bar {
+      color: var(--helix-solid-text);
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__mobile-inner {
+      background: var(--helix-header-bg);
+      box-shadow: none;
+      color: var(--helix-solid-text);
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__logo--normal,
+    .helix-header--overlay.is-scrolled .helix-header__logo-text--normal {
+      display: block;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__logo--overlay,
+    .helix-header--overlay.is-scrolled .helix-header__logo-text--overlay {
+      display: none;
+    }
+
+    .helix-header__mobile-submenu a:hover,
+    .helix-header__mobile-submenu a:focus-visible,
+    .helix-header__mobile-submenu button:hover,
+    .helix-header__mobile-submenu button:focus-visible {
+      color: inherit;
+    }
+
+    .helix-header__mobile-submenu-group--featured a:hover,
+    .helix-header__mobile-submenu-group--featured a:focus-visible {
+      color: #131313;
+    }
+
+    .helix-header__mobile-submenu-group--pages a:hover,
+    .helix-header__mobile-submenu-group--pages a:focus-visible,
+    .helix-header__mobile-submenu--child .helix-header__mobile-submenu-group a:hover,
+    .helix-header__mobile-submenu--child .helix-header__mobile-submenu-group a:focus-visible {
+      color: #323232;
     }
 
     .helix-header__announcement {
