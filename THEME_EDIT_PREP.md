@@ -858,3 +858,16 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Demo giữ header/logo chính trong lúc panel Women hoặc Men trượt vào; panel submenu absolute sau đó phủ lên header ở trạng thái hoàn tất.
 - Theme trước đó ẩn `.helix-header__mobile-menu-top` ngay khi root `details` mở, tạo khoảng trống trước khi submenu bắt đầu hiển thị.
 - Bỏ rule `display: none` theo class `is-mobile-submenu-open`; logo vẫn nằm sẵn bên dưới transition, còn submenu giữ `z-index` cao để phủ lên đúng như demo.
+
+## 47. Đối chiếu toàn diện header Helix trên desktop và mobile (2026-08-09)
+
+- Đối chiếu trực tiếp demo `helix-shoes-theme.myshopify.com` và storefront preview ở cùng viewport `1440×900`, `1024×900` và `424×850`; kiểm tra trạng thái đầu trang, sticky khi cuộn lên/xuống, hover Women/Men/Pages, Search, Cart, localization, menu chính mobile, submenu và animation Back.
+- Desktop đầu trang giữ đúng announcement cao khoảng `38.4px`, header cao `80.4px`, lề `50px` ở màn hình lớn, logo `110px`, vùng click icon `44×44px`, font Figtree `14px/22.4px` và màu chữ solid `#323232`.
+- Mega menu Women/Men dùng đúng padding cột, typography Archivo cho heading, khoảng cách banner/product và panel trắng mở theo chiều cao nội dung. Ở sticky state, header trở thành khung trắng bo `16px`, cách mép trên `16px`; mega menu dùng padding ngang `30px` để bề rộng banner/card tiếp tục khớp demo.
+- Lớp nền khi mở Women/Men, Search hoặc Cart phủ toàn viewport bằng `rgba(50, 50, 50, .5)` và `blur(20px)`. Pages vẫn không dùng lớp nền đen như demo. Cơ chế khóa cuộn bù đúng chiều rộng scrollbar nên header/drawer không bị giật ngang khi mở panel.
+- Search và Cart desktop cùng dùng drawer `550×868px`, bo `16px`, cách mép phải/trên `16px`; typography Archivo, input/chip/button Figtree, letter-spacing, chiều cao và spacing đã được căn theo số đo demo. Country/language selector desktop và bottom sheet mobile giữ cùng kiểu panel, blur và chuyển động.
+- Mobile đầu trang giữ header cao `56px`; drawer chính nằm cách mép `8px`, rộng `calc(100% - 16px)`, cao `calc(100dvh - 16px)`, bo `16px`, header drawer cao `69px`, logo `90×16px`. Women/Men có vùng title và vùng chevron tách đôi giống demo; Pages giữ vùng label/toggle riêng và toàn bộ hit-area đúng kích thước.
+- Animation chuyển vào/ra Women/Men/Pages dùng `transform 300ms ease-in-out`, không fade panel. Logo không bị ẩn trước lúc slide-in và hiện ngay khi bấm Back; chevron cấp menu luôn hướng phải, Back luôn hướng trái.
+- Typography mobile được chốt theo demo: menu chính màu `#131313`, submenu con màu `#323232`, heading Best deals và title product màu `#131313`. Product title vẫn có vùng cao hai dòng để tên dài không tràn và hàng giá giữa các card luôn thẳng.
+- Sticky mobile đổi sang nền trắng/chữ `#323232`; cuộn xuống ẩn header bằng `translateY(-110%)` với transition `500ms cubic-bezier(.6,0,.4,1) 200ms`, cuộn lên hiện lại giống demo.
+- Đã tạo backup branch `backup/pre-full-header-parity-20260809` trước lượt chỉnh toàn diện này.
