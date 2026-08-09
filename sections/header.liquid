@@ -3122,6 +3122,10 @@
   }
 
   @media (min-width: 991px) {
+    html.helix-header-lock .helix-header.is-scrolled .helix-header__desktop-bar {
+      right: var(--helix-scrollbar-compensation, 0px);
+    }
+
     .helix-header--overlay.is-scrolled .helix-header__desktop-bar {
       color: var(--helix-solid-text);
     }
