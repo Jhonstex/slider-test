@@ -1186,7 +1186,19 @@
   }
 
   .helix-header__desktop-surface::before {
-    display: none;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: var(--helix-desktop-side-padding);
+    bottom: 0;
+    left: var(--helix-desktop-side-padding);
+    border-radius: 0;
+    background: var(--helix-header-bg);
+    content: '';
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s cubic-bezier(.6, 0, .4, 1), border-radius .15s cubic-bezier(.6, .14, 0, 1);
+    will-change: opacity;
   }
 
   .helix-header__desktop-inner {
@@ -1201,9 +1213,15 @@
     margin-right: 0;
     gap: 10px;
     padding: 24px 0;
+    transition: width .35s ease-in-out, margin .35s ease-in-out;
   }
 
   @media (min-width: 991px) and (max-width: 1199px) {
+    .helix-header__desktop-surface::before {
+      right: 30px;
+      left: 30px;
+    }
+
     .helix-header__desktop-inner {
       width: calc(100% - 60px);
       margin-left: 30px;
@@ -3132,19 +3150,22 @@
     }
 
     .helix-header--overlay.is-scrolled .helix-header__desktop-surface {
-      width: calc(100% - (var(--helix-desktop-side-padding) * 2));
-      margin-inline: var(--helix-desktop-side-padding);
-      border-radius: 16px;
-      background: var(--helix-header-bg);
+      background: transparent;
       box-shadow: none;
       color: var(--helix-solid-text);
       transform: translateY(16px);
-      transition: background-color .15s cubic-bezier(.6, 0, .4, 1), border-radius .15s cubic-bezier(.6, .14, 0, 1), color .15s cubic-bezier(.6, 0, .4, 1), transform .5s cubic-bezier(.625, .05, 0, 1);
+      transition: box-shadow .5s cubic-bezier(.625, .05, 0, 1), color .2s cubic-bezier(.6, 0, .4, 1), transform .5s cubic-bezier(.625, .05, 0, 1);
+      will-change: transform;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__desktop-surface::before {
+      border-radius: 16px;
+      opacity: 1;
     }
 
     .helix-header--overlay.is-scrolled .helix-header__desktop-inner {
-      width: calc(100% - 60px);
-      margin-inline: 30px;
+      width: calc(100% - ((var(--helix-desktop-side-padding) + 30px) * 2));
+      margin-inline: calc(var(--helix-desktop-side-padding) + 30px);
     }
 
     .helix-header--overlay.is-scrolled .helix-header__menu-background {
@@ -3184,9 +3205,9 @@
   }
 
   @media (min-width: 991px) and (max-width: 1199px) {
-    .helix-header--overlay.is-scrolled .helix-header__desktop-surface {
-      width: calc(100% - 60px);
-      margin-inline: 30px;
+    .helix-header--overlay.is-scrolled .helix-header__desktop-inner {
+      width: calc(100% - 120px);
+      margin-inline: 60px;
     }
 
     .helix-header--overlay.is-scrolled .helix-header__menu-background {
