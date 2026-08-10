@@ -3844,15 +3844,38 @@
     .helix-header__mobile-bar {
       display: block;
       min-height: 56px;
-      transition: transform .5s cubic-bezier(.6, 0, .4, 1) .2s;
+      transition: top .42s cubic-bezier(.625, .05, 0, 1), color .35s cubic-bezier(.6, 0, .4, 1), transform .5s cubic-bezier(.6, 0, .4, 1) .2s;
     }
 
     .helix-header__mobile-inner {
+      position: relative;
+      isolation: isolate;
       display: grid;
       min-height: 56px;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
       padding-inline: 16px;
+    }
+
+    .helix-header--overlay .helix-header__mobile-inner {
+      background: transparent;
+    }
+
+    .helix-header--overlay .helix-header__mobile-inner::before {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      background: var(--helix-header-bg);
+      content: '';
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s cubic-bezier(.6, 0, .4, 1);
+      will-change: opacity;
+    }
+
+    .helix-header__mobile-inner > * {
+      position: relative;
+      z-index: 1;
     }
 
     .helix-header__mobile-side {
@@ -3874,6 +3897,24 @@
       justify-self: center;
     }
 
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo--normal,
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo-text--normal,
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo--overlay,
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo-text--overlay {
+      display: block;
+      transition: opacity .35s cubic-bezier(.6, 0, .4, 1);
+    }
+
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo--normal,
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo-text--normal {
+      opacity: 0;
+    }
+
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo--overlay,
+    .helix-header--overlay .helix-header__brand--mobile .helix-header__logo-text--overlay {
+      opacity: 1;
+    }
+
     .helix-header__brand--mobile .helix-header__logo-text {
       font-size: 16px;
     }
@@ -3892,19 +3933,47 @@
     }
 
     .helix-header--overlay.is-scrolled .helix-header__mobile-inner {
-      background: var(--helix-header-bg);
+      background: transparent;
       box-shadow: none;
       color: var(--helix-solid-text);
     }
 
-    .helix-header--overlay.is-scrolled .helix-header__logo--normal,
-    .helix-header--overlay.is-scrolled .helix-header__logo-text--normal {
-      display: block;
+    .helix-header--overlay.is-scrolled .helix-header__mobile-inner::before {
+      opacity: 1;
     }
 
-    .helix-header--overlay.is-scrolled .helix-header__logo--overlay,
-    .helix-header--overlay.is-scrolled .helix-header__logo-text--overlay {
-      display: none;
+    .helix-header--overlay.is-scrolled .helix-header__brand--mobile .helix-header__logo--normal,
+    .helix-header--overlay.is-scrolled .helix-header__brand--mobile .helix-header__logo-text--normal {
+      display: block;
+      opacity: 1;
+    }
+
+    .helix-header--overlay.is-scrolled .helix-header__brand--mobile .helix-header__logo--overlay,
+    .helix-header--overlay.is-scrolled .helix-header__brand--mobile .helix-header__logo-text--overlay {
+      display: block;
+      opacity: 0;
+    }
+
+    .helix-header.is-returning-top .helix-header__mobile-bar {
+      top: var(--helix-mobile-return-offset, 0px);
+    }
+
+    .helix-header--overlay.is-returning-top .helix-header__mobile-bar {
+      color: var(--helix-overlay-text);
+    }
+
+    .helix-header--overlay.is-returning-top .helix-header__mobile-inner::before {
+      opacity: 0;
+    }
+
+    .helix-header--overlay.is-returning-top .helix-header__brand--mobile .helix-header__logo--normal,
+    .helix-header--overlay.is-returning-top .helix-header__brand--mobile .helix-header__logo-text--normal {
+      opacity: 0;
+    }
+
+    .helix-header--overlay.is-returning-top .helix-header__brand--mobile .helix-header__logo--overlay,
+    .helix-header--overlay.is-returning-top .helix-header__brand--mobile .helix-header__logo-text--overlay {
+      opacity: 1;
     }
 
     .helix-header__mobile-submenu a:hover,
@@ -4000,6 +4069,7 @@
     let announcementIndex = 0;
     let announcementTimer;
     let closeDropdownTimer;
+    let mobileReturnTimer;
     let lastScrollY = window.scrollY;
     const menProducts = select('[data-helix-men-products]');
     const menProductsViewport = select('[data-helix-men-products-viewport]', menProducts);
@@ -4367,12 +4437,39 @@
     function updateScrollState() {
       if (!root.classList.contains('helix-header--sticky')) return;
       const currentScrollY = window.scrollY;
-      root.classList.toggle('is-scrolled', currentScrollY > 8);
+
       if (!desktopQuery.matches) {
+        if (currentScrollY > 8) {
+          window.clearTimeout(mobileReturnTimer);
+          root.classList.remove('is-returning-top');
+          root.style.removeProperty('--helix-mobile-return-offset');
+          root.classList.add('is-scrolled');
+        } else if (root.classList.contains('is-scrolled')) {
+          const announcementHeight = select('.helix-header__announcement')?.getBoundingClientRect().height || 0;
+          root.style.setProperty('--helix-mobile-return-offset', `${Math.max(0, announcementHeight - currentScrollY)}px`);
+
+          if (!root.classList.contains('is-returning-top')) {
+            root.classList.add('is-returning-top');
+          }
+
+          window.clearTimeout(mobileReturnTimer);
+          mobileReturnTimer = window.setTimeout(() => {
+            if (desktopQuery.matches || window.scrollY > 8) return;
+            root.classList.remove('is-scrolled', 'is-returning-top');
+            root.style.removeProperty('--helix-mobile-return-offset');
+          }, 430);
+        } else {
+          root.classList.remove('is-scrolled', 'is-returning-top');
+          root.style.removeProperty('--helix-mobile-return-offset');
+        }
+
         if (currentScrollY > lastScrollY + 3 && currentScrollY > 80) root.classList.add('is-scroll-hidden');
         if (currentScrollY < lastScrollY - 3 || currentScrollY <= 8) root.classList.remove('is-scroll-hidden');
       } else {
-        root.classList.remove('is-scroll-hidden');
+        window.clearTimeout(mobileReturnTimer);
+        root.classList.remove('is-scroll-hidden', 'is-returning-top');
+        root.style.removeProperty('--helix-mobile-return-offset');
+        root.classList.toggle('is-scrolled', currentScrollY > 8);
       }
       lastScrollY = currentScrollY;
     }
