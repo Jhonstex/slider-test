@@ -876,5 +876,5 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 
 - Đối chiếu trực tiếp Helix và preview desktop cho thấy lớp `header-menu-background` của demo vẫn giữ màu trắng trong khoảng đóng menu, sau đó giảm `height` về `0` trong `300ms cubic-bezier(.6,.14,0,1)`; vì mép trên đứng yên nên nền trắng biến mất từ dưới lên.
 - Theme đã có transition chiều cao tương đương, nhưng khi dropdown đóng, class `is-menu-open` bị gỡ đồng thời làm background đổi sang transparent ngay lập tức. Transition vẫn chạy trong DOM nhưng không còn nhìn thấy trên hero.
-- Thêm trạng thái trung gian `is-menu-closing` trong `320ms` để giữ màu trắng cho shared background trong khi chiều cao co về `0`; khi mở menu khác giữa lúc đang đóng, timer được hủy và trạng thái closing được gỡ ngay.
+- Thêm trạng thái trung gian `is-menu-closing` để giữ màu trắng cho shared background trong khi chiều cao co về `0`; trạng thái kết thúc theo sự kiện `height transitionend` và có fallback `500ms` nếu trình duyệt bỏ lỡ sự kiện. Khi mở menu khác giữa lúc đang đóng, timer được hủy và trạng thái closing được gỡ ngay.
 - `closeDropdowns()` không còn xóa class trực tiếp mà đi qua `syncDropdownState()`, nên hover ra ngoài, chuyển Women/Men/Pages sang `Find your shoes`, click nền và phím Escape đều dùng cùng một animation đóng.

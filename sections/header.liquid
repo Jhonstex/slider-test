@@ -4064,6 +4064,7 @@
     const searchDrawer = select('[data-helix-search-drawer]');
     const cartDrawer = select('[data-helix-cart-drawer]');
     const megaScrim = select('[data-helix-mega-scrim]');
+    const menuBackground = select('[data-helix-menu-background]');
     const mobileMenuPanel = select('.helix-header__mobile-menu-panel');
     const mobileSections = selectAll('[data-helix-mobile-section]');
     const mobileDetails = selectAll('.helix-header__mobile-nav details');
@@ -4263,7 +4264,7 @@
         root.classList.add('is-menu-closing');
         menuClosingTimer = window.setTimeout(() => {
           root.classList.remove('is-menu-closing');
-        }, 320);
+        }, 500);
       }
 
       root.classList.toggle('is-menu-open', open);
@@ -4278,6 +4279,12 @@
       setBodyLock();
       syncMenProducts();
     };
+
+    menuBackground?.addEventListener('transitionend', (event) => {
+      if (event.propertyName !== 'height' || !root.classList.contains('is-menu-closing') || root.classList.contains('is-menu-open')) return;
+      window.clearTimeout(menuClosingTimer);
+      root.classList.remove('is-menu-closing');
+    });
 
     const replayMegaPanelReveal = () => {
       if (!desktopQuery.matches || !root.classList.contains('is-menu-open')) return;
