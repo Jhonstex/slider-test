@@ -3098,6 +3098,13 @@
     background: var(--helix-header-bg);
   }
 
+  /* Keep the shared white sheet painted while its height retracts to zero.
+     Without this closing state the background becomes transparent immediately,
+     so the existing height transition is hidden behind the hero. */
+  .helix-header.is-menu-closing .helix-header__menu-background {
+    background: var(--helix-header-bg);
+  }
+
   .helix-header.is-replaying-menu-reveal .helix-header__mega-panel {
     height: 0;
     opacity: 0;
@@ -4069,6 +4076,7 @@
     let announcementIndex = 0;
     let announcementTimer;
     let closeDropdownTimer;
+    let menuClosingTimer;
     let mobileReturnTimer;
     let lastScrollY = window.scrollY;
     const menProducts = select('[data-helix-men-products]');
@@ -4198,8 +4206,6 @@
       dropdowns.forEach((dropdown) => {
         dropdown.open = false;
       });
-      root.classList.remove('is-menu-open');
-      root.classList.remove('is-mega-backdrop-open');
       window.setTimeout(syncDropdownState, 0);
     };
 
@@ -4247,6 +4253,19 @@
     const syncDropdownState = () => {
       const open = dropdowns.some((dropdown) => dropdown.open);
       const megaBackdropOpen = Boolean(select('.helix-header__dropdown--mega[open]'));
+      const wasOpen = root.classList.contains('is-menu-open');
+
+      if (open) {
+        window.clearTimeout(menuClosingTimer);
+        root.classList.remove('is-menu-closing');
+      } else if (wasOpen) {
+        window.clearTimeout(menuClosingTimer);
+        root.classList.add('is-menu-closing');
+        menuClosingTimer = window.setTimeout(() => {
+          root.classList.remove('is-menu-closing');
+        }, 320);
+      }
+
       root.classList.toggle('is-menu-open', open);
       root.classList.toggle('is-mega-backdrop-open', megaBackdropOpen);
       megaScrim?.setAttribute('aria-hidden', String(!megaBackdropOpen));

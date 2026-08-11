@@ -871,3 +871,10 @@ Kết luận: kết nối GitHub và Shopify đang hoạt động. Thay đổi �
 - Typography mobile được chốt theo demo: menu chính màu `#131313`, submenu con màu `#323232`, heading Best deals và title product màu `#131313`. Product title vẫn có vùng cao hai dòng để tên dài không tràn và hàng giá giữa các card luôn thẳng.
 - Sticky mobile đổi sang nền trắng/chữ `#323232`; cuộn xuống ẩn header bằng `translateY(-110%)` với transition `500ms cubic-bezier(.6,0,.4,1) 200ms`, cuộn lên hiện lại giống demo.
 - Đã tạo backup branch `backup/pre-full-header-parity-20260809` trước lượt chỉnh toàn diện này.
+
+## 48. Giữ animation rút nền trắng khi đóng menu desktop (2026-08-11)
+
+- Đối chiếu trực tiếp Helix và preview desktop cho thấy lớp `header-menu-background` của demo vẫn giữ màu trắng trong khoảng đóng menu, sau đó giảm `height` về `0` trong `300ms cubic-bezier(.6,.14,0,1)`; vì mép trên đứng yên nên nền trắng biến mất từ dưới lên.
+- Theme đã có transition chiều cao tương đương, nhưng khi dropdown đóng, class `is-menu-open` bị gỡ đồng thời làm background đổi sang transparent ngay lập tức. Transition vẫn chạy trong DOM nhưng không còn nhìn thấy trên hero.
+- Thêm trạng thái trung gian `is-menu-closing` trong `320ms` để giữ màu trắng cho shared background trong khi chiều cao co về `0`; khi mở menu khác giữa lúc đang đóng, timer được hủy và trạng thái closing được gỡ ngay.
+- `closeDropdowns()` không còn xóa class trực tiếp mà đi qua `syncDropdownState()`, nên hover ra ngoài, chuyển Women/Men/Pages sang `Find your shoes`, click nền và phím Escape đều dùng cùng một animation đóng.
